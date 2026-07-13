@@ -37,10 +37,50 @@ window.addEventListener('load',loadProgress);
 </head>
 <body>
 
-<nav>
-  <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">← L14</a> |
-  <a href="L16-Environmental-and-Mechanical-Specs.html">L16 →</a>
+<nav style="margin-bottom:1.5em;font-size:0.9em;">
+<a href="../index.html">&larr; Home</a>
 </nav>
+
+<details>
+<summary style="cursor:pointer;font-weight:bold;font-size:1.1em;color:#2c5f2d;">📚 All Lessons</summary>
+<div style="margin-top:0.8em;line-height:2;">
+<strong>Part 1 — Core Chapters</strong><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L01" onchange="saveProgress()"> <a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L02" onchange="saveProgress()"> <a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L03" onchange="saveProgress()"> <a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L04" onchange="saveProgress()"> <a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L05" onchange="saveProgress()"> <a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L06" onchange="saveProgress()"> <a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L07" onchange="saveProgress()"> <a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L08" onchange="saveProgress()"> <a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L09" onchange="saveProgress()"> <a href="L09-LEDs-Smart-Switches-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a></label><br>
+<br>
+<strong>Part 2 — Specifications</strong><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L10" onchange="saveProgress()"> <a href="L10-Environmental-and-Carrier-Specifications.html">L10: Environmental and Carrier Specifications</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L11" onchange="saveProgress()"> <a href="L11-Interface-Specifications---Digital-IO-Cards.html">L11: Interface Specifications — Digital I/O Cards</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L12" onchange="saveProgress()"> <a href="L12-Interface-Specifications---Analog-IO-Cards.html">L12: Interface Specifications — Analog I/O Cards</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L13" onchange="saveProgress()"> <a href="L13-Interface-Specifications---Special-Cards.html">L13: Interface Specifications — Special Cards</a></label><br>
+<br>
+<strong>Part 3 — Controllers & Power</strong><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L14" onchange="saveProgress()"> <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">L14: Controllers, Remote Interface Unit, and Power Supplies</a></label><br>
+<label style="cursor:pointer; font-weight:bold;"><input type="checkbox" data-lesson="L15" onchange="saveProgress()" checked> <a href="L15-Control-Network---Topology-and-Cable-Specs.html">L15: Control Network — Topology and Cable Specs</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L16" onchange="saveProgress()"> <a href="L16-Control-Network---Installation-Rules-and-Diagrams.html">L16: Control Network — Installation Rules and Diagrams</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L17" onchange="saveProgress()"> <a href="L17-Legacy-Bulk-Power-Supplies-and-Enclosure-Guidelines.html">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a></label><br>
+<br>
+<strong>Part 4 — Power & Vertical</strong><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L18" onchange="saveProgress()"> <a href="L18-System-Power-Guidelines.html">L18: System Power Guidelines</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L19" onchange="saveProgress()"> <a href="L19-Bussed-Field-Power-and-Controller-Redundancy.html">L19: Bussed Field Power and Controller Redundancy</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L20" onchange="saveProgress()"> <a href="L20-Vertical-Carriers---Mounting-and-Configuration.html">L20: Vertical Carriers — Mounting and Configuration</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L21" onchange="saveProgress()"> <a href="L21-Vertical-Carriers---Wiring-and-Worksheets.html">L21: Vertical Carriers — Wiring and Worksheets</a></label><br>
+<br>
+<strong>Part 5 — Special Topics</strong><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L22" onchange="saveProgress()"> <a href="L22-Intrinsically-Safe-IO.html">L22: Intrinsically Safe I/O</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L23" onchange="saveProgress()"> <a href="L23-Product-Type-Numbers.html">L23: Product Type Numbers</a></label><br>
+<label style="cursor:pointer;"><input type="checkbox" data-lesson="L24" onchange="saveProgress()"> <a href="L24-Glossary-of-DeltaV-Hardware-Terms.html">L24: Glossary of DeltaV Hardware Terms</a></label><br>
+<br>
+<span id="progress-text"></span>
+</div>
+</details>
 
 <h1>L15 – Control Network: Topology and Cable Specs</h1>
 <p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix G (Control Network Specifications)</p>
