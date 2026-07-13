@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L19 – Bussed Field Power and Controller Redundancy</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L18-System-Power-Guidelines.html">← L18</a> |
+  <a href="L20-Vertical-Carriers---Mounting-and-Configuration.html">L20 →</a>
+</nav>
+
+<h1>L19 – Bussed Field Power and Controller Redundancy</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendices K, L</p>
+<p><label><input type="checkbox" data-lesson="L19" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0490_1.png" alt="Figure from page 490">
+  <div class="caption">Figure from page 490 (page 490)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0491_1.png" alt="Figure from page 491">
+  <div class="caption">Figure from page 491 (page 491)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0494_1.png" alt="Figure from page 494">
+  <div class="caption">Figure from page 494 (page 494)</div>
+</div>
+1. Bussed Field Power Overview</h2>
+
+<div class="key-concept">
+<strong>Core Principle:</strong> Many DeltaV I/O cards use 24 VDC bussed field power to energize their field devices. The carrier provides a direct power connection point, eliminating the need for separate power wiring to each device.
+</div>
+
+<p>Key specifications for bussed field power:</p>
+
+<table>
+<tr><th>Parameter</th><th>Specification</th></tr>
+<tr><td>Nominal Voltage</td><td>24 VDC</td></tr>
+<tr><td>Operating Range</td><td>21.6 to 26.4 VDC (24 VDC ±10%)</td></tr>
+<tr><td>Connection Point</td><td>Top of the I/O interface carrier</td></tr>
+<tr><td>Supported Power Sources</td><td>DeltaV Bulk Power Supply or Legacy Bulk Power Supply</td></tr>
+<tr><td>Max Current (VerticalPLUS)</td><td>13 A per carrier connection</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Important Restriction:</strong> The bussed field power connection on the top of the carrier provides power to the field <em>through the I/O cards only</em>. Extending power from this connection to additional field devices is <strong>not supported or appropriate</strong>.
+</div>
+
+<div class="tip">
+<strong>Tip:</strong> For redundant bulk power supplies or multiple bulk power supplies for load sharing, use DeltaV Bulk Power supplies in conjunction with DeltaV Redundancy Modules.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Bussed Field Power for DI and DO Cards</h2>
+
+<p>Special guidelines apply when implementing bussed field power for discrete input and output cards.</p>
+
+<h3>2.1 Discrete Input — Arc Suppression</h3>
+
+<p>When using DeltaV discrete input cards (isolated or dry contact) to sense a contact closure, an <strong>arc suppression device</strong> is required at the contact. Options include an R-C snubber or a varistor.</p>
+
+<p><strong>Example R-C Snubber Values (Table K-1):</strong></p>
+
+<table>
+<tr><th>Load from Input Card</th><th>R Value</th><th>C Value</th></tr>
+<tr><td>24 VDC</td><td>5 kΩ</td><td>2.4 nF</td></tr>
+<tr><td>120 VAC</td><td>60 Ω</td><td>0.12 nF</td></tr>
+<tr><td>230 VAC</td><td>115 Ω</td><td>0.01 nF</td></tr>
+</table>
+
+<p class="page-ref">Reference: Sizing R-C Snubbers section for formulas.</p>
+
+<h3>2.2 Discrete Input — Solid State Devices (Triacs)</h3>
+
+<p>When sensing solid-state devices with isolated discrete input cards, place a resistor in parallel with the input to avoid false triggering due to leakage currents. Size the resistor so that the leakage current produces a voltage below the upper limit for OFF voltage.</p>
+
+<div class="key-concept">
+<strong>Power Dissipation Formula:</strong><br>
+<code>Watts = V × V / R</code><br>
+where V = voltage, R = resistance. The resistor wattage must support this dissipation when the switch is ON.
+</div>
+
+<h3>2.3 Dry Contact Cards — OFF Current Limits (Table K-2)</h3>
+
+<p>Dry contact discrete input cards can sense solid-state devices only if switch leakage is below the upper OFF current limit:</p>
+
+<table>
+<tr><th>Input Card Voltage Level</th><th>Upper Limit of OFF Current</th></tr>
+<tr><td>24 VDC</td><td>1 mA</td></tr>
+<tr><td>120 VAC</td><td>0.56 mA</td></tr>
+<tr><td>230 VAC</td><td>0.28 mA</td></tr>
+</table>
+
+<h3>2.4 AC Discrete Output — Inductive Loads</h3>
+
+<p>When AC output cards (high-side or isolated) drive inductive loads (relay coils), suppress kickback at the coil using an R-C snubber or varistor. Sizing is load-dependent.</p>
+
+<h3>2.5 DC Discrete Output — Inductive Loads</h3>
+
+<p>When DC output cards drive inductive loads (solenoid valves, relay coils), place a <strong>reverse-biased diode</strong> (e.g., 1N4004) in parallel at the load. Benefits:</p>
+<ul>
+  <li>Protects the output channel circuitry from inductive kickback in all configurations</li>
+  <li>Suppresses electrical noise that would couple onto adjacent field wiring</li>
+</ul>
+
+<h3>2.6 Low-Current Loads on AC Output Cards</h3>
+
+<p>For field devices with low current requirements, connect a loading resistor in parallel to limit leakage current effects. Size for 10 mA total load:</p>
+
+<table>
+<tr><th>Voltage</th><th>Resistor Value</th><th>Power Rating</th></tr>
+<tr><td>120 VAC</td><td>12 kΩ</td><td>2 W</td></tr>
+<tr><td>230 VAC</td><td>23 kΩ</td><td>3 W</td></tr>
+</table>
+
+<h3>2.7 Noisy Environments</h3>
+
+<p>In electrically noisy environments, place varistors at two locations:</p>
+<ul>
+  <li>In parallel with the field terminal blocks at the I/O card</li>
+  <li>In parallel with the bussed field power connection to the carrier</li>
+</ul>
+<p>Size the varistor for <strong>20% above the nominal line voltage</strong>.</p>
+
+<!-- ============================================================ -->
+<h2>3. Sizing R-C Snubbers</h2>
+
+<p>R-C snubbers suppress arcing when contacts open and kickback when coils de-energize. Pre-assembled units are available (Quencharc®, RIFA RC-units) or can be built from discrete components.</p>
+
+<div class="key-concept">
+<strong>Key Fact:</strong> Because the resistor is in series with the capacitor, the wattage requirements are low — typically less than 0.25 W.
+</div>
+
+<h3>3.1 DC Applications</h3>
+
+<table>
+<tr><th>Example</th><th>Source</th><th>Load</th></tr>
+<tr><td>Typical DC sizing</td><td>24 VDC</td><td>0.5 A</td></tr>
+</table>
+
+<p>Always round up to the next available component value.</p>
+
+<h3>3.2 AC Applications</h3>
+
+<p>For AC, size at 0.1 µF for each 10 V·A of steady-state load.</p>
+
+<table>
+<tr><th>Example</th><th>Source</th><th>Load</th></tr>
+<tr><td>Typical AC sizing</td><td>120 VAC</td><td>0.5 A (60 V·A → 0.6 µF)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. Controller Redundancy</h2>
+
+<p>The DeltaV system supports redundant controllers for high-availability applications. A redundant configuration requires two 2-wide carriers side by side, each with its own power supply and controller.</p>
+
+<div class="key-concept">
+<strong>Redundancy Topology:</strong> Two controllers connect to separate hubs on a redundant Control Network, providing fault tolerance for both controller and network failures.
+</div>
+
+<table>
+<tr><th>Component</th><th>Specification</th></tr>
+<tr><td>Control Network Cable</td><td>ScTP Cat. 5(e)</td></tr>
+<tr><td>Maximum Cable Length</td><td>100 m (330 ft)</td></tr>
+<tr><td>Carrier Requirement</td><td>Two 2-wide carriers (must support redundancy)</td></tr>
+<tr><td>Controller Matching</td><td>Both controllers must be the same type</td></tr>
+</table>
+
+<h3>4.1 Installing a Redundant Controller</h3>
+
+<div class="pitfall">
+<strong>⚠ Prerequisite:</strong> A simplex controller cannot be made redundant after VCAT is enabled. Plan for redundancy before enabling VCAT.
+</div>
+
+<p><strong>Step-by-step procedure:</strong></p>
+
+<table>
+<tr><th>Step</th><th>Action</th><th>Indicator</th></tr>
+<tr><td>1</td><td>Assign a redundancy license to the simplex controller in DeltaV Explorer</td><td>—</td></tr>
+<tr><td>2</td><td>Plug in a second 2-wide carrier to the <strong>left</strong> of the current carrier. Verify correct pins and redundancy support.</td><td>—</td></tr>
+<tr><td>3</td><td>Insert power supply in the left slot of the left carrier; connect power cord</td><td>Power LED on</td></tr>
+<tr><td>4</td><td>Insert matching controller in the right slot of the left carrier</td><td>Error LED blinks briefly</td></tr>
+<tr><td>5</td><td>Observe LED sequence: all 6 LEDs on for ~2 s, then all off except Power LED; Standby and communications LEDs begin blinking</td><td>Controller becomes commissioned</td></tr>
+<tr><td>6</td><td>Download ProfessionalPLUS workstation in DeltaV Explorer</td><td>—</td></tr>
+<tr><td>7</td><td>Download setup data to the controller; communications LEDs blink for a few minutes</td><td>Standby LED turns solid (configured and ready)</td></tr>
+</table>
+
+<div class="tip">
+<strong>LED Tell-Tales:</strong> The controller LEDs are the primary diagnostic tool during redundancy setup. The Standby LED transitioning from blinking to solid confirms successful configuration.
+</div>
+
+<h3>4.2 Powering Redundant Controllers</h3>
+
+<p>A redundant system requires an additional 2-wide carrier for the second controller and power supply.</p>
+
+<table>
+<tr><th>Power Element</th><th>Source</th></tr>
+<tr><td>Controller 1</td><td>Power Supply 1 (5V and 3.3V)</td></tr>
+<tr><td>Controller 2</td><td>Power Supply 2 (5V and 3.3V)</td></tr>
+<tr><td>I/O Cards</td><td>Both power supplies — load sharing (12V)</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Redundant I/O Power Calculation:</strong> Ensure sufficient power for the active controller and I/O if one power supply fails. If the two power supplies cannot provide redundant power, install an additional carrier with power supplies to the left of the controller carrier.
+</div>
+
+<!-- ============================================================ -->
+<h2>5. Reference Summary</h2>
+
+<table>
+<tr><th>Topic</th><th>Key Point</th></tr>
+<tr><td>Bussed field power voltage</td><td>24 VDC ±10% (21.6–26.4 VDC)</td></tr>
+<tr><td>Arc suppression (DI)</td><td>R-C snubber or varistor required at contact</td></tr>
+<tr><td>Inductive load suppression (DC DO)</td><td>Reverse-biased diode (1N4004) at load</td></tr>
+<tr><td>Inductive load suppression (AC DO)</td><td>R-C snubber or varistor at coil</td></tr>
+<tr><td>Noisy environment varistors</td><td>Size at 20% above nominal; place at I/O card and power connection</td></tr>
+<tr><td>Controller redundancy</td><td>Requires license, matching controllers, separate 2-wide carriers</td></tr>
+<tr><td>Standby LED solid</td><td>Indicates standby controller is configured and ready</td></tr>
+<tr><td>Redundant power planning</td><td>Verify single power supply can sustain active controller + full I/O load</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="quiz">
+<h3>Review Questions</h3>
+
+<p><strong>1.</strong> What is the acceptable voltage range for bussed field power on DeltaV I/O cards?</p>
+<p class="answer">21.6 to 26.4 VDC (24 VDC ±10%)</p>
+
+<p><strong>2.</strong> Why must an arc suppression device be installed when discrete input cards sense a contact closure?</p>
+<p class="answer">To suppress arcing at the contact, preventing damage and false triggering. An R-C snubber or varistor is used.</p>
+
+<p><strong>3.</strong> What component protects DC output channel circuitry from inductive kickback when driving solenoid valves?</p>
+<p class="answer">A reverse-biased diode (such as a 1N4004) connected in parallel at the load.</p>
+
+<p><strong>4.</strong> What does a solid Standby LED indicate after installing a redundant controller?</p>
+<p class="answer">The standby controller has been successfully configured and is ready to take over if the active controller fails.</p>
+
+<p><strong>5.</strong> Why must the two controllers in a redundant pair be the same type?</p>
+<p class="answer">Mismatched controllers cannot communicate properly on the redundancy bus and will not fail over correctly. The system requires identical hardware for seamless failover.</p>
+</div>
+
+<p class="page-ref">Pages referenced: 489–494</p>
+
+</body>
+</html>

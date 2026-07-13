@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L05 — Installing the Controller and Power Supply | DeltaV M-Series Hardware Training</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+<strong>Lessons:</strong>
+<select onchange="if(this.value) window.location.href=this.value">
+<option value="">— Select Lesson —</option>
+<option value="L01-DeltaV-System-Overview-and-Equipment.html">L01 — DeltaV System Overview and Equipment</option>
+<option value="L02-System-Architecture-and-Components.html">L02 — System Architecture and Components</option>
+<option value="L03-Installation-Planning-and-Safety.html">L03 — Installation Planning and Safety</option>
+<option value="L04-Installing-IO-Interface-and-Cards.html">L04 — Installing I/O Interface &amp; Cards</option>
+<option value="L05-Installing-Controller-and-Power-Supply.html" selected>L05 — Installing Controller &amp; Power Supply</option>
+<option value="L06-Workstation-Control-Network-and-Power.html">L06 — Workstation, Control Network &amp; Power</option>
+<option value="L07-System-Checkout---Cables-and-Power.html">L07 — System Checkout — Cables and Power</option>
+<option value="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08 — LED Indicators — Controllers and I/O Cards</option>
+<option value="L09-Analog-IO-Cards-and-Wiring.html">L09 — Analog I/O Cards and Wiring</option>
+<option value="L10-Digital-IO-Cards-and-Wiring.html">L10 — Digital I/O Cards and Wiring</option>
+<option value="L11-Series-2-IO-and-Redundancy.html">L11 — Series 2 I/O and Redundancy</option>
+<option value="L12-IO-Terminal-Block-Wiring-Reference.html">L12 — I/O Terminal Block Wiring Reference</option>
+<option value="L13-Controller-Specifications-and-Features.html">L13 — Controller Specifications and Features</option>
+<option value="L14-Controller-Redundancy-Configuration.html">L14 — Controller Redundancy Configuration</option>
+<option value="L15-Power-Supply-Specifications-and-Grounding.html">L15 — Power Supply Specifications and Grounding</option>
+<option value="L16-Control-Network-Specifications.html">L16 — Control Network Specifications</option>
+<option value="L17-Remote-Network-and-Time-Server.html">L17 — Remote Network and Time Server</option>
+<option value="L18-Smart-Switches-and-Network-Config.html">L18 — Smart Switches and Network Configuration</option>
+<option value="L19-Carrier-Types-and-Configurations.html">L19 — Carrier Types and Configurations</option>
+<option value="L20-Vertical-and-VerticalPLUS-Carriers.html">L20 — Vertical and VerticalPLUS Carriers</option>
+<option value="L21-Enclosure-Mounting-and-Physical-Install.html">L21 — Enclosure Mounting and Physical Installation</option>
+<option value="L22-Power-Grounding-and-UPS.html">L22 — Power, Grounding, and UPS</option>
+<option value="L23-Troubleshooting-and-Maintenance.html">L23 — Troubleshooting and Maintenance</option>
+<option value="L24-Comprehensive-Review-and-Certification.html">L24 — Comprehensive Review and Certification</option>
+</select>
+<br><br>
+<label><input type="checkbox" data-lesson="L05" onchange="saveProgress()"> Mark as completed</label>
+<span id="progress-text" style="margin-left:1em;"></span>
+</nav>
+
+<h1>Lesson 05 — Installing the Controller and Power Supply</h1>
+<p class="source">Source: DeltaV M-Series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021, pp.&nbsp;39–44.</p>
+
+<p>With I/O cards and terminal blocks installed (Lesson 04), it is time to mount the <strong>brain</strong> and the <strong>heart</strong> of the system — the DeltaV controller and its dedicated power supply. These two components sit together on the 2-wide power/controller carrier and form the core of the control system. The controller executes your control logic, manages I/O scanning, and communicates with workstations over the Control Network. The power supply converts line power into the clean 12&nbsp;VDC that drives both the controller and the I/O cards.</p>
+
+<h2>5.1 Installing the DeltaV Controller</h2>
+
+<p>The controller is the central processing unit of the DeltaV system. For simplex controller systems, the controller mounts on the <strong>right slot</strong> of the 2-wide power/controller carrier. The left slot is reserved for the system power supply — this arrangement is fixed and cannot be swapped.</p>
+
+<ol>
+<li><strong>Align the connectors</strong> on the back of the controller with the connectors on the right slot of the 2-wide power/controller carrier.</li>
+<li><strong>Push the controller</strong> to attach it firmly to the carrier.</li>
+<li><strong>Tighten the mounting screw</strong> to secure the controller in place.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0040_1.png" alt="Controller Installation — controller mounts on the right slot of the 2-wide power/controller carrier">
+<div class="caption">Figure 2-13: Controller installation — the controller mounts on the right slot of the 2-wide power/controller carrier. Align the back connectors and push firmly to seat. (D800001X312, p.&nbsp;40)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — Fixed Slot Assignment:</strong> In a 2-wide power/controller carrier, the power supply always goes on the <strong>left</strong> and the controller always goes on the <strong>right</strong>. This is a hardware constraint — swapping them will not work and can damage the connectors. For a 4-wide power/controller carrier (used with Vertical carriers), refer to Appendix M in the manual.
+</div>
+
+<div class="tip">
+<strong>💡 Tip — UPS Backup:</strong> The controller should be backed up by an <strong>uninterruptible power supply (UPS)</strong> to maintain current process data during short-term power outages. The UPS allows the controller to continue operating even when AC main power is down. Refer to the DeltaV Power and Grounding manual for proper UPS configuration and to the UPS manufacturer's specifications for runtime and capacity requirements.
+</div>
+
+<p>If you are building a <strong>redundant controller</strong> system, a second controller is installed alongside the first on the carrier. Refer to the "Controller Redundancy" section in the manual for the dual-controller configuration details.</p>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.9, pp.&nbsp;39–40</div>
+
+<h2>5.2 Installing the System Power Supply</h2>
+
+<p>The system power supply takes line power (AC or DC) and converts it to the <strong>12&nbsp;VDC</strong> required to drive the controller and I/O cards. It mounts on either slot of the 2-wide power/controller carrier. The system power supply comes in two variants: <strong>AC/DC</strong> (converts AC line power to 12&nbsp;VDC) and <strong>Dual DC/DC</strong> (passthrough from a bulk 12&nbsp;VDC supply).</p>
+
+<h3>5.2.1 AC/DC System Power Supply — Simplex Wiring</h3>
+
+<p>For a simplex AC/DC installation, connect the input supply wires to the input power connection on the top of the system power supply:</p>
+
+<ul>
+<li><strong>Line (L)</strong> — from AC power distribution terminal block</li>
+<li><strong>Neutral (N)</strong> — from AC power distribution terminal block</li>
+<li><strong>Protective Earth (G)</strong> — to the DC ground bus in the enclosure</li>
+</ul>
+
+<div class="screenshot">
+<img src="../images/page_0037_1.png" alt="Simplex Wiring Diagram for System Power Supply (AC/DC) showing line, neutral, and ground connections">
+<div class="caption">Figure 2-14: Simplex wiring diagram for system power supply (AC/DC) — top view showing Line, Neutral, and Protective Earth connections from the AC power distribution terminal block. (D800001X312, p.&nbsp;41)</div>
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Critical Warning — Hot-Plugging Power:</strong> Always remove input power to the supply <em>before</em> connecting or disconnecting the input power connection. The connector should not interrupt current flow and could be damaged if actuated under a load condition. This applies to both initial installation and any subsequent maintenance.
+</div>
+
+<h3>5.2.2 AC/DC System Power Supply — Redundant Wiring</h3>
+
+<p>For redundant AC/DC power supplies, each supply connects to <strong>separate terminal blocks</strong>. For optimum power redundancy, connect each system power supply to separate power disconnect panels, powered by separate isolation transformers. This ensures that a single power source failure does not bring down both supplies.</p>
+
+<div class="screenshot">
+<img src="../images/page_0038_1.png" alt="Redundant Wiring Diagram for System Power Supply (AC/DC) showing separate terminal blocks for each supply">
+<div class="caption">Figure 2-15: Redundant wiring diagram for system power supply (AC/DC) — use separate terminal blocks for each supply. Only one ground wire is needed because the return sides are internally connected. (D800001X312, p.&nbsp;42)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — Single Ground for Redundant Supplies:</strong> Only one ground wire is necessary for redundant AC/DC power supplies because the return side of both DC power supplies is internally connected to the ground terminal of either terminal strip. Use the left-hand terminal screw only. Connecting both supplies to protective earth can create a ground loop.
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> If you are using a Two-Wide Power Carrier and redundant AC-to-DC power supplies, connect <em>only one</em> of the power supplies to protective earth. Connecting both can create a ground loop that introduces noise into the system and may cause erratic behavior.
+</div>
+
+<h3>5.2.3 Dual DC/DC System Power Supply</h3>
+
+<p>The dual DC/DC system power supply takes 12&nbsp;VDC input (from a bulk power supply) and provides pass-through power to the carrier. This is used in systems where a central bulk DC supply distributes power to multiple carriers.</p>
+
+<div class="screenshot">
+<img src="../images/page_0040_1.png" alt="Simplex Wiring Diagram for System Power Supply (Dual DC/DC) showing 12 VDC input connections">
+<div class="caption">Figure 2-16: Simplex wiring diagram for the dual DC/DC system power supply — the fuse block is optional but recommended when multiple DC/DC supplies share the same bulk power supply. (D800001X312, p.&nbsp;43)</div>
+</div>
+
+<table>
+<thead>
+<tr><th>Feature</th><th>AC/DC Power Supply</th><th>Dual DC/DC Power Supply</th></tr>
+</thead>
+<tbody>
+<tr><td>Input Type</td><td>AC line power</td><td>12 VDC from bulk supply</td></tr>
+<tr><td>Output</td><td>12 VDC</td><td>12 VDC passthrough</td></tr>
+<tr><td>Fuse Block</td><td>N/A</td><td>Optional (recommended for shared supplies)</td></tr>
+<tr><td>Grounding</td><td>Protective earth required</td><td>Do not connect ground terminal when powered from 12 VDC supply</td></tr>
+<tr><td>Best For</td><td>Standalone installations</td><td>Multi-carrier systems with central bulk supply</td></tr>
+</tbody>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Dual DC/DC Grounding:</strong> Do <em>not</em> connect the ground terminal on the power carrier when powering the dual DC/DC system power supply from a 12 VDC supply. Doing so can create ground loops and interfere with proper system operation. Always use pre-formed metal shorting bars to ensure a good connection — never use individual jumper wires.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.10, pp.&nbsp;40–43</div>
+
+<h2>5.3 Installing Alarm Contact Wiring</h2>
+
+<p>The system power supply includes alarm contacts that can be wired to a digital input card for power monitoring. This provides an early warning mechanism: if the power supply fails, the alarm relay opens, which can be detected by a DI card before the system actually goes down.</p>
+
+<div class="screenshot">
+<img src="../images/page_0044_1.png" alt="System Power Supply Alarm Contact Wiring showing relay connections to DI card">
+<div class="caption">Figure 2-17: System power supply alarm contact wiring — the alarm relay contact is shown open (unpowered/shelf condition) but is closed during normal operation. Multiple supplies can be daisy-chained to a single DI card. (D800001X312, p.&nbsp;43)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — Alarm Contact Logic:</strong> The alarm relay is <strong>closed during normal operation</strong>. If the power supply fails, the relay opens, which can be detected by a digital input card connected to a 24&nbsp;VDC external power supply. This provides an early warning of power supply failure before the system actually loses power. Multiple system power supplies can be daisy-chained to a single DI card for centralized monitoring.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.10, p.&nbsp;43</div>
+
+<h2>5.4 Mounting the Power Supply in the Carrier</h2>
+
+<p>After wiring the input power and alarm contacts, the final step is to physically mount the power supply:</p>
+
+<ol>
+<li><strong>Align</strong> the system power supply with the connector on the 2-wide power/controller carrier.</li>
+<li><strong>Push to attach</strong> the supply firmly to the carrier.</li>
+<li><strong>Tighten the mounting screw</strong> to secure it.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0044_1.png" alt="System Power Supply Installation showing alignment with carrier connector">
+<div class="caption">Figure 2-18: System power supply installation — align with the carrier connector and secure with the mounting screw. (D800001X312, p.&nbsp;44)</div>
+</div>
+
+<div class="tip">
+<strong>💡 Tip — Ready for Transportation:</strong> Once the controller and power supply are installed and the hardware is mounted in an enclosure as described in the manual, the DeltaV hardware is ready for transportation. Additional preparation measures are <em>not recommended</em> and may actually damage the hardware. If you need to ship the system, follow the packaging guidelines in the manual.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.11, p.&nbsp;44</div>
+
+<h2>5.5 Wiring Summary</h2>
+
+<p>The following table provides a quick-reference summary of all power-related connections made in this lesson:</p>
+
+<table>
+<thead>
+<tr><th>Connection</th><th>Wire Type</th><th>Destination</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Line (L)</td><td>AC input</td><td>Power distribution terminal block</td><td>Remove power before connecting/disconnecting</td></tr>
+<tr><td>Neutral (N)</td><td>AC input</td><td>Power distribution terminal block</td><td>—</td></tr>
+<tr><td>Protective Earth (G)</td><td>Ground</td><td>DC ground bus in enclosure</td><td>Only one needed for redundant supplies</td></tr>
+<tr><td>DC/DC Input (+)</td><td>12 VDC</td><td>Bulk power supply (+)</td><td>Optional fuse block per supply</td></tr>
+<tr><td>DC/DC Return (−)</td><td>12 VDC Return</td><td>Bulk power supply (−)</td><td>Do not ground when using 12 VDC source</td></tr>
+<tr><td>Alarm Contacts</td><td>Signal wiring</td><td>Digital input card</td><td>Relay closed in normal operation</td></tr>
+</tbody>
+</table>
+
+<h2>Quiz — Lesson 05</h2>
+
+<div class="quiz">
+<h3>Knowledge Check</h3>
+
+<details>
+<summary><strong>Q1:</strong> In a 2-wide power/controller carrier, which slot holds the controller and which holds the power supply?</summary>
+<p class="answer">The power supply always goes on the left slot and the controller always goes on the right slot. This assignment is fixed by the hardware design and cannot be swapped.</p>
+</details>
+
+<details>
+<summary><strong>Q2:</strong> Why should you always remove input power before connecting or disconnecting the power supply input connector?</summary>
+<p class="answer">The connector should not interrupt current flow and could be damaged if actuated under a load condition. Removing power first prevents arcing and connector damage that could render the power supply unsafe or non-functional.</p>
+</details>
+
+<details>
+<summary><strong>Q3:</strong> How many ground wires are needed for redundant AC/DC power supplies, and why?</summary>
+<p class="answer">Only one ground wire is necessary because the return side of both DC power supplies is internally connected to the ground terminal of either terminal strip. Use the left-hand terminal screw only. Connecting both to protective earth can create a ground loop.</p>
+</details>
+
+<details>
+<summary><strong>Q4:</strong> What is the state of the alarm relay contact during normal operation?</summary>
+<p class="answer">The alarm relay contact is closed during normal operation. It opens when the power supply fails, which can be detected by a digital input card. This provides an early warning before the system actually loses power.</p>
+</details>
+
+<details>
+<summary><strong>Q5:</strong> What precaution must be taken when powering a dual DC/DC system power supply from a 12 VDC source?</summary>
+<p class="answer">Do not connect the ground terminal on the power carrier when powering from a 12 VDC supply. Doing so can create ground loops and interfere with proper system operation. Always use pre-formed metal shorting bars instead of individual jumper wires.</p>
+</details>
+
+<details>
+<summary><strong>Q6:</strong> What are the two variants of the DeltaV system power supply, and what are their input types?</summary>
+<p class="answer">The two variants are: (1) AC/DC power supply, which converts AC line power to 12 VDC, and (2) Dual DC/DC power supply, which provides 12 VDC passthrough from a bulk power supply. The AC/DC variant is for standalone installations; the DC/DC variant is for multi-carrier systems with a central bulk supply.</p>
+</details>
+
+<details>
+<summary><strong>Q7:</strong> Why is a UPS recommended for the controller?</summary>
+<p class="answer">A UPS allows the controller to continue operating and maintain current process data during short-term power outages. Without UPS backup, a power outage could cause the controller to lose its running state, potentially disrupting process control. Refer to the DeltaV Power and Grounding manual for proper UPS configuration.</p>
+</details>
+</div>
+
+<p style="margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em;">
+<em>Previous: <a href="L04-Installing-IO-Interface-and-Cards.html">L04 — Installing I/O Interface &amp; Cards</a> | Next: <a href="L06-Workstation-Control-Network-and-Power.html">L06 — Workstation, Control Network &amp; Power</a></em>
+</p>
+
+</body>
+</html>

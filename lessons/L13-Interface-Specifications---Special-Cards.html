@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L13 – Interface Specifications: Special Cards (PLC-5/1771 I/O Signal Conditioning)</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L12-Smart-Switches-and-Media-Modules.html">← L12</a> |
+  <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">L14 →</a>
+</nav>
+
+<h1>L13 – Interface Specifications: Special Cards</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix C (Interface Specifications), Sections C.6.1–C.6.6</p>
+<p><label><input type="checkbox" data-lesson="L13" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0266_2.png" alt="Figure from page 266">
+  <div class="caption">Figure from page 266 (page 266)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0266_23.png" alt="Figure from page 266">
+  <div class="caption">Figure from page 266 (page 266)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0266_34.png" alt="Figure from page 266">
+  <div class="caption">Figure from page 266 (page 266)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0312_1.png" alt="Figure from page 312">
+  <div class="caption">Figure from page 312 (page 312)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0313_1.png" alt="Figure from page 313">
+  <div class="caption">Figure from page 313 (page 313)</div>
+</div>
+1. Overview</h2>
+<p>This lesson covers the <strong>PLC-5/1771 I/O signal conditioning cards</strong> — special-purpose interface cards that allow DeltaV Series 2 Plus I/O modules to connect to existing Allen-Bradley PLC-5/1771 wiring infrastructure. These cards replace legacy 1771-series discrete I/O cards and provide electrical signal conditioning between high-voltage field signals and the DeltaV digital I/O cards.</p>
+
+<div class="key-concept">
+  <strong>Key Concept:</strong> Signal conditioning cards sit between the field wiring (swing-arm terminals) and the DeltaV I/O modules. They convert field voltage levels to the 24 VDC dry-contact signals expected by Series 2 Plus DI/DO cards, connected via ribbon cables to mass termination blocks.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. AI 16-Channel 4-20 mA HART Signal Conditioning Card</h2>
+<p class="page-ref">Pages 260–262</p>
+
+<h3>2.1 Purpose</h3>
+<p>Interfaces 16 analog 4-20 mA field transmitter channels to DeltaV AI 16-Channel 4-20 mA HART Series 2 Plus cards. Supports both 2-wire (field-powered) and 4-wire transmitters.</p>
+
+<h3>2.2 Wiring Topology</h3>
+<table>
+  <tr><th>Connector</th><th>Function</th></tr>
+  <tr><td>Field 48-Pin Mass Termblock</td><td>Field transmitter wiring connections</td></tr>
+  <tr><td>24-Pin Ribbon Cable (Primary)</td><td>Connects to Primary AI Series 2 Plus card</td></tr>
+  <tr><td>24-Pin Ribbon Cable (Secondary)</td><td>Connects to Secondary AI Series 2 Plus card (redundant)</td></tr>
+</table>
+
+<h3>2.3 Ribbon-Cable Pinout (AI Signal Conditioning Card)</h3>
+<p>The card has two 24-pin ribbon-cable connectors: <strong>J1 (Rear)</strong> for Channels 1–8 and <strong>J2 (Front)</strong> for Channels 9–16.</p>
+
+<table>
+  <tr><th colspan="2">Rear Connector J1</th><th colspan="2">Front Connector J2</th></tr>
+  <tr><th>Pin</th><th>Function</th><th>Pin</th><th>Function</th></tr>
+  <tr><td>1</td><td>Channel 1 Signal</td><td>1</td><td>Channel 9 Signal</td></tr>
+  <tr><td>2</td><td>No Connection</td><td>2</td><td>No Connection</td></tr>
+  <tr><td>3</td><td>Channel 2 Signal</td><td>3</td><td>Channel 10 Signal</td></tr>
+  <tr><td>4</td><td>No Connection</td><td>4</td><td>No Connection</td></tr>
+  <tr><td>5</td><td>Channel 3 Signal</td><td>5</td><td>Channel 11 Signal</td></tr>
+  <tr><td>6</td><td>No Connection</td><td>6</td><td>No Connection</td></tr>
+  <tr><td>7</td><td>Channel 4 Signal</td><td>7</td><td>Channel 12 Signal</td></tr>
+  <tr><td>8</td><td>No Connection</td><td>8</td><td>No Connection</td></tr>
+  <tr><td>9</td><td>Channel 5 Signal</td><td>9</td><td>Channel 13 Signal</td></tr>
+  <tr><td>10</td><td>No Connection</td><td>10</td><td>No Connection</td></tr>
+  <tr><td>11</td><td>Channel 6 Signal</td><td>11</td><td>Channel 14 Signal</td></tr>
+  <tr><td>12</td><td>No Connection</td><td>12</td><td>No Connection</td></tr>
+  <tr><td>13</td><td>Channel 7 Signal</td><td>13</td><td>Channel 15 Signal</td></tr>
+  <tr><td>14</td><td>No Connection</td><td>14</td><td>No Connection</td></tr>
+  <tr><td>15</td><td>Channel 8 Signal</td><td>15</td><td>Channel 16 Signal</td></tr>
+  <tr><td>16</td><td>No Connection</td><td>16</td><td>No Connection</td></tr>
+  <tr><td>17</td><td>Ch 1 DC GND</td><td>17</td><td>Ch 9 DC GND</td></tr>
+  <tr><td>18</td><td>Ch 2 DC GND</td><td>18</td><td>Ch 10 DC GND</td></tr>
+  <tr><td>19</td><td>Ch 3 DC GND</td><td>19</td><td>Ch 11 DC GND</td></tr>
+  <tr><td>20</td><td>Ch 4 DC GND</td><td>20</td><td>Ch 12 DC GND</td></tr>
+  <tr><td>21</td><td>Ch 5 DC GND</td><td>21</td><td>Ch 13 DC GND</td></tr>
+  <tr><td>22</td><td>Ch 6 DC GND</td><td>22</td><td>Ch 14 DC GND</td></tr>
+  <tr><td>23</td><td>Ch 7 DC GND</td><td>23</td><td>Ch 15 DC GND</td></tr>
+  <tr><td>24</td><td>Ch 8 DC GND</td><td>24</td><td>Ch 16 DC GND</td></tr>
+</table>
+
+<h3>2.4 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Field device type</td><td>4-20 mA</td></tr>
+  <tr><td>Number of channels</td><td>16</td></tr>
+  <tr><td>Field signals</td><td>2-wire and 4-wire field-powered transmitters</td></tr>
+  <tr><td>Electrical connections</td><td>Front: one 1771-WG/WH swing arm; Bottom: two 24-pin ribbon-cable connectors</td></tr>
+  <tr><td>Max input voltage per channel</td><td>24 VDC</td></tr>
+  <tr><td>Max input current per channel</td><td>30 mA</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+  <tr><td>Operating temperature</td><td>-40 to 60 °C</td></tr>
+  <tr><td>Storage temperature</td><td>-40 to 85 °C</td></tr>
+  <tr><td>Relative humidity</td><td>5 to 95% non-condensing</td></tr>
+  <tr><td>Contaminant protection</td><td>ISA-S71.04-1985 Class G3 conformal coating</td></tr>
+  <tr><td>Shock</td><td>10 g, ½-sine wave for 11 ms</td></tr>
+  <tr><td>Vibration</td><td>1 mm p-p from 2 to 13.2 Hz; 0.7 g from 13.2 to 150 Hz</td></tr>
+</table>
+
+<div class="tip">
+  <strong>Transmitter Wiring Note:</strong> Emerson recommends using <strong>isolated four-wire transmitters</strong>. For DC-powered isolated 4-wire transmitters, connect the power supply return to DeltaV DC ground to prevent ground bounce from localized transients.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. DI 16-Channel 24 VDC Signal Conditioning Card</h2>
+<p class="page-ref">Pages 263–265</p>
+
+<h3>3.1 Purpose</h3>
+<p>Replaces the legacy 1771-IBD 24 VDC DI card. Provides an interface between 16 discrete input PLC signals and simplex or redundant Series 2 Plus DI, 32-Channel, 24 VDC, Dry Contact cards. <strong>Two cards required</strong> to connect all 32 channels of one Series 2 Plus DI card.</p>
+
+<h3>3.2 Installation Notes</h3>
+<ul>
+  <li>Front: 1771-WH swing arm for field wiring (up to 16 devices)</li>
+  <li>Bottom: 20-pin ribbon-cable connector to Discrete Input 40-Pin Plus Mass Termination Block</li>
+  <li>Use consolidated ribbon cable with strain relief at signal conditioning card end</li>
+</ul>
+
+<h3>3.3 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Field device type</td><td>24 VDC dry contact</td></tr>
+  <tr><td>Number of channels</td><td>16</td></tr>
+  <tr><td>Isolation</td><td>Channels share a common ground return</td></tr>
+  <tr><td>Electrical connections</td><td>Front: one 1771-WH swing arm; Bottom: one 20-pin ribbon-cable connector</td></tr>
+  <tr><td>Nominal input current</td><td>4.5 mA at 10 VDC; 15 mA at 30 VDC</td></tr>
+  <tr><td>Min ON-state voltage</td><td>10 VDC</td></tr>
+  <tr><td>Min OFF-state voltage</td><td>5 VDC</td></tr>
+  <tr><td>Input voltage range</td><td>10–30 VDC</td></tr>
+  <tr><td>Max nominal input impedance</td><td>2.2 kΩ</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+  <tr><td>Operating temperature</td><td>-40 to 60 °C</td></tr>
+  <tr><td>Shock</td><td>10 g, ½-sine wave for 11 ms</td></tr>
+  <tr><td>Vibration</td><td>1 mm p-p from 2 to 13.2 Hz; 0.7 g from 13.2 to 150 Hz</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. DI 16-Channel 120 VAC/VDC Signal Conditioning Card</h2>
+<p class="page-ref">Pages 265–268</p>
+
+<h3>4.1 Purpose</h3>
+<p>Replaces the legacy 1771-IAD 120 VAC/VDC DI card. Converts 120 VAC/VDC discrete input signals to 24 VDC dry-contact signals for Series 2 Plus DI cards. Two cards required for all 32 channels.</p>
+
+<h3>4.2 Time-Delay Jumper</h3>
+<p>A jumper switch on the bottom of the card sets the OFF-to-ON signal time delay:</p>
+<table>
+  <tr><th>Setting</th><th>Delay</th><th>Default</th></tr>
+  <tr><td>5 ms filter</td><td>5 ms</td><td>Yes (default)</td></tr>
+  <tr><td>20 ms filter</td><td>20 ms</td><td>No</td></tr>
+</table>
+
+<h3>4.3 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Field device type</td><td>120 VAC/VDC dry contact</td></tr>
+  <tr><td>Number of channels</td><td>16</td></tr>
+  <tr><td>Isolation</td><td>Field to system tested to 2,000 VDC for 2 s; channels share common return</td></tr>
+  <tr><td>Nominal input voltage</td><td>120 VAC at 50/60 Hz; 125 VDC</td></tr>
+  <tr><td>Nominal input current</td><td>9.9 mA at 120 VAC 60 Hz; 8.7 mA at 120 VAC 50 Hz; 2.56 mA at 125 VDC</td></tr>
+  <tr><td>ON-state voltage range</td><td>79–138 VAC/VDC</td></tr>
+  <tr><td>Max OFF-state voltage</td><td>43 VAC/VDC</td></tr>
+  <tr><td>Input impedance</td><td>11.2 kΩ at 60 Hz</td></tr>
+  <tr><td>Input signal delay (OFF→ON)</td><td>5 ms (default) or 20 ms via jumper</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. DI 16-Channel 120 VAC/VDC Isolated Signal Conditioning Card</h2>
+<p class="page-ref">Pages 269–272</p>
+
+<h3>5.1 Purpose</h3>
+<p>Replaces the legacy 1771-ID16 120 VAC/VDC DI card. Provides channel-group isolation — unlike the standard 120 VAC/VDC card, field-to-system isolation is tested to 2,000 VDC for 2 s with independent channel groups.</p>
+
+<h3>5.2 Time-Delay Jumpers</h3>
+<p>This card has <strong>two independent jumpers</strong> (J1 and J4):</p>
+<table>
+  <tr><th>Jumper</th><th>Controls</th><th>Options</th><th>Default</th></tr>
+  <tr><td>J1</td><td>Channels 1–8</td><td>5 ms or 20 ms</td><td>20 ms</td></tr>
+  <tr><td>J4</td><td>Channels 9–16</td><td>5 ms or 20 ms</td><td>20 ms</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>Common Pitfall:</strong> The two jumpers are <em>independent</em> — they can be set to different time delays. Verify jumper positions match your field device debounce requirements for each channel group.
+</div>
+
+<h3>5.3 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Field device type</td><td>120 VAC/VDC dry contact</td></tr>
+  <tr><td>Number of channels</td><td>16</td></tr>
+  <tr><td>Isolation</td><td>Field to system tested to 2,000 VDC for 2 s</td></tr>
+  <tr><td>Electrical connections</td><td>Front: one 1771-WN swing arm; Bottom: one 20-pin ribbon-cable connector</td></tr>
+  <tr><td>Nominal input voltage</td><td>120 VAC at 50/60 Hz; 125 VDC</td></tr>
+  <tr><td>Nominal input current</td><td>9.9 mA at 120 VAC 60 Hz; 8.7 mA at 120 VAC 50 Hz; 2.56 mA at 125 VDC</td></tr>
+  <tr><td>ON-state voltage range</td><td>79–138 VAC/VDC</td></tr>
+  <tr><td>Max OFF-state voltage</td><td>43 VAC/VDC</td></tr>
+  <tr><td>Input impedance</td><td>11.2 kΩ at 60 Hz</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. DO 16-Channel 24 VDC Signal Conditioning Card</h2>
+<p class="page-ref">Pages 272–274</p>
+
+<h3>6.1 Purpose</h3>
+<p>Replaces the legacy 1771-OBD 24 VDC DO card. Provides an interface between 16 discrete output PLC signals and DO 32-Channel, 24 VDC, High-Side, Series 2 Plus cards.</p>
+
+<h3>6.2 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Field device type</td><td>24 VDC high-side</td></tr>
+  <tr><td>Number of channels</td><td>16</td></tr>
+  <tr><td>Isolation</td><td>1,000 VDC channel to system; channels share common ground return</td></tr>
+  <tr><td>Electrical connections</td><td>Front: one 1771-WH swing arm; Bottom: one 20-pin ribbon-cable connector</td></tr>
+  <tr><td>User supply voltage</td><td>10–60 VDC</td></tr>
+  <tr><td>Output current rating</td><td>2 A per channel, not to exceed 8 A per card</td></tr>
+  <tr><td>Max surge current</td><td>4 A/channel for 10 ms (repeatable every 2 s); 25 A/card for 10 ms</td></tr>
+  <tr><td>Max ON-state voltage drop</td><td>1.5 VDC at rated current</td></tr>
+  <tr><td>Min load current</td><td>2.5 mA per channel</td></tr>
+  <tr><td>Max OFF-state leakage</td><td>0.5 mA per channel</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. DO 16-Channel 120 VAC Signal Conditioning Card</h2>
+<p class="page-ref">Pages 274–276</p>
+
+<h3>7.1 Purpose</h3>
+<p>Replaces the legacy 1771-OAD 120 VAC DO card. Provides an interface between 16 discrete output PLC signals and DO 32-Channel, 24 VDC, High-Side, Series 2 Plus cards.</p>
+
+<h3>7.2 Installation Notes</h3>
+<ul>
+  <li>Front: 1771-WH swing arm (up to 16 field devices)</li>
+  <li>Bottom: 20-pin ribbon-cable connector to Discrete Output 40-Pin Plus Mass Termination Block</li>
+  <li>Strain relief required at signal conditioning card end of consolidated ribbon cable</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>8. Common Environmental Specifications</h2>
+<p>All PLC-5/1771 I/O signal conditioning cards share the same environmental ratings:</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Operating temperature</td><td>-40 to 60 °C</td></tr>
+  <tr><td>Storage temperature</td><td>-40 to 85 °C</td></tr>
+  <tr><td>Relative humidity</td><td>5 to 95% non-condensing</td></tr>
+  <tr><td>Contaminant protection</td><td>ISA-S71.04-1985 Class G3 conformal coating</td></tr>
+  <tr><td>Shock</td><td>10 g, ½-sine wave for 11 ms</td></tr>
+  <tr><td>Vibration</td><td>1 mm p-p from 2 to 13.2 Hz; 0.7 g from 13.2 to 150 Hz</td></tr>
+  <tr><td>Physical dimensions (all cards)</td><td>208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.)</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — Common Dimension:</strong> All six PLC-5/1771 I/O signal conditioning cards share the same physical dimensions. This standardisation means they fit the same swing-arm and carrier infrastructure regardless of signal type.
+</div>
+
+<!-- ============================================================ -->
+<h2>9. Signal Conditioning Card Quick Reference</h2>
+<table>
+  <tr>
+    <th>Card Type</th>
+    <th>Channels</th>
+    <th>Field Signal</th>
+    <th>Isolation</th>
+    <th>Jumper Config</th>
+  </tr>
+  <tr>
+    <td>AI 4-20 mA HART</td>
+    <td>16</td>
+    <td>4-20 mA (2/4-wire)</td>
+    <td>Carrier isolation per channel</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>DI 24 VDC</td>
+    <td>16</td>
+    <td>24 VDC dry contact</td>
+    <td>Common ground return</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>DI 120 VAC/VDC</td>
+    <td>16</td>
+    <td>120 VAC/VDC dry contact</td>
+    <td>2,000 VDC field-to-system</td>
+    <td>Single jumper: 5 ms / 20 ms</td>
+  </tr>
+  <tr>
+    <td>DI 120 VAC/VDC Isolated</td>
+    <td>16</td>
+    <td>120 VAC/VDC dry contact</td>
+    <td>2,000 VDC field-to-system</td>
+    <td>Two jumpers (J1, J4): independent 5 ms / 20 ms</td>
+  </tr>
+  <tr>
+    <td>DO 24 VDC</td>
+    <td>16</td>
+    <td>24 VDC high-side</td>
+    <td>1,000 VDC channel-to-system</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>DO 120 VAC</td>
+    <td>16</td>
+    <td>120 VAC output</td>
+    <td>Channel isolation</td>
+    <td>N/A</td>
+  </tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>10. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> How many signal conditioning cards are required to connect all 32 channels of one Series 2 Plus DI 32-Channel card?</p>
+  <p class="answer">A1: Two cards — each handles 16 channels.</p>
+
+  <p><strong>Q2:</strong> What is the default time-delay setting for the DI 120 VAC/VDC Isolated card, and which jumpers control it?</p>
+  <p class="answer">A2: The default is 20 ms. J1 controls channels 1–8 and J4 controls channels 9–16.</p>
+
+  <p><strong>Q3:</strong> What type of transmitter does Emerson recommend for the AI 4-20 mA HART card, and why?</p>
+  <p class="answer">A3: Isolated four-wire transmitters are recommended. For DC-powered isolated 4-wire transmitters, the power supply return should be connected to DeltaV DC ground to prevent ground bounce from localized transients.</p>
+
+  <p><strong>Q4:</strong> What is the physical dimension shared by all PLC-5/1771 I/O signal conditioning cards?</p>
+  <p class="answer">A4: 208 × 32 × 168 mm (8.2 × 1.3 × 6.6 in.) — Height × Width × Depth.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>11. Lesson Progress</h2>
+<p><label><input type="checkbox" data-lesson="L13" onchange="saveProgress()"> Mark lesson L13 as completed</label></p>
+
+<nav>
+  <a href="L12-Smart-Switches-and-Media-Modules.html">← L12</a> |
+  <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">L14 →</a>
+</nav>
+
+<p class="source">Reference: DeltaV M-series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021 — Appendix C, Sections C.6.1–C.6.6 (pages 260–276)</p>
+
+</body>
+</html>

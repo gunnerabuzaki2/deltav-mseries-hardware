@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L04 — Installing the I/O Interface and Cards | DeltaV M-Series Hardware Training</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+<strong>Lessons:</strong>
+<select onchange="if(this.value) window.location.href=this.value">
+<option value="">— Select Lesson —</option>
+<option value="L01-DeltaV-System-Overview-and-Equipment.html">L01 — DeltaV System Overview and Equipment</option>
+<option value="L02-System-Architecture-and-Components.html">L02 — System Architecture and Components</option>
+<option value="L03-Installation-Planning-and-Safety.html">L03 — Installation Planning and Safety</option>
+<option value="L04-Installing-IO-Interface-and-Cards.html" selected>L04 — Installing I/O Interface &amp; Cards</option>
+<option value="L05-Installing-Controller-and-Power-Supply.html">L05 — Installing Controller &amp; Power Supply</option>
+<option value="L06-Workstation-Control-Network-and-Power.html">L06 — Workstation, Control Network &amp; Power</option>
+<option value="L07-System-Checkout---Cables-and-Power.html">L07 — System Checkout — Cables and Power</option>
+<option value="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08 — LED Indicators — Controllers and I/O Cards</option>
+<option value="L09-Analog-IO-Cards-and-Wiring.html">L09 — Analog I/O Cards and Wiring</option>
+<option value="L10-Digital-IO-Cards-and-Wiring.html">L10 — Digital I/O Cards and Wiring</option>
+<option value="L11-Series-2-IO-and-Redundancy.html">L11 — Series 2 I/O and Redundancy</option>
+<option value="L12-IO-Terminal-Block-Wiring-Reference.html">L12 — I/O Terminal Block Wiring Reference</option>
+<option value="L13-Controller-Specifications-and-Features.html">L13 — Controller Specifications and Features</option>
+<option value="L14-Controller-Redundancy-Configuration.html">L14 — Controller Redundancy Configuration</option>
+<option value="L15-Power-Supply-Specifications-and-Grounding.html">L15 — Power Supply Specifications and Grounding</option>
+<option value="L16-Control-Network-Specifications.html">L16 — Control Network Specifications</option>
+<option value="L17-Remote-Network-and-Time-Server.html">L17 — Remote Network and Time Server</option>
+<option value="L18-Smart-Switches-and-Network-Config.html">L18 — Smart Switches and Network Configuration</option>
+<option value="L19-Carrier-Types-and-Configurations.html">L19 — Carrier Types and Configurations</option>
+<option value="L20-Vertical-and-VerticalPLUS-Carriers.html">L20 — Vertical and VerticalPLUS Carriers</option>
+<option value="L21-Enclosure-Mounting-and-Physical-Install.html">L21 — Enclosure Mounting and Physical Installation</option>
+<option value="L22-Power-Grounding-and-UPS.html">L22 — Power, Grounding, and UPS</option>
+<option value="L23-Troubleshooting-and-Maintenance.html">L23 — Troubleshooting and Maintenance</option>
+<option value="L24-Comprehensive-Review-and-Certification.html">L24 — Comprehensive Review and Certification</option>
+</select>
+<br><br>
+<label><input type="checkbox" data-lesson="L04" onchange="saveProgress()"> Mark as completed</label>
+<span id="progress-text" style="margin-left:1em;"></span>
+</nav>
+
+<h1>Lesson 04 — Installing the I/O Interface and Cards</h1>
+<p class="source">Source: DeltaV M-Series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021, pp.&nbsp;36–39.</p>
+
+<p>With carriers mounted and LocalBus power routed across DIN rails (covered in Lesson 03), the next step is to install the <strong>I/O interface</strong> — the bridge between your field instruments and the DeltaV controller. This lesson walks you through extender cables, terminal blocks, and I/O card installation, including the redundant configurations available with Series&nbsp;2 I/O. By the end, you will understand every physical step required to get field signals flowing into the controller.</p>
+
+<h2>4.1 Installing Extender Cables</h2>
+
+<p>When I/O carriers live on separate DIN rails, they need a way to share LocalBus power. <strong>Extender cables</strong> accomplish exactly that. These cables connect to one-wide extender cable carriers that sit on the left and right sides of the 2-wide, 4-wide, and 8-wide carriers. The extender cable carries both power and communication signals between carrier groups.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Carrier Alignment for Extender Cables:</strong> The 4-wide and 8-wide carriers <em>must</em> be left-aligned when using extender cables. A standard installation uses one extender cable, though dual cables can be used for additional bandwidth or redundancy. For VerticalPLUS carriers, the procedure differs — refer to the "Extending LocalBus Power to Other Carriers" section in the manual.
+</div>
+
+<p>The installation procedure is straightforward:</p>
+
+<ol>
+<li><strong>Install the one-wide extender cable carriers</strong> on the right and left sides by sliding together the 48-pin connectors on the sides of the carriers.</li>
+<li><strong>Connect the first end</strong> — attach the 44-pin D-shell (male) connector on the extender cable to the top D-shell connector labeled <strong>A</strong> on the right-side carrier, then fasten the retainer screws.</li>
+<li><strong>Connect the second end</strong> — attach the other end of the cable to the top D-shell connector labeled <strong>A</strong> on the left-side carrier, then fasten the retainer screws.</li>
+</ol>
+
+<div class="tip">
+<strong>💡 Tip:</strong> The 44-pin D-shell connectors use retainer screws — do not skip these. Without them, vibration from the plant environment can gradually loosen the connection, causing intermittent LocalBus communication failures that are extremely difficult to diagnose.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.7, p.&nbsp;36</div>
+
+<h2>4.2 Installing the DeltaV I/O Interface</h2>
+
+<p>The I/O interface installation has three main parts: mounting <strong>terminal blocks</strong>, connecting <strong>field wiring</strong>, and inserting <strong>I/O cards</strong>. You perform this sequence for each carrier in your system. The terminal block provides the physical connection points for field wiring, and the I/O card plugs into both the carrier and the terminal block simultaneously.</p>
+
+<h3>4.2.1 Installing an I/O Terminal Block</h3>
+
+<p>Each I/O card has a corresponding terminal block. The terminal block mounts directly onto the I/O interface carrier using a tab-and-slot mechanism:</p>
+
+<ol>
+<li><strong>Check key settings</strong> on the corresponding I/O card, and set the keys on the I/O terminal block to match. Keying ensures the correct card type can only be inserted into the matching terminal block slot — it is a physical safeguard against mismatches.</li>
+<li><strong>Locate the assigned slot</strong> on the I/O interface carrier. Place the tabs on the back of the I/O terminal block through the slots on the carrier and push the terminal block <strong>upward</strong> to lock it into place.</li>
+<li><strong>Connect field wiring</strong> for the I/O terminal block according to the I/O card wiring diagrams in the "Interface Specifications" section of the manual.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0037_1.png" alt="I/O Terminal Block Installation — tabs slide through carrier slots and lock upward">
+<div class="caption">Figure 2-10: I/O terminal block installation — tabs on the back of the terminal block slide through the carrier slots and lock upward into position. (D800001X312, p.&nbsp;37)</div>
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Key Mismatch:</strong> If the key settings on the terminal block don't match the card you're about to install, the card physically will not seat properly. Always verify key settings <em>before</em> inserting the card. Installing the wrong card type can also cause communication failures that are difficult to diagnose after the fact.
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0037_2.png" alt="I/O Terminal Block Channel Assignments showing wiring positions for each channel">
+<div class="caption">Figure 2-11: I/O terminal block channel assignments — these assignments apply to the standard, fused, and 4-wire terminal blocks. (D800001X312, p.&nbsp;37)</div>
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Field wiring connections are specific to the I/O card type associated with the terminal block. A 4-20&nbsp;mA analog input card will have different wiring requirements than a digital input card. Always cross-reference the Interface Specifications section for your specific card type before landing any wires.
+</div>
+
+<table>
+<thead>
+<tr><th>Terminal Block Type</th><th>Use Case</th><th>Channel Assignment Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Standard I/O Terminal Block</td><td>General-purpose I/O</td><td>Refer to card-specific wiring diagrams</td></tr>
+<tr><td>Fused I/O Terminal Block</td><td>Applications requiring field-side fuse protection</td><td>Same channel assignments as standard</td></tr>
+<tr><td>4-Wire Terminal Block</td><td>4-wire transmitters requiring external power</td><td>Same channel assignments as standard</td></tr>
+<tr><td>Redundant Terminal Block</td><td>Series 2 redundant I/O configurations</td><td>Refer to Series 2 wiring diagrams</td></tr>
+</tbody>
+</table>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.8, pp.&nbsp;36–37</div>
+
+<h2>4.3 Installing an I/O Card</h2>
+
+<p>With the terminal block in place and field wiring connected, the I/O card itself slides into the carrier slot. The card connects to both the carrier backplane (for communication and power) and the terminal block (for field signals) in a single push-to-seat motion.</p>
+
+<div class="pitfall">
+<strong>⚠️ Critical Warning — Field Power Voltage:</strong> Before installing a card in a carrier slot, <em>always</em> ensure that the bussed field power voltage at the slot matches the field power requirements for the card. Card damage can result during installation if there is a mismatch between the field power voltage at a carrier slot and the card installed in that slot.
+</div>
+
+<p>The installation steps are:</p>
+
+<ol>
+<li><strong>Locate the assigned slot</strong> on the I/O interface carrier.</li>
+<li><strong>Align the connectors</strong> on the I/O card with the connectors on both the I/O carrier and the I/O terminal block, then push to attach.</li>
+<li><strong>Tighten the mounting screw</strong> to secure the card in place.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0038_1.png" alt="I/O Card Installation — align pins with carrier and terminal block connectors before pressing into place">
+<div class="caption">Figure 2-12: I/O card installation — align the connectors on the card with both the carrier and terminal block connectors, then push to seat. (D800001X312, p.&nbsp;38)</div>
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Installing a Card Without a Terminal Block:</strong> I/O cards are designed to be installed on terminal blocks. If you temporarily install a card on the carrier <em>without</em> a terminal block, be extremely careful to align the pins on the card with the connector on the carrier. Misaligned pins can be bent or damaged, rendering the card useless. The terminal block acts as a guide that helps ensure correct pin alignment.
+</div>
+
+<table>
+<thead>
+<tr><th>Step</th><th>Action</th><th>Verification</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Verify field power voltage at the slot</td><td>Matches card specification</td></tr>
+<tr><td>2</td><td>Align card connectors with carrier + terminal block</td><td>Pins seated correctly, no resistance</td></tr>
+<tr><td>3</td><td>Push card to attach</td><td>Card fully seated, flush with carrier face</td></tr>
+<tr><td>4</td><td>Tighten mounting screw</td><td>Card secured, no movement</td></tr>
+</tbody>
+</table>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.8, p.&nbsp;38</div>
+
+<h2>4.4 Installing a Redundant Terminal Block</h2>
+
+<p>For Series&nbsp;2 I/O, you can install redundant terminal blocks that provide hot-swap capability. A redundant terminal block spans <strong>two carrier slots</strong> — this dual-slot design is what allows one card to be replaced while the other continues processing field signals without interruption.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Redundant Slot Pairing:</strong> In a redundant I/O configuration, the lower slot number is always <strong>odd</strong> and the upper slot number is always the next higher <strong>even</strong> number (for example, slots 1 and 2, or slots 3 and 4). This convention ensures the redundant pair is properly recognized by the controller. Getting this wrong will prevent the redundancy from functioning.
+</div>
+
+<p>The procedure mirrors the simplex installation with these additions:</p>
+
+<ol>
+<li><strong>Check key settings</strong> on both Series&nbsp;2 cards and set the terminal block keys to match. Both cards must be identical in type and keying.</li>
+<li><strong>Locate the assigned slot location</strong>, remembering the odd/even slot pairing rule — the lower slot number must be odd and the upper must be the next higher even number.</li>
+<li><strong>Place the tabs</strong> on the back of the redundant terminal block through the slots on the carrier and push up to lock into place.</li>
+<li><strong>Connect field wiring</strong> according to the Series&nbsp;2 card wiring diagrams and redundant terminal block figures in the "Interface Specifications" section.</li>
+</ol>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.8, p.&nbsp;39</div>
+
+<h2>4.5 Installing a Redundant I/O Card</h2>
+
+<p>A redundant I/O card consists of <strong>two Series&nbsp;2 cards</strong> installed in a redundant terminal block. Both cards must be identical. The installation is straightforward but requires attention to the slot pairing convention:</p>
+
+<ol>
+<li><strong>Locate the assigned slots</strong> on the I/O interface carrier (odd lower, even upper).</li>
+<li><strong>Align the connectors</strong> on each I/O card with the connectors on both the I/O carrier and the redundant I/O terminal block, then push to attach.</li>
+<li><strong>Tighten the mounting screws</strong> on both cards to secure them.</li>
+</ol>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Always read the "DeltaV Series 2 I/O" section before installing redundant I/O. Series&nbsp;2 cards have specific requirements that differ from standard I/O cards, and failure to follow the correct sequence can result in communication errors between the redundant pair that persist even after the cards are properly seated.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.8, p.&nbsp;39</div>
+
+<h2>4.6 Summary of I/O Installation Types</h2>
+
+<p>The following table summarizes the four I/O installation configurations available in a DeltaV system. Each uses a different terminal block type and has different redundancy characteristics:</p>
+
+<table>
+<thead>
+<tr><th>Configuration</th><th>Terminal Block Type</th><th>Cards Required</th><th>Slot Pairing</th><th>Hot-Swap?</th></tr>
+</thead>
+<tbody>
+<tr><td>Simplex I/O</td><td>Standard terminal block</td><td>1 I/O card</td><td>Single slot</td><td>No</td></tr>
+<tr><td>Simplex Fused I/O</td><td>Fused terminal block</td><td>1 I/O card</td><td>Single slot</td><td>No</td></tr>
+<tr><td>4-Wire I/O</td><td>4-wire terminal block</td><td>1 I/O card</td><td>Single slot</td><td>No</td></tr>
+<tr><td>Redundant I/O</td><td>Redundant terminal block</td><td>2 Series&nbsp;2 cards</td><td>Odd (lower) / Even (upper)</td><td>Yes</td></tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Choosing Your Configuration:</strong> Simplex I/O is appropriate for non-critical loops where a brief interruption during card replacement is acceptable. Redundant I/O is required for safety-critical or high-availability applications where zero downtime during maintenance is essential. The choice affects both hardware cost and ongoing maintenance procedures.
+</div>
+
+<h2>Quiz — Lesson 04</h2>
+
+<div class="quiz">
+<h3>Knowledge Check</h3>
+
+<details>
+<summary><strong>Q1:</strong> Why must the 4-wide and 8-wide carriers be left-aligned when using extender cables?</summary>
+<p class="answer">The extender cable connects to the D-shell connectors labeled "A" on the right and left one-wide carriers. Left-alignment of the 4-wide and 8-wide carriers ensures the connectors are positioned correctly for the extender cable to reach both one-wide carriers without excessive cable tension.</p>
+</details>
+
+<details>
+<summary><strong>Q2:</strong> What can happen if you install an I/O card into a slot where the field power voltage doesn't match the card's requirements?</summary>
+<p class="answer">Card damage can result during installation. The voltage mismatch can damage the card's internal circuitry, potentially rendering it non-functional. Always verify the bussed field power voltage at each slot matches the card specification before installation.</p>
+</details>
+
+<details>
+<summary><strong>Q3:</strong> In a redundant I/O configuration, what is the slot numbering convention?</summary>
+<p class="answer">The lower slot number must always be odd and the upper slot number must be the next higher even number (e.g., slots 1 and 2, slots 3 and 4). This convention ensures the controller properly recognizes the redundant pair.</p>
+</details>
+
+<details>
+<summary><strong>Q4:</strong> What should you verify <em>before</em> inserting an I/O card into a terminal block?</summary>
+<p class="answer">You should verify the key settings on both the I/O card and the terminal block to ensure they match. The keys are a physical safeguard that prevents incorrect card types from being installed in the wrong slot.</p>
+</details>
+
+<details>
+<summary><strong>Q5:</strong> What type of terminal block is required for redundant I/O, and what cards does it accept?</summary>
+<p class="answer">A redundant terminal block is required. It accepts two identical Series 2 I/O cards, one in the lower (odd-numbered) slot and one in the upper (even-numbered) slot. This dual-slot design enables hot-swap capability.</p>
+</details>
+
+<details>
+<summary><strong>Q6:</strong> Why should you avoid installing an I/O card on a carrier without a terminal block?</summary>
+<p class="answer">The terminal block acts as a guide that ensures correct pin alignment. Without it, the card's pins can easily be bent or damaged when pushed into the carrier connector, potentially rendering the card useless. I/O cards are designed to be installed on terminal blocks.</p>
+</details>
+
+<details>
+<summary><strong>Q7:</strong> What are the three types of standard (non-redundant) I/O terminal blocks?</summary>
+<p class="answer">The three types are: (1) Standard I/O terminal block for general-purpose I/O, (2) Fused I/O terminal block for applications requiring field-side fuse protection, and (3) 4-wire terminal block for 4-wire transmitters requiring external power. All three share the same channel assignments.</p>
+</details>
+</div>
+
+<p style="margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em;">
+<em>Previous: <a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03 — DIN Rails, Carriers, and Bussed Field Power</a> | Next: <a href="L05-Installing-Controller-and-Power-Supply.html">L05 — Installing Controller &amp; Power Supply</a></em>
+</p>
+
+</body>
+</html>

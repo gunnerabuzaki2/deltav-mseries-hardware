@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L14 – Controllers, Remote Interface Unit and Power Supplies</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L13-Interface-Specifications---Special-Cards.html">← L13</a> |
+  <a href="L15-Control-Network---Topology-and-Cable-Specs.html">L15 →</a>
+</nav>
+
+<h1>L14 – Controllers, Remote Interface Unit and Power Supplies</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendices D, E</p>
+<p><label><input type="checkbox" data-lesson="L14" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0315_1.png" alt="Figure from page 315">
+  <div class="caption">Figure from page 315 (page 315)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0317_1.png" alt="Figure from page 317">
+  <div class="caption">Figure from page 317 (page 317)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0320_1.png" alt="Figure from page 320">
+  <div class="caption">Figure from page 320 (page 320)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0323_1.png" alt="Figure from page 323">
+  <div class="caption">Figure from page 323 (page 323)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0324_1.png" alt="Figure from page 324">
+  <div class="caption">Figure from page 324 (page 324)</div>
+</div>
+1. Overview</h2>
+<p>This lesson consolidates the specifications for the DeltaV <strong>controllers</strong> (MD Plus, MX, MQ), the <strong>Remote Interface Unit</strong>, the <strong>Fiber-Optic Media Converter</strong>, and the three types of <strong>system power supplies</strong>.</p>
+
+<div class="key-concept">
+  <strong>Key Concept:</strong> The controller, Remote Interface Unit, and media converter all mount in the right slot of a 2-wide power/controller carrier. The system power supply occupies the left slot. This carrier-based architecture provides hot-swappable redundancy for both power and processing.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Controller Specifications (MD Plus, MX, MQ)</h2>
+<p class="page-ref">Appendix D, Page 315</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Supported models</td><td>MD Plus, MX, MQ</td></tr>
+  <tr><td>Power requirement</td><td>+5 VDC at 1.4 A maximum (supplied by system power supply through 2-wide power/controller carrier)</td></tr>
+  <tr><td>Fuse protection</td><td>3.0 A, non-replaceable fuses</td></tr>
+  <tr><td>Power dissipation</td><td>5.0 W typical; 7.0 W maximum</td></tr>
+  <tr><td>Mounting</td><td>Right slot of power/controller carrier</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — Controller Power:</strong> The controller draws power from the system power supply via the carrier's backplane. It does not have a separate power input. In a redundant configuration, each controller is powered by its own power supply in its own 2-wide carrier.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Remote Interface Unit (RIU)</h2>
+<p class="page-ref">Appendix D, Pages 316–317</p>
+
+<h3>3.1 Purpose</h3>
+<p>The Remote Interface Unit allows standard DeltaV I/O cards to be installed <strong>remotely from the controller</strong>. The remote subsystem (RIU + system power supply + carriers + I/O cards) can be located in <strong>Zone 2</strong> and communicates with the controller over redundant Control Network (Ethernet) connections.</p>
+
+<h3>3.2 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Power requirement</td><td>+3.3 VDC at 500 mA max + +5 VDC at 200 mA max (from system power supply via 2-wide carrier)</td></tr>
+  <tr><td>Fuse protection</td><td>3.0 A, non-replaceable fuses</td></tr>
+  <tr><td>Power dissipation</td><td>3.0 W maximum</td></tr>
+  <tr><td>Mounting</td><td>Right slot of power/controller carrier</td></tr>
+</table>
+
+<h3>3.3 Network Connections</h3>
+<table>
+  <tr><th>Port</th><th>Connects To</th><th>Speed</th></tr>
+  <tr><td>Primary</td><td>Primary Control Network switch or hub</td><td>10/100 Mbit Ethernet</td></tr>
+  <tr><td>Secondary</td><td>Secondary Control Network switch or hub</td><td>10 Mbit Ethernet</td></tr>
+</table>
+
+<div class="tip">
+  <strong>Redundancy Note:</strong> The primary and secondary Ethernet connections are physically separate. The primary supports 10/100 Mbit while the secondary is limited to 10 Mbit. Both must be connected to separate network switches for proper redundancy.
+</div>
+
+<!-- ============================================================ -->
+<h2>4. Fiber-Optic Media Converter</h2>
+<p class="page-ref">Appendix D, Pages 317–318</p>
+
+<h3>4.1 Purpose</h3>
+<p>Converts 10BaseT TP (twisted-pair) to 10Base-FL ST fiber cable, extending the Ethernet link range to <strong>2,000 meters</strong>. Used with controllers to provide long-distance Control Network connectivity.</p>
+
+<h3>4.2 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>LAN interface</td><td>Ethernet IEEE 802.3 compatible</td></tr>
+  <tr><td>Port interface</td><td>10BaseT RJ45 compatible</td></tr>
+  <tr><td>Data rate</td><td>10 Mbps</td></tr>
+  <tr><td>Fiber interface</td><td>10Base-FL compatible</td></tr>
+  <tr><td>Fiber type</td><td>Multimode 62.5/125 µm</td></tr>
+  <tr><td>LocalBus current (12 VDC nominal)</td><td>250 mA typical; 300 mA maximum</td></tr>
+</table>
+
+<h3>4.3 Installation</h3>
+<ul>
+  <li>Mounts on a 2-wide carrier next to (or close to) the controller</li>
+  <li>Connects to controller via two standard 12–16 inch twisted-pair cables with shielded connectors</li>
+  <li>Four fiber-optic cables connect transmit-to-receive between workstation and controller media converters</li>
+  <li>Can occupy positions 1, 2, or 3 on the carrier</li>
+</ul>
+
+<div class="pitfall">
+  <strong>Common Pitfall:</strong> Fiber-optic cables must be connected <strong>transmit-to-receive</strong> (crossed). Do not connect Tx-to-Tx or Rx-to-Rx. Verify the fiber patch cable polarity before powering on.
+</div>
+
+<!-- ============================================================ -->
+<h2>5. System Power Supply — AC/DC</h2>
+<p class="page-ref">Appendix E, Pages 319–321</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input</td><td>100–264 VAC, 47–63 Hz, single-phase</td></tr>
+  <tr><td>Inrush (soft start)</td><td>230 VAC input at 35 A peak maximum for one cycle or less</td></tr>
+  <tr><td>Output power</td><td>25 W total at 60 °C</td></tr>
+  <tr><td>Output voltages (25 W max)</td><td>+12 VDC at 2.1 A max; +5 VDC at 2.0 A max; +3.3 VDC at 0.5 A max</td></tr>
+  <tr><td>Combined 5 VDC + 3.3 VDC</td><td>10 W maximum</td></tr>
+  <tr><td>Input protection</td><td>Internally fused, non-replaceable fuses</td></tr>
+  <tr><td>Overvoltage protection</td><td>Output protected at 110% to 120%</td></tr>
+  <tr><td>Hold-up time</td><td>Output within 5% of nominal at full load and 115 VAC input for 20 ms</td></tr>
+  <tr><td>Mounting</td><td>Either slot of 2-wide power/controller carrier</td></tr>
+</table>
+
+<h3>5.1 External Connections</h3>
+<table>
+  <tr><th>Connector</th><th>Function</th></tr>
+  <tr><td>Primary power</td><td>AC input, 3-wire</td></tr>
+  <tr><td>Alarm contacts</td><td>2-wire normally open relays; closed when outputs within ±4% of nominal; rated 30 VDC at 2.0 A / 250 VAC at 2.0 A</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — Hold-up Time:</strong> The 20 ms hold-up time ensures the power supply can ride through brief AC interruptions without dropping the DC output below the 5% tolerance. This is critical for maintaining controller operation during momentary power glitches.
+</div>
+
+<div class="tip">
+  <strong>Grounding Note:</strong> Ground connection is <em>not</em> required for the secondary (backup) 2-wide power/controller carrier. Only the primary carrier requires the ground connection to the enclosure PE ground lug.
+</div>
+
+<!-- ============================================================ -->
+<h2>6. System Power Supply — Dual DC/DC</h2>
+<p class="page-ref">Appendix E, Pages 321–323</p>
+
+<h3>6.1 Three Model Variants</h3>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>KJ1501X1-BC1</th>
+    <th>KJ1501X1-BC2</th>
+    <th>KJ1501X1-BC3</th>
+  </tr>
+  <tr>
+    <td><strong>Input</strong></td>
+    <td>12 VDC ±5% at 14.8 A<br>24 VDC ±5% at 4.0 A</td>
+    <td>12 VDC ±5% at 14.8 A<br>24 VDC (-15% to +20%) at 4.0 A</td>
+    <td>12 VDC (-4/+5%) at 14.8 A<br>24 VDC ±20% at 6.1 A</td>
+  </tr>
+  <tr>
+    <td><strong>Output (−20 to 60 °C)</strong></td>
+    <td>+12 VDC at 13.0 A (12 VDC input)<br>+12 VDC at 4.5 A (24 VDC input)<br>+5.1 VDC at 2.0 A<br>+3.4 VDC at 2.0 A<br>(10.2 W total from 5.1 + 3.4 VDC)</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td><strong>Output (−40 to 60 °C)</strong></td>
+    <td>N/A</td>
+    <td>+12 VDC at 13.0 A (12 VDC input)<br>+12 VDC at 4.5 A (24 VDC input)<br>+5.1 VDC at 2.0 A<br>+3.4 VDC at 2.0 A<br>(10.2 W total)</td>
+    <td>+12 VDC at 13.0 A (12 VDC input)<br>+12 VDC at 8.0 A (24 VDC input)<br>+5.1 VDC at 2.0 A<br>+3.4 VDC at 2.0 A<br>(10.2 W total)</td>
+  </tr>
+  <tr>
+    <td><strong>Output (60 to 70 °C)</strong></td>
+    <td>N/A</td>
+    <td>+12 VDC at 10.0 A (12 VDC input)<br>+12 VDC at 3.0 A (24 VDC input)<br>+5.1 VDC at 2.0 A<br>+3.4 VDC at 2.0 A</td>
+    <td>+12 VDC at 10.0 A (12 VDC input)<br>+12 VDC at 6.0 A (24 VDC input)<br>+5.1 VDC at 2.0 A<br>+3.4 VDC at 2.0 A</td>
+  </tr>
+</table>
+
+<h3>6.2 Common Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Inrush (soft start)</td><td>12 A peak max for 5 ms over 12 VDC input range (excl. 12 VDC output); 20 A peak max for 5 ms over 24 VDC input range (incl. 12 VDC outputs)</td></tr>
+  <tr><td>Input protection</td><td>Internally fused, non-replaceable fuses</td></tr>
+  <tr><td>Overvoltage protection</td><td>Output protected at 110% to 120%</td></tr>
+  <tr><td>Hold-up time</td><td>Output within 5% of nominal at full load and minimum input voltage for 5 ms (excl. 12 VDC current with 12 VDC input)</td></tr>
+  <tr><td>Mounting</td><td>Either slot of 2-wide power/controller carrier</td></tr>
+</table>
+
+<h3>6.3 External Connections</h3>
+<table>
+  <tr><th>Connector</th><th>Function</th></tr>
+  <tr><td>Primary power</td><td>DC input, 2-wire</td></tr>
+  <tr><td>Alarm contacts</td><td>2-wire normally open relays; closed when 3.3 and 5 VDC outputs within ±4% of nominal; rated 30 VDC at 2.0 A / 250 VAC at 2.0 A</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>Safety Warning:</strong> Always remove input power to the supply <em>before</em> connecting or disconnecting the input power connection. The connector should not interrupt current flow and could be damaged if actuated under a load condition.
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Intrinsically Safe (I.S.) System Power Supply</h2>
+<p class="page-ref">Appendix E, Page 324</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input</td><td>18.5–36 VDC (24 VDC nominal)</td></tr>
+  <tr><td>Output</td><td>12 VDC ±5%</td></tr>
+  <tr><td>Output current</td><td>5 A</td></tr>
+  <tr><td>Input-to-output isolation</td><td>250 VAC rms</td></tr>
+  <tr><td>Hold-up time</td><td>1.8 ms</td></tr>
+  <tr><td>Input protection</td><td>Internally fused, non-replaceable fuses</td></tr>
+  <tr><td>Overvoltage protection</td><td>110% to 120%</td></tr>
+  <tr><td>Input power</td><td>80 Watts</td></tr>
+  <tr><td>Mounting</td><td>I.S. Power Supply Carrier</td></tr>
+  <tr><td>External connectors</td><td>DC input, 2-part screw terminal</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — I.S. Power Supply:</strong> The I.S. power supply is designed for hazardous area (Zone 1) installations. It provides 250 VAC rms input-to-output isolation and mounts on a dedicated I.S. Power Supply Carrier, separate from standard power/controller carriers.
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Power Supply Comparison Summary</h2>
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>AC/DC</th>
+    <th>Dual DC/DC</th>
+    <th>I.S. DC/DC</th>
+  </tr>
+  <tr>
+    <td><strong>Input type</strong></td>
+    <td>100–264 VAC</td>
+    <td>12 VDC and/or 24 VDC</td>
+    <td>18.5–36 VDC</td>
+  </tr>
+  <tr>
+    <td><strong>Output power</strong></td>
+    <td>25 W at 60 °C</td>
+    <td>Up to 196 W (12 VDC × 13 A + 10.2 W)</td>
+    <td>60 W (12 VDC × 5 A)</td>
+  </tr>
+  <tr>
+    <td><strong>Output voltages</strong></td>
+    <td>+12, +5, +3.3 VDC</td>
+    <td>+12, +5.1, +3.4 VDC</td>
+    <td>+12 VDC only</td>
+  </tr>
+  <tr>
+    <td><strong>Hold-up time</strong></td>
+    <td>20 ms</td>
+    <td>5 ms</td>
+    <td>1.8 ms</td>
+  </tr>
+  <tr>
+    <td><strong>Mounting</strong></td>
+    <td>2-wide carrier (either slot)</td>
+    <td>2-wide carrier (either slot)</td>
+    <td>I.S. Power Supply Carrier</td>
+  </tr>
+  <tr>
+    <td><strong>Hazardous area</strong></td>
+    <td>No</td>
+    <td>No</td>
+    <td>Yes (Zone 1)</td>
+  </tr>
+  <tr>
+    <td><strong>Alarm relays</strong></td>
+    <td>Yes (NO, 2-wire)</td>
+    <td>Yes (NO, 2-wire)</td>
+    <td>No</td>
+  </tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>9. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> What is the maximum power dissipation of the MD Plus / MX / MQ controllers?</p>
+  <p class="answer">A1: 7.0 W maximum (5.0 W typical).</p>
+
+  <p><strong>Q2:</strong> What is the difference in Ethernet speed between the primary and secondary ports of the Remote Interface Unit?</p>
+  <p class="answer">A2: Primary supports 10/100 Mbit; secondary is limited to 10 Mbit.</p>
+
+  <p><strong>Q3:</strong> What fiber type does the fiber-optic media converter use, and what is its maximum link range?</p>
+  <p class="answer">A3: Multimode 62.5/125 µm fiber, with a maximum range of 2,000 meters.</p>
+
+  <p><strong>Q4:</strong> Which power supply has the longest hold-up time, and what is it?</p>
+  <p class="answer">A4: The AC/DC power supply, with a 20 ms hold-up time at full load and 115 VAC input.</p>
+
+  <p><strong>Q5:</strong> Why must fiber-optic patch cables be connected Tx-to-Rx rather than Tx-to-Tx?</p>
+  <p class="answer">A5: The fiber-optic media converter uses separate transmit and receive paths. Connecting Tx-to-Rx ensures the transmit signal from one end reaches the receive input at the other end. Connecting Tx-to-Tx would result in no signal reception.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>10. Lesson Progress</h2>
+<p><label><input type="checkbox" data-lesson="L14" onchange="saveProgress()"> Mark lesson L14 as completed</label></p>
+
+<nav>
+  <a href="L13-Interface-Specifications---Special-Cards.html">← L13</a> |
+  <a href="L15-Control-Network---Topology-and-Cable-Specs.html">L15 →</a>
+</nav>
+
+<p class="source">Reference: DeltaV M-series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021 — Appendices D, E (pages 315–326)</p>
+
+</body>
+</html>

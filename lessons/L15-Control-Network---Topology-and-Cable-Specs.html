@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L15 – Control Network: Topology and Cable Specs</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">← L14</a> |
+  <a href="L16-Environmental-and-Mechanical-Specs.html">L16 →</a>
+</nav>
+
+<h1>L15 – Control Network: Topology and Cable Specs</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix G (Control Network Specifications)</p>
+<p><label><input type="checkbox" data-lesson="L15" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0360_2.png" alt="Figure from page 360">
+  <div class="caption">Figure from page 360 (page 360)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0367_2.png" alt="Figure from page 367">
+  <div class="caption">Figure from page 367 (page 367)</div>
+</div>
+1. Overview</h2>
+<p>The DeltaV Control Network is an Ethernet-based network that connects controllers, workstations, Remote Interface Units, and I/O subsystems. This lesson provides a comprehensive reference of all supported switches, transceivers, and cable specifications.</p>
+
+<div class="pitfall">
+  <strong>Critical Requirement:</strong> DeltaV systems require a <strong>specific version of Cisco switch software</strong> and a <strong>special switch configuration</strong>. Using other software versions or an improperly configured switch can cause serious problems. Purchase switches through Emerson channels to ensure correct software and configuration.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Cisco Managed Switches — Quick Reference</h2>
+
+<h3>2.1 8-Port 10/100Mbit Managed Switch with 1 MTRJ Fiber-Optic Port</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco WS-C2940-8TF</td></tr>
+  <tr><td>Type</td><td>8 × 10/100 BASE-T Ethernet + 1 × 100BASE-FX Fiber-Optic + 1 × Gigabit SFP</td></tr>
+  <tr><td>Console</td><td>RJ-45 (rear)</td></tr>
+</table>
+<div class="tip"><strong>Note:</strong> Either the 100BASE-FX port or the Gigabit SFP-based port can be used — not both simultaneously.</div>
+
+<h3>2.2 24-Port 100Mbit Fiber Switch</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco WS-C3550-24-FX-SMI</td></tr>
+  <tr><td>Type</td><td>24 × 100Mbit fiber Ethernet (MTRJ) + GBIC module slots</td></tr>
+  <tr><td>Console</td><td>RJ-45 (rear)</td></tr>
+</table>
+
+<h3>2.3 24-Port 10/100Mbit Switch with 2 MTRJ Fiber-Optic Ports</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco WS-C2950C-24</td></tr>
+  <tr><td>Type</td><td>24 × 10/100 BASE-T Ethernet + 2 × 100BASE-FX Fiber-Optic</td></tr>
+  <tr><td>Console</td><td>RJ-45 (rear)</td></tr>
+</table>
+
+<h3>2.4 24-Port 10/100Mbit Switch</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco WS-C2950-24</td></tr>
+  <tr><td>Type</td><td>24 × 10/100BASE-T Ethernet</td></tr>
+</table>
+
+<h3>2.5 12-Port SFP Managed Switch</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 3750G-12S</td></tr>
+  <tr><td>Type</td><td>12-port Small Form-Factor Pluggable (SFP) managed</td></tr>
+  <tr><td>Stacking</td><td>STACK 1 / STACK 2 ports (rear)</td></tr>
+  <tr><td>Console</td><td>RJ-45 (rear)</td></tr>
+</table>
+
+<h3>2.6 24-Port Fiber Managed Switch with 2 SFP Gigabit Slots</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 3750-24FS</td></tr>
+  <tr><td>Type</td><td>24 × 100BASE-FX fiber-optic + 2 × SFP gigabit slots</td></tr>
+  <tr><td>Stacking</td><td>STACK 1 / STACK 2 ports (rear)</td></tr>
+</table>
+
+<h3>2.7 24-Port Twisted Pair Managed Switch with 2 SFP Gigabit Slots</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 3750-24TS</td></tr>
+  <tr><td>Type</td><td>24 × 10/100 twisted pair managed + 2 × SFP gigabit slots</td></tr>
+  <tr><td>Stacking</td><td>STACK 1 / STACK 2 ports (rear)</td></tr>
+</table>
+
+<h3>2.8 8-Port Twisted Pair Unmanaged Switch</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Allied Telesyn AT-FS708</td></tr>
+  <tr><td>Type</td><td>8 × 10/100 twisted pair unmanaged</td></tr>
+</table>
+
+<h3>2.9 8-Port Twisted Pair Unmanaged Switch with One Fiber Port</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Allied Telesyn AT-FS709FC</td></tr>
+  <tr><td>Type</td><td>8 × 10/100 twisted pair unmanaged + 1 × 100BASE-FX</td></tr>
+</table>
+
+<h3>2.10 8-Port 10/100Mbit Switch with 1 Gigabit Multi-Function Port</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 2960-8TC-L</td></tr>
+  <tr><td>Type</td><td>8 × 10/100Mbit twisted pair + 1 × gigabit multi-function (TP or SFP)</td></tr>
+</table>
+<div class="tip"><strong>Note:</strong> Multi-function port: either twisted pair or SFP — not both simultaneously.</div>
+
+<h3>2.11 24-Port 10/100Mbit Switch with 2 RJ45 Ports</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 2960-24TT-L</td></tr>
+  <tr><td>Type</td><td>24 × 10/100Mbit twisted pair + 2 × 10/100/1000Mbit RJ45</td></tr>
+</table>
+
+<h3>2.12 24-Port 10/100Mbit Switch with 2 Gigabit Multi-Function Ports</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 2960-24TC-L</td></tr>
+  <tr><td>Type</td><td>24 × 10/100Mbit twisted pair + 2 × gigabit multi-function (TP or SFP each)</td></tr>
+</table>
+
+<h3>2.13 48-Port 10/100Mbit Switch with 2 RJ45 Ports</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 2960-48TT-L</td></tr>
+  <tr><td>Type</td><td>48 × 10/100Mbit twisted pair + 2 × RJ45 10/100/1000Mbit</td></tr>
+</table>
+
+<h3>2.14 48-Port 10/100Mbit Switch with 2 Gigabit Multi-Function Ports</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Model</td><td>Cisco Catalyst 2960-48TC-L</td></tr>
+  <tr><td>Type</td><td>48 × 10/100Mbit twisted pair + 2 × gigabit multi-function (TP or SFP each)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>3. SFP Transceivers</h2>
+
+<h3>3.1 Fiber-Optic Gigabit Transceivers</h3>
+<table>
+  <tr><th>Model</th><th>Type</th><th>Max Distance</th></tr>
+  <tr><td>GLC-LH-SM</td><td>Single-mode, long-haul</td><td>Up to 10 km</td></tr>
+  <tr><td>GLC-SX-MM</td><td>Multimode</td><td>Up to 550 m</td></tr>
+</table>
+
+<h3>3.2 Fiber-Optic Ethernet Transceivers</h3>
+<table>
+  <tr><th>Model</th><th>Compatible Switch</th><th>Type</th><th>Max Distance</th></tr>
+  <tr><td>GLC-FE-100FX</td><td>Cisco 2960-8TC-L only</td><td>Multimode</td><td>Up to 2 km</td></tr>
+  <tr><td>GLC-GE-100FX</td><td>Cisco 2960-24TC-L, 2960-48TC-L</td><td>Multimode</td><td>Up to 2 km</td></tr>
+</table>
+
+<h3>3.3 Twisted Pair Gigabit Transceiver</h3>
+<table>
+  <tr><th>Model</th><th>Type</th><th>Max Distance</th></tr>
+  <tr><td>GLC-T</td><td>1 twisted pair port</td><td>Up to 100 m</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. DeltaV Fiber Switches</h2>
+<p class="page-ref">Appendix G, Pages 341–343</p>
+
+<h3>4.1 Purpose</h3>
+<p>The DeltaV Single Port and Four Port Fiber Switches are DIN-rail mountable Ethernet switches designed for <strong>Zone 2 installation</strong>. They provide connection to Zone 1 components over certified energy-limited fiber ports.</p>
+
+<h3>4.2 Specifications</h3>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input voltage</td><td>24 VDC ±20%</td></tr>
+  <tr><td>Input current</td><td>0.25 A (Single Port); 0.35 A (Four Port)</td></tr>
+  <tr><td>Link budget (multimode)</td><td>62.5/125 µm: max 11 dB attenuation; 50/125 µm: max 8 dB attenuation</td></tr>
+  <tr><td>Wavelength</td><td>1300 nm</td></tr>
+  <tr><td>Fiber interface</td><td>100BASE-FX with MT-RJ receptacle, full duplex only</td></tr>
+  <tr><td>Nominal fiber distance</td><td>2 km</td></tr>
+  <tr><td>Twisted pair ports</td><td>10/100BASE-T, RJ45 compatible</td></tr>
+  <tr><td>Cable type</td><td>Category 5e screened twisted pair (ScTP)</td></tr>
+  <tr><td>Mounting</td><td>Vertically on horizontal DIN rail</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — Zone 2 Fiber Switches:</strong> These switches are specifically designed for hazardous area deployment. They can be installed in Zone 2 and provide fiber-optic connectivity to Zone 1 instruments. The fiber interface is certified as energy-limited, preventing ignition sources from reaching the hazardous area.
+</div>
+
+<!-- ============================================================ -->
+<h2>5. DeltaV Smart Switches</h2>
+<p class="page-ref">Appendix G, Pages 343–348+</p>
+
+<h3>5.1 Overview</h3>
+<p>DeltaV Smart Switches are plug-and-play switches that require <strong>no configuration</strong> for basic operation. They are commissioned using:</p>
+<ul>
+  <li><strong>DeltaV v11.3 / v12.3:</strong> Smart Switch Command Center (SSCC)</li>
+  <li><strong>DeltaV v13.3+:</strong> Network Device Command Center (NDCC)</li>
+</ul>
+<p>Commissioning assigns a network address and associates the switch with a control module for hardware alarm interpretation.</p>
+
+<h3>5.2 MD Base Smart Switches</h3>
+<table>
+  <tr><th>Model</th><th>Ports</th><th>Gigabit</th></tr>
+  <tr><td>MD20-8 / MD20-8-ES</td><td>Up to 8 × 10/100Mbit + modules</td><td>No</td></tr>
+  <tr><td>MD20-16 / MD20-16-ES</td><td>Up to 16 × 10/100Mbit + modules</td><td>No</td></tr>
+  <tr><td>MD20-24 / MD20-24-ES</td><td>Up to 24 × 10/100Mbit + modules</td><td>No</td></tr>
+  <tr><td>MD30-8 / MD30-8-ES</td><td>Up to 8 × 10/100Mbit + modules</td><td>Yes (2 ports)</td></tr>
+  <tr><td>MD30-16 / MD30-16-ES</td><td>Up to 16 × 10/100Mbit + modules</td><td>Yes (2 ports)</td></tr>
+  <tr><td>MD30-24 / MD30-24-ES</td><td>Up to 24 × 10/100Mbit + modules</td><td>Yes (2 ports)</td></tr>
+</table>
+<p><strong>ES versions</strong> have extended temperature range and conformal coating.</p>
+
+<h3>5.3 Media Modules for MD20/MD30</h3>
+<table>
+  <tr><th>Model</th><th>Interface</th></tr>
+  <tr><td>MD4-2TX/SFP (-ES)</td><td>2 × gigabit multimode fiber SFP + 2 × gigabit RJ45 (use one type only)</td></tr>
+  <tr><td>MD2-2FXM2 (-ES)</td><td>2 × 100BASE-FX multimode fiber (SC)</td></tr>
+  <tr><td>MD2-2FXS2 (-ES)</td><td>2 × 100BASE-FX single-mode fiber (SC)</td></tr>
+  <tr><td>MD2-4TX1 (-ES)</td><td>4 × 10BASE-T/100BASE-TX twisted pair (RJ45)</td></tr>
+  <tr><td>MD2-4TX1-POE (-ES)</td><td>4 × 10BASE-T/100BASE-TX twisted pair (RJ45) with PoE</td></tr>
+  <tr><td>MD3-2FXM2/2TX1 (-ES)</td><td>2 × 100BASE-FX multimode (SC) + 2 × twisted pair (RJ45)</td></tr>
+  <tr><td>MD3-2FXS2/2TX1 (-ES)</td><td>2 × 100BASE-FX single-mode (SC) + 2 × twisted pair (RJ45)</td></tr>
+  <tr><td>MD3-4FXM2 (-ES)</td><td>4 × 100BASE-FX multimode fiber (SC)</td></tr>
+  <tr><td>MD3-4FXM4 (-ES)</td><td>4 × 100BASE-FX multimode fiber (ST)</td></tr>
+  <tr><td>MD3-4FXS2 (-ES)</td><td>4 × 100BASE-FX single-mode fiber (SC)</td></tr>
+  <tr><td>MD3-2FXM4/2TX1 (-ES)</td><td>2 × 100BASE-FX multimode (ST) + 2 × twisted pair (RJ45)</td></tr>
+  <tr><td>MD3-1FXS2/3TX1 (-ES)</td><td>1 × 100BASE-FX single-mode (SC) + 3 × twisted pair (RJ45)</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Key Concept — Full Duplex Requirement:</strong> Media modules with fiber-optic ports are fixed to <strong>100Mbit full duplex</strong>. When integrating DeltaV Smart Switches into existing networks (e.g., with 3Com switches), all existing fiber connections must be reconfigured from the default half duplex to full duplex.
+</div>
+
+<h3>5.4 Fiber Switch Port Types</h3>
+<table>
+  <tr><th>Fiber Type</th><th>Connector</th><th>Max Distance</th></tr>
+  <tr><td>Multimode</td><td>SC or ST</td><td>2 km (100BASE-FX)</td></tr>
+  <tr><td>Single-mode</td><td>SC</td><td>2 km (100BASE-FX)</td></tr>
+  <tr><td>Gigabit SFP (multimode)</td><td>SFP slot</td><td>550 m</td></tr>
+  <tr><td>Gigabit SFP (single-mode)</td><td>SFP slot</td><td>10 km</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. Network Topology Summary</h2>
+
+<h3>6.1 Switch Selection Guide</h3>
+<table>
+  <tr><th>Scenario</th><th>Recommended Switch</th></tr>
+  <tr><td>Small network, ≤8 copper ports</td><td>Cisco 2940-8TF or Allied Telesyn AT-FS708</td></tr>
+  <tr><td>Medium network, ≤24 copper + fiber uplinks</td><td>Cisco 2950C-24 or Catalyst 2960-24TC-L</td></tr>
+  <tr><td>Large network, 48 copper ports</td><td>Cisco Catalyst 2960-48TC-L</td></tr>
+  <tr><td>Fiber backbone / long distance</td><td>Cisco 3550-24-FX-SMI or Catalyst 3750-24FS</td></tr>
+  <tr><td>Gigabit SFP flexibility</td><td>Cisco Catalyst 3750G-12S or 3750-24TS</td></tr>
+  <tr><td>Zone 2 hazardous area</td><td>DeltaV Single Port / Four Port Fiber Switch</td></tr>
+  <tr><td>Modular / expandable</td><td>DeltaV MD20 or MD30 Smart Switch + media modules</td></tr>
+</table>
+
+<h3>6.2 Cable Specifications Quick Reference</h3>
+<table>
+  <tr><th>Cable Type</th><th>Standard</th><th>Max Distance</th><th>Use Case</th></tr>
+  <tr><td>Cat 5e ScTP twisted pair</td><td>10/100BASE-T</td><td>100 m</td><td>Copper port connections</td></tr>
+  <tr><td>Multimode fiber (62.5/125 µm)</td><td>100BASE-FX</td><td>2 km</td><td>Fiber switch uplinks</td></tr>
+  <tr><td>Multimode fiber (50/125 µm)</td><td>1000BASE-SX</td><td>550 m</td><td>Gigabit SFP (GLC-SX-MM)</td></tr>
+  <tr><td>Single-mode fiber</td><td>1000BASE-LX</td><td>10 km</td><td>Gigabit SFP (GLC-LH-SM)</td></tr>
+  <tr><td>Multimode fiber</td><td>100BASE-FX Ethernet</td><td>2 km</td><td>SFP Ethernet transceivers</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> Why must Cisco switches used with DeltaV be purchased through Emerson channels rather than off-the-shelf?</p>
+  <p class="answer">A1: DeltaV requires a specific version of Cisco switch software and a special configuration. Off-the-shelf switches may have a different software revision and would need to be manually configured to DeltaV specifications. Emerson ships switches with the supported version pre-configured.</p>
+
+  <p><strong>Q2:</strong> What is the maximum distance for the GLC-LH-SM gigabit transceiver?</p>
+  <p class="answer">A2: Up to 10 km over single-mode fiber.</p>
+
+  <p><strong>Q3:</strong> In what zones can the DeltaV fiber switches and Smart Switches be installed?</p>
+  <p class="answer">A3: The DeltaV fiber switches can be installed in Zone 2 and connect to Zone 1 components over energy-limited fiber. The MD Smart Switches (ES versions) can also be deployed in hazardous areas with conformal coating.</p>
+
+  <p><strong>Q4:</strong> When integrating DeltaV Smart Switches with existing 3Com switches, what duplex setting must be changed?</p>
+  <p class="answer">A4: All existing fiber connections must be changed from the default half duplex to 100Mbit full duplex, because DeltaV media modules are fixed at 100Mbit full duplex.</p>
+
+  <p><strong>Q5:</strong> What connector types are available for 100BASE-FX media modules?</p>
+  <p class="answer">A5: SC connectors (most models) and ST connectors (MD3-4FXM4 and MD3-2FXM4/2TX1).</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Lesson Progress</h2>
+<p><label><input type="checkbox" data-lesson="L15" onchange="saveProgress()"> Mark lesson L15 as completed</label></p>
+
+<nav>
+  <a href="L14-Controllers-Remote-Interface-Unit-and-Power-Supplies.html">← L14</a> |
+  <a href="L16-Environmental-and-Mechanical-Specs.html">L16 →</a>
+</nav>
+
+<p class="source">Reference: DeltaV M-series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021 — Appendix G (Control Network Specifications), pages 327–348+</p>
+
+</body>
+</html>

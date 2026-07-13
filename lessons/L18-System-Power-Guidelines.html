@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L18 – System Power Guidelines</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L17-Legacy-Bulk-Power-Supplies-and-Enclosure-Guidelines.html">← L17</a> |
+  <span style="color:#999;">End of series</span>
+</nav>
+
+<h1>L18 – System Power Guidelines</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix J</p>
+<p><label><input type="checkbox" data-lesson="L18" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0464_1.png" alt="Figure from page 464">
+  <div class="caption">Figure from page 464 (page 464)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0478_1.png" alt="Figure from page 478">
+  <div class="caption">Figure from page 478 (page 478)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0480_1.png" alt="Figure from page 480">
+  <div class="caption">Figure from page 480 (page 480)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0482_1.png" alt="Figure from page 482">
+  <div class="caption">Figure from page 482 (page 482)</div>
+</div>
+1. Overview</h2>
+<p>This lesson covers all system power supply options for DeltaV M-series, including the System Power Supply (AC/DC), System Power Supply (Dual DC/DC), DeltaV Bulk Power Supplies, redundancy modules, and guidelines for using multiple power supplies.</p>
+
+<div class="key-concept">
+  <strong>System Power Supply (AC/DC) Capacity:</strong> One supply provides <strong>1.25 A of LocalBus power</strong> — sufficient for 8 discrete I/O cards, 8 analog I/O cards, 4 serial I/O cards, or 4 Series 2 H1 cards.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. System Power Supply (AC/DC)</h2>
+<p class="page-ref">Page 443, Section J.1</p>
+
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Output</td><td>12 VDC, 1.25 A LocalBus power</td></tr>
+  <tr><td>Simplex Use</td><td>Sufficient for small systems (up to 8 I/O cards)</td></tr>
+  <tr><td>Load Sharing</td><td>Add additional supplies for systems exceeding 1.25 A</td></tr>
+  <tr><td>Redundancy</td><td>Connect a second supply for redundant power</td></tr>
+  <tr><td>Heat Dissipation</td><td>4.4 W</td></tr>
+</table>
+
+<h3>2.1 LocalBus Current by Configuration</h3>
+<p class="page-ref">Pages 480–481, Table J-9</p>
+<table>
+  <tr><th>No. of Supplies (AC/DC)</th><th>Simplex Controller + Simplex Power</th><th>Simplex Controller + Redundant Power</th><th>Redundant Controller + Redundant Power</th></tr>
+  <tr><td>1</td><td>1.25 A</td><td>N/A</td><td>N/A</td></tr>
+  <tr><td>2</td><td>3.35 A</td><td>1.25 A</td><td>1.25 A</td></tr>
+  <tr><td>3</td><td>5.45 A</td><td>3.35 A</td><td>2.50 A</td></tr>
+  <tr><td>4</td><td>7.55 A</td><td>5.45 A</td><td>4.6 A</td></tr>
+  <tr><td>5</td><td>9.65 A (limited to 8.0 A*)</td><td>7.55 A</td><td>6.7 A</td></tr>
+  <tr><td>6</td><td>11.75 A (limited to 8.0 A*)</td><td>9.65 A (limited to 8.0 A*)</td><td>8.8 A (limited to 8.0 A*)</td></tr>
+</table>
+<p><em>* Carrier limitation: current limited to 8.0 A due to carrier constraints.</em></p>
+
+<div class="pitfall">
+  <strong>Controller Power Rule:</strong> The left slot of the second 2-wide power/controller carrier does <strong>NOT</strong> provide power to the controller — only to the I/O subsystem. To power the controller from a secondary supply, it must be in the <strong>right slot</strong> of the second carrier.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. System Power Supply (Dual DC/DC)</h2>
+<p class="page-ref">Pages 443–447, Section J.2</p>
+
+<table>
+  <tr><th>Parameter</th><th>12 VDC Input</th><th>24 VDC Input</th></tr>
+  <tr><td>LocalBus Power</td><td>Up to 13 A</td><td>Up to 8 A (4.5 A older models)</td></tr>
+  <tr><td>Sufficient For</td><td>Most large DeltaV systems</td><td>Medium systems</td></tr>
+  <tr><td>Heat Dissipation</td><td>11.4 W</td><td>26.4 W</td></tr>
+</table>
+
+<h3>3.1 Wiring Configurations</h3>
+<table>
+  <tr><th>Configuration</th><th>Key Details</th></tr>
+  <tr><td>Simplex — 12 VDC</td><td>Single Dual DC/DC supply, optional fuse block. Use pre-formed metal shorting bars (no individual jumper wires).</td></tr>
+  <tr><td>Redundant — 12 VDC</td><td>Two supplies on separate DC power busses. For optimum redundancy, connect each to a separate DC bulk supply.</td></tr>
+  <tr><td>Simplex — 24 VDC</td><td>Single supply. Use the left-hand terminal screw only. Optional fuse block. Connect DC Return Reference Ground to enclosure DC Gnd Bus.</td></tr>
+  <tr><td>Redundant — 24 VDC</td><td>Two supplies on separate DC power busses. Only one ground wire needed (return side internally connected). Connect to enclosure DC Gnd Bus.</td></tr>
+</table>
+
+<div class="tip">
+  <strong>Best Practice:</strong> Always use pre-formed metal shorting bars for connections. Do not use individual jumper wires — they create unreliable connections.
+</div>
+
+<!-- ============================================================ -->
+<h2>4. DeltaV Bulk Power Supply Specifications</h2>
+
+<h3>4.1 100-240 VAC to 12 VDC 15 A (KJ1503X1-BA1)</h3>
+<p class="page-ref">Pages 447–450, Table J-1</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Output Voltage</td><td>12 VDC (adjustable 12–15 VDC)</td></tr>
+  <tr><td>Output Current</td><td>15–13.5 A continuous; 22.5–20.3 A for 4 seconds</td></tr>
+  <tr><td>Output Power</td><td>180 W continuous; 270 W for 4 seconds</td></tr>
+  <tr><td>Output Ripple</td><td>&lt; 50 mV PK-to-PK (20 Hz–20 MHz)</td></tr>
+  <tr><td>Hold-up Time (AC)</td><td>72 ms @ 100 VAC 7.5 A / 31 ms @ 100 VAC 15 A</td></tr>
+  <tr><td>Temp Range</td><td>−25°C to +70°C operational</td></tr>
+  <tr><td>Derating</td><td>5 W/°C at +60°C to +70°C</td></tr>
+  <tr><td>AC Input</td><td>100–240 VAC ±15%; 50–60 Hz ±6%</td></tr>
+  <tr><td>AC Input Current</td><td>1.65 A @ 120 VAC; 0.93 A @ 230 VAC</td></tr>
+  <tr><td>AC Efficiency</td><td>91.5% @ 120 VAC; 91.8% @ 230 VAC</td></tr>
+  <tr><td>DC Input</td><td>110–150 VDC −20%/+25%</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 6 × 11.7 cm (4.9 × 2.4 × 4.6 in)</td></tr>
+  <tr><td>Terminals</td><td>Bistable quick-connect spring-clamp, IP20 finger safe</td></tr>
+  <tr><td>Wire — Solid</td><td>Max 6 mm² (10 AWG)</td></tr>
+  <tr><td>Wire — Stranded</td><td>Max 4 mm² (11 AWG)</td></tr>
+</table>
+
+<h3>4.2 100-240 VAC to 24 VDC 5 A (KJ1503X1-BB1)</h3>
+<p class="page-ref">Pages 451–453, Table J-2</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Output Voltage</td><td>24 VDC (adjustable 24–28 VDC)</td></tr>
+  <tr><td>Output Current</td><td>5–4.5 A continuous; 7.5–6.7 A for 4 seconds</td></tr>
+  <tr><td>Output Power</td><td>120 W continuous; 180 W for 4 seconds</td></tr>
+  <tr><td>Output Ripple</td><td>&lt; 50 mV PK-to-PK</td></tr>
+  <tr><td>Hold-up Time (AC)</td><td>66 ms @ 100 VAC 2.5 A / 34 ms @ 100 VAC 5 A</td></tr>
+  <tr><td>Temp Range</td><td>−25°C to +70°C</td></tr>
+  <tr><td>Derating</td><td>3 W/°C at +60°C to +70°C</td></tr>
+  <tr><td>AC Input</td><td>100–240 VAC +10%/−15%; 50–60 Hz ±6%</td></tr>
+  <tr><td>AC Efficiency</td><td>91% @ 120 VAC; 92.7% @ 230 VAC</td></tr>
+  <tr><td>DC Input</td><td>110–300 VDC ±20%</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 4 × 11.7 cm (4.9 × 1.6 × 4.6 in)</td></tr>
+</table>
+
+<h3>4.3 100-240 VAC to 24 VDC 10 A (KJ1503X1-BB2)</h3>
+<p class="page-ref">Pages 454–457, Table J-3</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Output Voltage</td><td>24 VDC (adjustable 24–28 VDC)</td></tr>
+  <tr><td>Output Current</td><td>10–9 A continuous; 15–13.5 A for 4 seconds</td></tr>
+  <tr><td>Output Power</td><td>240 W continuous; 360 W for 4 seconds</td></tr>
+  <tr><td>Output Ripple</td><td>&lt; 50 mV PK-to-PK</td></tr>
+  <tr><td>Hold-up Time (AC)</td><td>51 ms @ 100 VAC 5 A / 26 ms @ 100 VAC 10 A</td></tr>
+  <tr><td>Temp Range</td><td>−25°C to +70°C</td></tr>
+  <tr><td>Derating</td><td>6 W/°C at +60°C to +70°C</td></tr>
+  <tr><td>AC Input</td><td>100–240 VAC ±15%; 50–60 Hz ±6%</td></tr>
+  <tr><td>AC Efficiency</td><td>92.6% @ 120 VAC; 93.5% @ 230 VAC</td></tr>
+  <tr><td>DC Input</td><td>110–150 VDC −20%/+25%</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 6 × 11.7 cm (4.9 × 2.3 × 4.6 in)</td></tr>
+</table>
+
+<h3>4.4 100-240 VAC to 24 VDC 20 A (1X00781H01L / KJ1503X1-BB3)</h3>
+<p class="page-ref">Pages 458–460, Table J-4</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Output Voltage</td><td>24 VDC (adjustable 24–28 VDC)</td></tr>
+  <tr><td>Output Current</td><td>20–17 A continuous; 30–26 A for 4 seconds</td></tr>
+  <tr><td>Output Power</td><td>480 W continuous; 720 W for 4 seconds</td></tr>
+  <tr><td>Output Ripple</td><td>&lt; 100 mV PK-to-PK</td></tr>
+  <tr><td>Hold-up Time (AC)</td><td>64 ms @ 100 VAC 10 A / 32 ms @ 100 VAC 20 A</td></tr>
+  <tr><td>Temp Range</td><td>−25°C to +70°C</td></tr>
+  <tr><td>Derating</td><td>12 W/°C at +60°C to +70°C</td></tr>
+  <tr><td>AC Input</td><td>100–240 VAC ±15%; 50–60 Hz ±6%</td></tr>
+  <tr><td>AC Efficiency</td><td>92.4% @ 120 VAC; 93.9% @ 230 VAC</td></tr>
+  <tr><td>DC Input</td><td>110–150 VDC −20%/+25%</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 8.2 × 12.7 cm (4.9 × 3.2 × 5 in)</td></tr>
+</table>
+
+<h3>4.5 100-240 VAC to 24 VDC 40 A (1X00797H01L / KJ1503X1-BB4)</h3>
+<p class="page-ref">Pages 461–463, Table J-5</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Output Voltage</td><td>24 VDC nominal (adjustable 24–28 VDC)</td></tr>
+  <tr><td>Output Current</td><td>40–34.3 A continuous; 60–51.5 A for 4 seconds</td></tr>
+  <tr><td>Output Power</td><td>960 W continuous; 1440 W for 4 seconds</td></tr>
+  <tr><td>Output Ripple</td><td>&lt; 100 mV PK-to-PK</td></tr>
+  <tr><td>Hold-up Time (AC)</td><td>54 ms @ 100 VAC 20 A / 27 ms @ 100 VAC 40 A</td></tr>
+  <tr><td>Temp Range</td><td>−25°C to +70°C</td></tr>
+  <tr><td>Derating</td><td>24 W/°C at +60°C to +70°C</td></tr>
+  <tr><td>AC Input</td><td>100–240 VAC −15%/+10%; 50–60 Hz ±6%</td></tr>
+  <tr><td>AC Efficiency</td><td>93.6% @ 120 VAC; 94.6% @ 230 VAC</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 12.5 × 12.7 cm (4.9 × 4.92 × 5 in)</td></tr>
+  <tr><td>Terminals</td><td>Screw terminals, IP20 finger safe</td></tr>
+  <tr><td>Features</td><td>Parallel/single use selector; shut down/remote control input</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>DC OK Relay Contact (All Bulk Power Supplies):</strong>
+  <ul>
+    <li><strong>Closed:</strong> Output voltage has reached adjusted level</li>
+    <li><strong>Open:</strong> Voltage dipped &gt; 10% below adjusted level (dips &lt; 1 ms ignored, dips extended to 250 ms)</li>
+    <li><strong>Reclosed:</strong> Output exceeds 90% of adjusted voltage</li>
+    <li>Max ratings: 60 VDC @ 0.3 A, 30 VDC @ 1 A, 30 VAC @ 0.5 A</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<h2>5. Redundancy Modules</h2>
+
+<h3>5.1 12-48 VDC 20 A Redundancy Module (KJ1503X1-BC1)</h3>
+<p class="page-ref">Pages 464–467, Table J-6</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input Voltage</td><td>12–48 VDC ±25% (range: 9–60 VDC)</td></tr>
+  <tr><td>Input Current</td><td>2× 0–10 A continuous; 2× 0–16 A for 5 seconds</td></tr>
+  <tr><td>Output Current</td><td>0–20 A continuous; 20–32 A for 5 seconds; 25 A overload/short</td></tr>
+  <tr><td>Voltage Drop</td><td>0.78–0.85 VDC (varies with load)</td></tr>
+  <tr><td>Temp Range</td><td>−40°C to +70°C operational</td></tr>
+  <tr><td>Derating</td><td>0.5 A/°C at +60°C to +70°C</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 3.2 × 10.2 cm (4.9 × 1.25 × 4.0 in)</td></tr>
+</table>
+<p>Use with the 100-240 VAC to 24 VDC 10 A bulk power supply for redundant applications.</p>
+
+<h3>5.2 12-24 VDC 40 A Redundancy Module (KJ1503X1-BD1)</h3>
+<p class="page-ref">Pages 468–471, Table J-7</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input Voltage</td><td>12–28 VDC ±30% (range: 16.8–36.4 VDC)</td></tr>
+  <tr><td>Input Current</td><td>2× 0–20 A continuous; 2× 20–32.5 A for 5 seconds</td></tr>
+  <tr><td>Output Current</td><td>0–40 A continuous; 40–65 A for 5 seconds; 65 A overload/short</td></tr>
+  <tr><td>Voltage Drop</td><td>72–140 mV (varies with load)</td></tr>
+  <tr><td>Temp Range</td><td>−40°C to +70°C; no derating required</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 3.6 × 12.7 cm (4.9 × 1.4 × 5.0 in)</td></tr>
+</table>
+<p>Use with the 100-240 VAC to 24 VDC 20 A bulk power supply for redundant applications.</p>
+
+<h3>5.3 12-24 VDC 80 A Redundancy Module (KJ1503X1-BD2)</h3>
+<p class="page-ref">Pages 472–475, Table J-8</p>
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>Input Voltage</td><td>12–28 VDC ±30% (range: 16.8–36.4 VDC)</td></tr>
+  <tr><td>Input Current</td><td>2× 0–40 A continuous; 2× 40–65 A for 5 seconds</td></tr>
+  <tr><td>Output Current</td><td>0–80 A continuous; 80–130 A for 5 seconds; 130 A overload/short</td></tr>
+  <tr><td>Voltage Drop</td><td>50–95 mV (varies with load)</td></tr>
+  <tr><td>Temp Range</td><td>−40°C to +70°C; no derating required</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.4 × 4.6 × 12.7 cm (4.9 × 1.8 × 5.0 in)</td></tr>
+</table>
+<p>Use with the 100-240 VAC to 24 VDC 40 A bulk power supply for redundant applications.</p>
+
+<div class="tip">
+  <strong>Redundancy Best Practice:</strong> For both one-to-one and n-to-one redundancy, use <strong>separate mains systems</strong> for each power supply when possible. This provides true independence from mains failures.
+</div>
+
+<h3>5.4 Redundancy Module Wiring Topologies</h3>
+<table>
+  <tr><th>Topology</th><th>Description</th></tr>
+  <tr><td>One-to-One</td><td>Two power supplies → one redundancy module → load. Each supply on separate mains. Optional failure monitor.</td></tr>
+  <tr><td>N-to-One</td><td>Multiple power supplies → one redundancy module → larger load. Optional failure monitor.</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. I.S. System Power Supply</h2>
+<p class="page-ref">Page 475, Section J.11</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Input</td><td>24 VDC nominal (from bulk supply)</td></tr>
+  <tr><td>Output</td><td>12 VDC, 5 A</td></tr>
+  <tr><td>Capacity</td><td>8–15 I.S. I/O cards (depends on type/mix)</td></tr>
+  <tr><td>Max Quantity</td><td>10 I.S. power supplies (+ 1 for redundancy = 11 total)</td></tr>
+  <tr><td>Power Draw</td><td>80 W from 24 VDC bulk supply at rated load</td></tr>
+</table>
+<div class="tip"><strong>Placement:</strong> When using multiple I.S. power supplies, intersperse them among the cards for optimal power distribution.</div>
+
+<!-- ============================================================ -->
+<h2>7. Using Multiple System Power Supplies</h2>
+<p class="page-ref">Pages 476–483</p>
+
+<h3>7.1 Three Reasons for Multiple Supplies</h3>
+<table>
+  <tr><th>Reason</th><th>Description</th></tr>
+  <tr><td>Load Sharing</td><td>When a single supply's output exceeds 100%</td></tr>
+  <tr><td>Redundancy</td><td>Separate supplies for redundant equipment</td></tr>
+  <tr><td>Backup</td><td>Backup for one or more power supplies</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>Critical Rule:</strong> Do <strong>not</strong> use different product types in multiple system power supply applications. Use the same product type with the same input voltage (12 VDC or 24 VDC).
+</div>
+
+<h3>7.2 AC/DC System Power Supply — Load Sharing</h3>
+<p>For systems exceeding a single supply's capacity, add supplies in additional 2-wide carriers. A full system of analog I/O cards may need up to four supplies.</p>
+<ul>
+  <li>Mount second supply in either slot of the second carrier</li>
+  <li>Additional supplies mount to the left or on a third carrier</li>
+  <li>For redundant controller power + load sharing, mount the secondary for the controller in the right slot of the second carrier</li>
+</ul>
+
+<h3>7.3 Dual DC/DC — Redundant Power</h3>
+<p>Mount the secondary supply in the right slot of the second 2-wide carrier. Power from a separate bulk supply to survive primary bulk supply failure.</p>
+<ul>
+  <li>Power conversion from 12 VDC happens inside the system supply</li>
+  <li>Both system supplies can be fed from a single bulk supply if acceptable (single point of failure)</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>8. Using Multiple Legacy Bulk Power Supplies</h2>
+<p class="page-ref">Pages 482–488</p>
+
+<table>
+  <tr><th>No. of Supplies</th><th>Simplex Current</th><th>Redundant Current</th></tr>
+  <tr><td>1</td><td>12 A</td><td>N/A</td></tr>
+  <tr><td>2</td><td>24 A</td><td>12 A</td></tr>
+  <tr><td>3</td><td>36 A</td><td>24 A</td></tr>
+  <tr><td>4</td><td>48 A</td><td>36 A</td></tr>
+  <tr><td>5</td><td>N/A</td><td>48 A</td></tr>
+</table>
+
+<h3>8.1 OR-ing Diode Guidelines</h3>
+<table>
+  <tr><th>Supply Type</th><th>OR-ing Diode</th><th>Adjustment Needed</th></tr>
+  <tr><td>DIN Rail-Mounted (Legacy)</td><td>Integrated</td><td>None — use SHARE terminals</td></tr>
+  <tr><td>Panel-Mounted (Legacy)</td><td>External required</td><td>Adjust output for 0.7 V drop → 12.3 VDC or 24.6 VDC</td></tr>
+  <tr><td>Third-party (no OR-ing)</td><td>External required</td><td>Same adjustment as panel-mounted</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>Maximum 12 VDC Input:</strong> The system power supply shuts down if input exceeds 12.6 V. Do <strong>not</strong> adjust a 12 V bulk supply to more than 12.3 V at the input to the system power supply.
+</div>
+
+<h3>8.2 Redundant Legacy Bulk Power — Best Practice</h3>
+<p>Connect primary legacy bulk power supply directly to primary system power supply, and secondary to secondary. <strong>Do not connect the legacy bulk supplies together</strong> — a single high-voltage failure in either could reset both system power supplies and both controllers.</p>
+
+<!-- ============================================================ -->
+<h2>9. Bulk Power Supply Quick Comparison</h2>
+<table>
+  <tr><th>Model</th><th>Output</td><th>Continuous</th><th>Peak (4 s)</th><th>Efficiency</th><th>Width</th></tr>
+  <tr><td>KJ1503X1-BA1</td><td>12 VDC</td><td>180 W (15 A)</td><td>270 W (22.5 A)</td><td>91.5%</td><td>6 cm</td></tr>
+  <tr><td>KJ1503X1-BB1</td><td>24 VDC</td><td>120 W (5 A)</td><td>180 W (7.5 A)</td><td>91%</td><td>4 cm</td></tr>
+  <tr><td>KJ1503X1-BB2</td><td>24 VDC</td><td>240 W (10 A)</td><td>360 W (15 A)</td><td>92.6%</td><td>6 cm</td></tr>
+  <tr><td>KJ1503X1-BB3</td><td>24 VDC</td><td>480 W (20 A)</td><td>720 W (30 A)</td><td>92.4%</td><td>8.2 cm</td></tr>
+  <tr><td>KJ1503X1-BB4</td><td>24 VDC</td><td>960 W (40 A)</td><td>1440 W (60 A)</td><td>93.6%</td><td>12.5 cm</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>10. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> What is the LocalBus power output of a single System Power Supply (AC/DC)?</p>
+  <p><span class="answer">A: 1.25 A of 12 VDC LocalBus power — sufficient for 8 discrete I/O cards, 8 analog I/O cards, 4 serial I/O cards, or 4 Series 2 H1 cards.</span></p>
+
+  <p><strong>Q2:</strong> Why must you use the right slot of the second carrier for a secondary System Power Supply when providing redundant controller power?</p>
+  <p><span class="answer">A: The left slot of the second carrier does NOT provide power to the controller — only to the I/O subsystem. Only the right slot routes power to the controller.</span></p>
+
+  <p><strong>Q3:</strong> When connecting redundant 12 VDC legacy bulk power supplies to redundant system power supplies, why should the bulk supplies NOT be connected together?</p>
+  <p><span class="answer">A: A single high-voltage failure in either bulk supply could cause both system power supplies to reset, which in turn resets both controllers — defeating the purpose of redundancy.</span></p>
+
+  <p><strong>Q4:</strong> What is the maximum output voltage at which the system power supply will remain operational?</p>
+  <p><span class="answer">A: The system power supply shuts down if input exceeds 12.6 V. The maximum safe setting is 12.3 V.</span></p>
+</div>
+
+</body>
+</html>

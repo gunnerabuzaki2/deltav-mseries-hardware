@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L22 — Intrinsically Safe I/O</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="L21-Remote-I-O.html">← L21: Remote I/O</a> |
+  <a href="L23-Product-Type-Numbers.html">L23: Product Type Numbers →</a>
+</nav>
+
+<h1>Lesson 22 — Intrinsically Safe I/O</h1>
+<p class="source">Source: DeltaV Scalable Process System with Zone 0 Field Circuits Installation Instructions, D800001X312, April 2021, pp. 543–548</p>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> Intrinsically Safe (I.S.) I/O is designed for use in hazardous areas where flammable gases, vapors, or dust may be present. The I.S. circuits limit energy to levels below the ignition threshold, preventing explosions under both normal and fault conditions.
+</div>
+
+<h2>I.S. I/O Components Overview</h2>
+<p>The DeltaV system includes the following I.S. I/O components:</p>
+
+<h3>I/O Cards</h3>
+<table>
+<tr><th>Card Type</th><th>Description</th></tr>
+<tr><td>I.S. DI</td><td>16-Channel Discrete Input</td></tr>
+<tr><td>I.S. DO</td><td>4-Channel Discrete Output</td></tr>
+<tr><td>I.S. AI</td><td>8-Channel, 4–20 mA, HART Analog Input</td></tr>
+<tr><td>I.S. AO</td><td>8-Channel, 4–20 mA (non-HART and HART variants)</td></tr>
+</table>
+
+<h3>Terminal Blocks</h3>
+<table>
+<tr><th>Block Type</th><th>Description</th></tr>
+<tr><td>I.S. 8-Channel terminal block</td><td>For 8-channel I.S. I/O cards</td></tr>
+<tr><td>I.S. 16-Channel terminal block</td><td>For 16-channel I.S. I/O cards</td></tr>
+</table>
+
+<h3>Supporting Hardware</h3>
+<ul>
+<li><strong>I.S. Power Supply</strong> — provides isolated power to I.S. field circuits</li>
+<li><strong>I.S. LocalBus Isolator</strong> — separates non-I.S. and I.S. components</li>
+<li><strong>I.S. Carrier Extenders</strong> (right and left hand) — bridge two I.S. carriers</li>
+<li><strong>I.S. 8-Wide Carrier</strong> — mounts I.S. I/O cards</li>
+<li><strong>Power Supply Carrier</strong> and <strong>Isolator Carrier</strong> — dedicated mounting hardware</li>
+</ul>
+
+<div class="pitfall">
+<strong>⚠️ Warning — Card/Block Compatibility:</strong> Always verify that your I.S. I/O cards and terminal blocks are compatible before plugging in cards. Card damage can result if an I/O card and terminal block are incompatible.
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Warning — Hazardous Area Safety:</strong> In any hazardous area installation, read and follow the device manufacturer's design and installation documents. Failure to follow documentation could result in an unapproved and unsafe application. Additionally, follow your plant's procedures for making the area safe during installation and maintenance.
+</div>
+
+<h2>Mixing I.S. and Non-I.S. Cards</h2>
+
+<div class="key-concept">
+<strong>Important Rule:</strong> You can use both I.S. and non-I.S. I/O cards within one DeltaV system, but you <em>must</em> separate them with a <strong>LocalBus Isolator</strong> to protect the I.S. cards from damaging voltages. Only <strong>one</strong> LocalBus Isolator can be used per DeltaV system.
+</div>
+
+<p>Key planning considerations:</p>
+<ul>
+<li>Plan your I/O subsystem carefully — you <strong>cannot</strong> add non-I.S. cards beyond the LocalBus Isolator.</li>
+<li>If using multiple I.S. system power supplies, intersperse them among the cards.</li>
+<li>Refer to <em>DeltaV Scalable Process System with Zone 0 Field Circuits Installation Instructions</em> (Part Number 12P1990) for detailed wiring information.</li>
+</ul>
+
+<h3>Carrier Layout Example</h3>
+<p>The following layout shows a LocalBus Isolator separating non-I.S. and I.S. cards:</p>
+
+<div class="screenshot">
+<div style="background:#f5f5f5; border:1px solid #ccc; padding:2em; font-family:monospace; font-size:0.9em; line-height:2; text-align:left; display:inline-block;">
+<strong>System Power</strong> → <strong>Controller</strong><br>
+Non-I.S. I/O Cards (Gray Terminal Blocks)<br>
+<div style="border-left:3px dashed #c0392b; padding-left:1em; margin:0.5em 0;">
+<strong>── LocalBus Isolator ──</strong><br>
+I.S. I/O Cards (Blue Terminal Blocks)<br>
+I.S. I/O Cards<br>
+I.S. I/O Cards<br>
+</div>
+<strong>RH Carrier Extender</strong> | <strong>LH Carrier Extender</strong><br>
+I.S. Power Supply
+</div>
+<div class="caption">Figure O-1: DeltaV Intrinsically Safe I/O Overview (conceptual layout)</div>
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Field power is provided by the I.S. I.O cards. Do not connect to the connectors on the top of the I.S. 8-wide carrier.
+</div>
+
+<h2>Grounding Requirements</h2>
+<p>Proper grounding is critical for I.S. I/O subsystems:</p>
+
+<div class="screenshot">
+<div style="background:#f5f5f5; border:1px solid #ccc; padding:2em; font-family:monospace; font-size:0.9em; text-align:left; display:inline-block;">
+<strong>Dedicated Plant Ground Grid Point</strong><br>
+&nbsp;&nbsp;├── Isolated Common Ground Reference<br>
+&nbsp;&nbsp;├── Carrier Shield Bar<br>
+&nbsp;&nbsp;├── I.S. Power Supply<br>
+&nbsp;&nbsp;└── LocalBus Isolator<br>
+</div>
+<div class="caption">Figure O-2: Grounding Requirements for I.S. I/O (conceptual diagram)</div>
+</div>
+
+<h2>O.1 — I.S. LocalBus Isolator</h2>
+
+<div class="key-concept">
+<strong>Purpose:</strong> The I.S. LocalBus Isolator separates non-I.S. components (I/O cards and controllers) from I.S. components. The controller is always non-I.S. — you must always use a LocalBus Isolator to isolate the controller from I.S. cards.
+</div>
+
+<table>
+<tr><th>Specification</th><th>Value</th></tr>
+<tr><td>Input</td><td>12 V @ 60 mA maximum</td></tr>
+<tr><td>Output</td><td>12 V @ 60 mA maximum</td></tr>
+<tr><td>Power dissipation</td><td>1.2 W maximum</td></tr>
+<tr><td>Mounting</td><td>LocalBus Isolator carrier</td></tr>
+</table>
+
+<h2>O.2 — I.S. Carrier Extenders</h2>
+<p>I.S. carrier extenders bridge two I.S. carriers to make one complete I.S. system. They allow building a system around obstacles such as cabinet walls or pipes.</p>
+
+<ul>
+<li><strong>Right-hand carrier extender</strong> — extends from the right side of a carrier</li>
+<li><strong>Left-hand carrier extender</strong> — extends from the left side of a carrier</li>
+</ul>
+
+<div class="quiz">
+<h3>📝 Knowledge Check</h3>
+<p><strong>Q1:</strong> How many LocalBus Isolators can be used in a single DeltaV system?</p>
+<p class="answer">A: Only one. Non-I.S. cards cannot be added beyond the isolator.</p>
+
+<p><strong>Q2:</strong> What are the two terminal block color-codings for I.S. vs non-I.S. cards?</p>
+<p class="answer">A: Blue terminal blocks for I.S. cards, gray terminal blocks for non-I.S. cards.</p>
+
+<p><strong>Q3:</strong> What provides field power to I.S. circuits?</p>
+<p class="answer">A: The I.S. I/O cards themselves provide field power — not the connectors on top of the carrier.</p>
+</div>
+
+<nav>
+  <a href="L21-Remote-I-O.html">← L21: Remote I/O</a> |
+  <a href="L23-Product-Type-Numbers.html">L23: Product Type Numbers →</a>
+</nav>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L23 — Product Type Numbers for DeltaV M-series Hardware</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="L22-Intrinsically-Safe-IO.html">← L22: Intrinsically Safe I/O</a> |
+  <a href="L24-Glossary-of-DeltaV-Hardware-Terms.html">L24: Glossary →</a>
+</nav>
+
+<h1>Lesson 23 — Product Type Numbers for DeltaV M-series Hardware</h1>
+<p class="source">Source: DeltaV M-series Hardware Installation and Reference Manual, D800001X312, April 2021, pp. 549–552</p>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> Every DeltaV M-series hardware component has a unique product type number used for ordering, replacement, and inventory management. This lesson provides a comprehensive cross-reference of all non-SIS hardware products.
+</div>
+
+<h2>Controllers &amp; System Components</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ2003X1-BB1</td><td>MD Plus Controller</td></tr>
+<tr><td>KJ2005X1-BA1</td><td>MX Controller</td></tr>
+<tr><td>KJ2004X1-BA1</td><td>Remote Interface Unit</td></tr>
+<tr><td>KJ1501X1-BC3</td><td>System Power Supply (Dual DC/DC)</td></tr>
+</table>
+
+<h2>Networking Components</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ1700X1-BA1</td><td>Fiber-Optic Media Converter</td></tr>
+<tr><td>KJ1710X1-BA1</td><td>Single Port Fiber Switch</td></tr>
+<tr><td>KJ1740X1-BA1</td><td>Four Port Fiber Switch</td></tr>
+</table>
+
+<h2>Series 2 Plus I/O Cards</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KC3011X1-BA1</td><td>AO, 16-Channel, 4–20 mA HART</td></tr>
+<tr><td>KC3020X1-BA1</td><td>Redundant DO, 32-Channel, 24 VDC, High-Side</td></tr>
+<tr><td>KC3021X1-BA1</td><td>Redundant DI, 32-Channel, 24 VDC, Dry Contact</td></tr>
+<tr><td>KC3030X1-BA1</td><td>Fieldbus H1 4-Port</td></tr>
+</table>
+
+<h2>Legacy (Series 1) I/O Cards</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ3001X1-BA1</td><td>DI, 8-Channel, 24 VDC, Isolated</td></tr>
+<tr><td>KJ3001X1-BB1</td><td>DI, 8-Channel, 24 VDC, Dry Contact</td></tr>
+<tr><td>KJ3001X1-BG1</td><td>DO, 8-Channel, 24 VDC, Isolated</td></tr>
+<tr><td>KJ3001X1-BJ1</td><td>DO, 8-Channel, 24 VDC, High-Side</td></tr>
+<tr><td>KJ3001X1-CA1</td><td>DI, 32-Channel, 24 VDC, Dry Contact</td></tr>
+<tr><td>KJ3001X1-CB1</td><td>DO, 32-Channel, 24 VDC, High-Side</td></tr>
+<tr><td>KJ3002X1-BA1</td><td>AI, 8-Channel, 4–20 mA, HART</td></tr>
+<tr><td>KJ3002X1-BB1</td><td>AO, 8-Channel, 4–20 mA</td></tr>
+<tr><td>KJ3002X1-BC1</td><td>AI, 8-Channel, 4–20 mA</td></tr>
+<tr><td>KJ3002X1-BD1</td><td>AI, 8-Channel, 1–5 VDC</td></tr>
+<tr><td>KJ3002X1-BE1</td><td>AO, 8-Channel, 4–20 mA, HART</td></tr>
+<tr><td>KJ3002X1-BF1</td><td>RTD, ohms</td></tr>
+<tr><td>KJ3002X1-BG2</td><td>Thermocouple, mV</td></tr>
+<tr><td>KJ3224X1-BA1</td><td>Series 2 Thermocouple, mV</td></tr>
+<tr><td>KJ3003X1-BA1</td><td>Serial Card, 2 Ports, RS232/RS485</td></tr>
+<tr><td>KJ3005X1-BA1</td><td>AS-Interface Card</td></tr>
+<tr><td>KJ3006X1-BA1</td><td>Multifunction Card</td></tr>
+<tr><td>KJ3007X1-BA1</td><td>Profibus DP Card (pre-Series 2)</td></tr>
+<tr><td>KJ3008X1-BA1</td><td>Sequence of Events Card</td></tr>
+<tr><td>KJ3009X1-BA1</td><td>DeviceNet Card</td></tr>
+</table>
+
+<h2>Series 2 I/O Cards</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ3201X1-BA1</td><td>DI, 8-Channel, 24 VDC, Dry Contact</td></tr>
+<tr><td>KJ3202X1-BA1</td><td>DO, 24 VDC, High-Side</td></tr>
+<tr><td>KJ3203X1-BA1</td><td>DI, 32-Channel, 24 VDC, Dry Contact</td></tr>
+<tr><td>KJ3204X1-BAI</td><td>DO, 32-Channel, 24 VDC, High Side</td></tr>
+<tr><td>KJ3206X1-BA1</td><td>DI, 8-Channel, 24 VDC, Isolated</td></tr>
+<tr><td>KJ3207X1-BA1</td><td>DI, 8-Channel, 120 VAC Isolated</td></tr>
+<tr><td>KJ3207X1-BB1</td><td>DI, 8-Channel, 120 VAC, Dry Contact</td></tr>
+<tr><td>KJ3208X1-BA1</td><td>DO, 8-Channel, 24 VDC, Isolated</td></tr>
+<tr><td>KJ3209X1-BA1</td><td>DO, 8-Channel, 120/230 VAC, Isolated</td></tr>
+<tr><td>KJ3210X1-BA1</td><td>DO, 8-Channel, 120/230 VAC High Side</td></tr>
+<tr><td>KJ3211X1-BA1</td><td>Sequence of Events</td></tr>
+<tr><td>KJ3212X1-BA1</td><td>Multifunction</td></tr>
+<tr><td>KJ3221X1-BA1</td><td>AO, 8-Channel, 4–20 mA, HART</td></tr>
+<tr><td>KJ3222X1-BA1</td><td>AI, 8-Channel, 4–20 mA, HART</td></tr>
+<tr><td>KJ3223X1-BA1</td><td>AI, 16-Channel, 4–20 mA HART</td></tr>
+<tr><td>KJ3225X1-BA1</td><td>RTD, ohms</td></tr>
+<tr><td>KJ3231X1-BA1</td><td>Isolated Input</td></tr>
+<tr><td>KJ3241X1-BA1</td><td>Serial Card, 2 Ports, RS232/RS485</td></tr>
+<tr><td>KJ3242X1-BA1</td><td>H1 Card</td></tr>
+<tr><td>KJ3243X1-BA1</td><td>Profibus DP Card</td></tr>
+<tr><td>KJ3243X1-BB1</td><td>Profibus DP Card (Series 2 Plus)</td></tr>
+<tr><td>KJ3244X1-BA1</td><td>DeviceNet Card</td></tr>
+<tr><td>KJ3245X1-BA1</td><td>AS-Interface Card</td></tr>
+</table>
+
+<h2>Terminal Blocks</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KC4011X1-BA1</td><td>4-Wire 16-Channel Analog Input Terminal Block</td></tr>
+<tr><td>KC4011X1-BB1</td><td>Redundant Discrete Output 40-Pin Mass Termination Block</td></tr>
+<tr><td>KC4011X1-BC1</td><td>Redundant 32-Channel Discrete Input Terminal Block</td></tr>
+<tr><td>KC4011X1-BD1</td><td>Redundant 16-Channel Analog Output Terminal Block</td></tr>
+<tr><td>KC4011X1-BE1</td><td>Redundant 16-Channel Analog Input Terminal Block</td></tr>
+<tr><td>KC4011X1-BF1</td><td>Redundant H1 4-Port Terminal Block</td></tr>
+<tr><td>KC4011X1-BH1</td><td>Redundant Discrete Input 40-Pin Mass Termination Block</td></tr>
+<tr><td>KC4011X1-BL1</td><td>Simplex H1 4-Port Terminal Block</td></tr>
+<tr><td>KC4011X1-BP1</td><td>Simplex 4-Wire 16-Channel Analog Input Terminal Block</td></tr>
+<tr><td>KC4011X1-BS1</td><td>Simplex 2-Wire 16-Channel Analog Input Terminal Block</td></tr>
+<tr><td>KJ3003X1-EA1</td><td>Interface Terminal Block</td></tr>
+<tr><td>KJ3004X1-EA1</td><td>Fieldbus H1 Terminal Block</td></tr>
+<tr><td>KJ3007X1-EA1</td><td>Profibus DP Terminal Block</td></tr>
+<tr><td>KJ3201X1-EA1</td><td>Redundant Discrete Terminal Block</td></tr>
+<tr><td>KJ3221X1-EA1</td><td>Redundant Analog Output Terminal Block</td></tr>
+<tr><td>KJ3222X1-EA1</td><td>Redundant Analog Input Terminal Block</td></tr>
+<tr><td>KJ3223X1-EA1</td><td>16-Channel Analog Input Terminal Block</td></tr>
+<tr><td>KJ3231X1-EA1</td><td>Isolated Input Terminal Block</td></tr>
+<tr><td>KJ3241X1-EA1</td><td>Redundant Interface Terminal Block</td></tr>
+<tr><td>KJ3242X1-EA1</td><td>Series 2 Simplex H1 Terminal Block</td></tr>
+<tr><td>KJ3242X1-FA1</td><td>Series 2 Redundant H1 Terminal Block</td></tr>
+<tr><td>KJ4001X1-CA1</td><td>I/O Terminal Block</td></tr>
+<tr><td>KJ4001X1-CB1</td><td>Fused I/O Terminal Block</td></tr>
+<tr><td>KJ4001X1-CC1</td><td>4-Wire Terminal Block</td></tr>
+<tr><td>KJ4001X1-CD1</td><td>10-Pin Mass Termination Block</td></tr>
+<tr><td>KJ4001X1-CE1</td><td>16-Pin Mass Termination Block</td></tr>
+<tr><td>KJ4001X1-CF1</td><td>24-Pin Mass Termination Block</td></tr>
+<tr><td>KJ4001X1-CG1</td><td>Thermocouple, mV Terminal Block</td></tr>
+<tr><td>KJ4001X1-CH1</td><td>RTD, ohms Terminal Block</td></tr>
+<tr><td>KJ4001X1-CJ1</td><td>32-Channel Terminal Block</td></tr>
+</table>
+
+<h2>Carriers &amp; Extenders</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ4001X1-BA3</td><td>2-Wide Power/Controller Carrier</td></tr>
+<tr><td>KJ4001X1-BB1</td><td>8-Wide I/O Interface Carrier</td></tr>
+<tr><td>KJ4001X1-BE1</td><td>8-Wide I/O Interface Carrier with Shield Bar</td></tr>
+<tr><td>KJ4001X1-BH1</td><td>2-Wide Horizontal Power Carrier</td></tr>
+<tr><td>KJ4001X1-NA1</td><td>One-Wide Right Carrier Extender</td></tr>
+<tr><td>KJ4001X1-NB1</td><td>One-Wide Left Carrier Extender</td></tr>
+<tr><td>KJ4001X1-HC1 + KJ4010X1-BF1</td><td>Left Carrier Extender</td></tr>
+<tr><td>KJ4001X1-HB1 + KJ4010X1-BG1</td><td>Right Carrier Extender</td></tr>
+<tr><td>KJ4002X1-BF2</td><td>D-Shell Cables for One-Wide Carrier Extenders</td></tr>
+<tr><td>KJ4002X1-BA1</td><td>Left 8-Wide Legacy Vertical Carrier</td></tr>
+<tr><td>KJ4002X1-BB1</td><td>Right 8-Wide Legacy Vertical Carrier</td></tr>
+<tr><td>KJ4002X1-BC2</td><td>Top 4-Wide Legacy Vertical Carrier</td></tr>
+<tr><td>KJ4002X1-BD2</td><td>Bottom 4-Wide Legacy Vertical Carrier</td></tr>
+<tr><td>KJ4002X1-BE1</td><td>Top Extender Cable Assembly</td></tr>
+<tr><td>KJ4002X1-BF1</td><td>Bottom Extender Cable Assembly</td></tr>
+<tr><td>KJ4003X1-BA1</td><td>Left 8-Wide VerticalPLUS Carrier</td></tr>
+<tr><td>KJ4003X1-BB1</td><td>Right 8-Wide VerticalPLUS Carrier</td></tr>
+<tr><td>KJ4003X1-BC1</td><td>4-Wide VerticalPLUS Power/Controller Carrier</td></tr>
+<tr><td>KJ4003X1-BD1</td><td>4-Wide VerticalPLUS SISNet Repeater Carrier</td></tr>
+<tr><td>KJ4003X1-BE1</td><td>Right 1-Wide VerticalPLUS Carrier Extender</td></tr>
+<tr><td>KJ4003X1-BF1</td><td>Left 1-Wide VerticalPLUS Carrier Extender</td></tr>
+<tr><td>KJ4003X1-BG1</td><td>4-Wide VerticalPLUS Power Carrier</td></tr>
+<tr><td>KJ4003X1-BH1</td><td>VerticalPLUS Standard Cable</td></tr>
+<tr><td>KJ4003X1-BH2</td><td>VerticalPLUS Short Cable</td></tr>
+<tr><td>KJ4010X1-BS1</td><td>DIN Rail Stop</td></tr>
+</table>
+
+<h2>Fieldbus Components</h2>
+<table>
+<tr><th>Product Type Number</th><th>DeltaV Product Name</th></tr>
+<tr><td>KJ6001X1-BA2</td><td>Fieldbus H1 Carrier with Enclosure</td></tr>
+<tr><td>KJ6001X1-CA2</td><td>Fieldbus H1 Carrier</td></tr>
+</table>
+
+<div class="tip">
+<strong>💡 Tip:</strong> When ordering replacement parts, always use the exact product type number. The suffix (e.g., -BA1, -BB1) indicates the specific revision and variant. Check the label on the physical card for confirmation.
+</div>
+
+<div class="quiz">
+<h3>📝 Knowledge Check</h3>
+<p><strong>Q1:</strong> What is the product type number for the MD Plus Controller?</p>
+<p class="answer">A: KJ2003X1-BB1</p>
+
+<p><strong>Q2:</strong> Which product type number corresponds to the Series 2 AI, 16-Channel, 4–20 mA HART card?</p>
+<p class="answer">A: KJ3223X1-BA1</p>
+
+<p><strong>Q3:</strong> What are the two VerticalPLUS carrier types for power/controller mounting?</p>
+<p class="answer">A: KJ4003X1-BC1 (4-Wide Power/Controller Carrier) and KJ4003X1-BG1 (4-Wide Power Carrier)</p>
+</div>
+
+<nav>
+  <a href="L22-Intrinsically-Safe-IO.html">← L22: Intrinsically Safe I/O</a> |
+  <a href="L24-Glossary-of-DeltaV-Hardware-Terms.html">L24: Glossary →</a>
+</nav>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9: LEDs, Smart Switches, and Troubleshooting — DeltaV M-series Hardware</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; vertical-align: top; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+<nav style="margin-bottom:1.5em;font-size:0.9em;">
+<a href="../index.html">← Home</a> &nbsp;|&nbsp;
+<a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">← Previous</a> &nbsp;|&nbsp;
+<a href="#">Next →</a>
+</nav>
+
+<details>
+<summary style="cursor:pointer;font-weight:bold;font-size:1.1em;color:#2c5f2d;">📚 All Lessons</summary>
+<div style="margin-top:0.8em;line-height:2;">
+<strong>Module 1 — System Overview</strong><br>
+<label><input type="checkbox" data-lesson="L01" onchange="saveProgress()"> <a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a></label><br>
+<strong>Module 2 — Installation</strong><br>
+<label><input type="checkbox" data-lesson="L02" onchange="saveProgress()"> <a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a></label><br>
+<label><input type="checkbox" data-lesson="L03" onchange="saveProgress()"> <a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a></label><br>
+<label><input type="checkbox" data-lesson="L04" onchange="saveProgress()"> <a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L05" onchange="saveProgress()"> <a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a></label><br>
+<label><input type="checkbox" data-lesson="L06" onchange="saveProgress()"> <a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a></label><br>
+<strong>Module 3 — Checkout &amp; Troubleshooting</strong><br>
+<label><input type="checkbox" data-lesson="L07" onchange="saveProgress()"> <a href="L07-System-Checkout---Cables-and-Power.html">L07: System Checkout — Cables and Power</a></label><br>
+<label><input type="checkbox" data-lesson="L08" onchange="saveProgress()"> <a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L09" onchange="saveProgress()"> <a href="L09-LEDs-Smart-Switches-and-Troubleshooting.html">L09: LEDs, Smart Switches, and Troubleshooting</a></label><br>
+<span id="progress-text"></span>
+</div>
+</details>
+
+<h1>Lesson 9: LEDs, Smart Switches, and Troubleshooting</h1>
+<p class="page-ref">Pages 79–94 — VIM 2 card LEDs, intrinsic safety card LEDs, smart switch LEDs, and the DeltaV Diagnostics troubleshooting workflow.</p>
+<p class="source">Source: Emerson DeltaV M-series Hardware Installation and Reference Manual (D800001X312, April 2021), Chapter 3, Pages 79–94</p>
+
+<h2>9.1 The VIM 2 Card: Six LEDs That Tell a Story</h2>
+
+<p>The VIM 2 (Versatile Interface Module, version 2) card is a powerful communication interface that bridges DeltaV controllers with external devices over VIMNet Ethernet networks. Unlike most I/O cards that have a simple Power/Error/Channel pattern, the VIM 2 has <strong>six LEDs</strong> that together paint a complete picture of the card's health, redundancy status, and communication state.</p>
+
+<p>From top to bottom, the six LEDs are:</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Meaning</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Card is powered. If Off, provide power to the card.</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>When On, the VIM 2 is in error; all other LED states are not significant.</td></tr>
+<tr><td>Active</td><td>Green</td><td>On (if active in redundant pair)</td><td>Card is commissioned and operating as the active card in a redundant pair.</td></tr>
+<tr><td>Standby</td><td>Green</td><td>Off in simplex mode; On if standby in redundant pair</td><td>Card is commissioned and operating as the standby card in a redundant pair.</td></tr>
+<tr><td>Network</td><td>Amber</td><td>On (solid) or Blinking</td><td>On = valid VIMNet network communications. Blinking = no valid IP address (decommissioned).</td></tr>
+<tr><td>Ctlr Comm</td><td>Amber</td><td>On</td><td>Valid LocalBus (controller) communications.</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — The VIM 2 Redundancy Rule:</strong> If the Active LED is On and the Standby LED is Off, the card's redundancy role is <strong>Active</strong>. If the Active LED is Off and the Standby LED is On, the role is <strong>Standby</strong>. Both LEDs On simultaneously is not a normal state. In simplex mode, the Standby LED is always Off.
+</div>
+
+<h3>9.1.1 VIM 2 Decommissioned Pattern</h3>
+
+<table>
+<tr><th>LED</th><th>State</th><th>Corrective Action</th></tr>
+<tr><td>Active</td><td>Off</td><td rowspan="4">A decommissioned VIM 2 does not have an IP address. Use the VIMNet Explorer to configure a placeholder that contains the IP address for your network, then commission the VIM 2.</td></tr>
+<tr><td>Standby</td><td>Off</td></tr>
+<tr><td>Network</td><td>Blinking</td></tr>
+<tr><td>Ctlr Comm</td><td>Off</td></tr>
+<tr><td>Power</td><td>On</td><td>—</td></tr>
+</table>
+
+<h3>9.1.2 VIM 2 Fully Operational (Active, Both Networks)</h3>
+
+<table>
+<tr><th>LED</th><th>State</th></tr>
+<tr><td>Active</td><td>On</td></tr>
+<tr><td>Standby</td><td>Off</td></tr>
+<tr><td>Network</td><td>On</td></tr>
+<tr><td>Ctlr Comm</td><td>On</td></tr>
+<tr><td>Power</td><td>On</td></tr>
+</table>
+
+<h3>9.1.3 VIM 2: Controller Communication Failed, Network Error</h3>
+
+<table>
+<tr><th>LED</th><th>State</th><th>Corrective Action</th></tr>
+<tr><td>Active</td><td>On</td><td rowspan="4">Verify that the DeltaV controller is downloaded. Also verify that the external device configuration has been uploaded to the VIM 2 from the VIMNet Explorer.</td></tr>
+<tr><td>Standby</td><td>Off</td></tr>
+<tr><td>Network</td><td>Blink</td></tr>
+<tr><td>Ctlr Comm</td><td>Off</td></tr>
+<tr><td>Power</td><td>On</td><td>—</td></tr>
+</table>
+
+<h3>9.1.4 VIM 2: Controller Communication OK, Network Error</h3>
+
+<table>
+<tr><th>LED</th><th>State</th></tr>
+<tr><td>Active</td><td>On</td></tr>
+<tr><td>Standby</td><td>Off</td></tr>
+<tr><td>Network</td><td>Blink</td></tr>
+<tr><td>Ctlr Comm</td><td>On</td></tr>
+<tr><td>Power</td><td>On</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Common Misdiagnosis:</strong> A VIM 2 with the Network LED blinking and Ctlr Comm Off might be mistaken for a completely failed card. In reality, the card itself may be fine — the problem is typically that the controller has not been downloaded, or the external device configuration has not been uploaded from VIMNet Explorer. Always check the software configuration before replacing hardware.
+</div>
+
+<h2>9.2 I.S. (Intrinsic Safety) Card LEDs</h2>
+
+<p>The I.S. cards are designed for use in hazardous areas where spark ignition must be prevented. Their LED patterns follow the standard Power/Error/Channel pattern, but with important nuances specific to intrinsic safety applications.</p>
+
+<h3>9.2.1 I.S. AI 8-Channel HART Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card with known good card of same type</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>On</td><td>1. Input out of range<br>2. Internal fault</td><td>1. Check input source and connections<br>2. Contact technical support</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. Input out of range<br>2. HART configured but no HART communication<br>3. NAMUR limits exceeded</td><td>1. Check input source<br>2. Check HART input source and connections<br>3. Check input levels vs. NAMUR limits</td></tr>
+</table>
+
+<h3>9.2.2 I.S. AO 8-Channel HART Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Unit failed self-test</td><td>Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Unit failed self-test<br>3. Address conflict</td><td>1. Check controller operation<br>2. Contact technical support<br>3. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>On</td><td>1. No output device (load)<br>2. Internal fault</td><td>1. Check output connections<br>2. Contact technical support</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. No output device (load)<br>2. Internal fault<br>3. HART configured but no HART communication</td><td>1. Check output connections<br>2. Contact technical support<br>3. Check HART connections</td></tr>
+</table>
+
+<h3>9.2.3 I.S. DI 16-Channel Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.16</td><td>Yellow</td><td>On = input &gt; detection level<br>Off = input &lt; detection level</td><td>Flashing</td><td>Line fault detected</td><td>Check field wiring</td></tr>
+<tr><td>Ch.1 – Ch.16</td><td>Yellow</td><td>—</td><td>Running light from Ch.1 to Ch.16 with Red Error On</td><td>No terminal block installed or incorrect terminal block used</td><td>Install the correct terminal block</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Critical Pattern — Running Light on I.S. DI Card:</strong> If you see the yellow channel LEDs lighting up one by one in sequence (a "running light") from Channel 1 to Channel 16, with the Red Error LED simultaneously On, this indicates that <strong>no terminal block is installed</strong> or the <strong>wrong terminal block type</strong> has been used. This is a distinctive pattern — do not mistake it for normal operation or a communication error.
+</div>
+
+<h3>9.2.4 I.S. DO 4-Channel Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.4</td><td>Yellow</td><td>Depends on setpoint and configuration</td><td>Flashing</td><td>Line fault detected</td><td>Check field wiring</td></tr>
+</table>
+
+<h2>9.3 Smart Switch LEDs: MD20 and MD30</h2>
+
+<p>The DeltaV MD20 and MD30 Smart Switches are the backbone of the Control Network. They have two categories of LEDs: <strong>device status LEDs</strong> that describe the health of the base switch, and <strong>display status LEDs</strong> whose meaning changes depending on which item you have selected using the Select button on the base switch.</p>
+
+<h3>9.3.1 MD20/MD30 Device Status LEDs</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th></tr>
+<tr><td>P (Power)</td><td>Green</td><td>On</td><td>Off</td><td>Internal supply voltage too low</td></tr>
+<tr><td>P1 (Power 1)</td><td>Green</td><td>On</td><td>Off</td><td>Supply voltage 1 less than 18 V</td></tr>
+<tr><td>P2 (Power 2)</td><td>Green</td><td>On</td><td>Off</td><td>Supply voltage 2 less than 18 V</td></tr>
+<tr><td>LOCK</td><td>Green/Yellow</td><td>On (green) = locked<br>On (yellow) = temporarily unlocked<br>Flashing green = transitioning to locked</td><td>Off</td><td>Device is in unlocked state</td></tr>
+<tr><td>RL1 (Relay 1)</td><td>Red/Yellow</td><td>Off = contact closed, no error</td><td>Red On = contact open, reporting error<br>Yellow On = contact open, Manual Setting active</td><td>Error condition or manual override</td></tr>
+<tr><td>RL2 (Relay 2)</td><td>Red/Yellow</td><td>Off = contact closed, no error</td><td>Red On = contact open, reporting error<br>Yellow On = contact open, Manual Setting active</td><td>Error condition or manual override</td></tr>
+<tr><td>RUN</td><td>Green</td><td>On (continuous) = ready<br>Flashing = booting</td><td>Off</td><td>Device is in reset mode</td></tr>
+<tr><td>TEST</td><td>Green</td><td>On = LED test activated</td><td>Off</td><td>LED test not activated</td></tr>
+<tr><td>ACA/Flash</td><td>Green</td><td>Access = displays ACA flash access with Run LED</td><td>—</td><td>—</td></tr>
+</table>
+
+<h3>9.3.2 MD20/MD30 Display Status LEDs (per Media Module Port)</h3>
+
+<p>Every DeltaV media module has one LED per port. The meaning of these port LEDs depends on which item is currently selected on the base switch's display. Press the <strong>Select button</strong> to cycle through items.</p>
+
+<table>
+<tr><th>Display Status LED on Base Switch</th><th>Port LED Meaning on Media Module</th></tr>
+<tr><td><strong>Green L/D</strong> (Data/Link status)</td><td>
+• Ports glowing green — valid connection<br>
+• Ports not glowing green — no valid connection<br>
+• Ports flashing green once per period — port switched to standby<br>
+• Ports flashing green three times per period — port locked by One-Click Lockdown, Smart Switch Command Center, or NDCC<br>
+• Ports flashing yellow — port is receiving data
+</td></tr>
+<tr><td><strong>Green FDX</strong> (Full Duplex)</td><td>
+• Ports glowing green — Full-duplex is active<br>
+• Ports not glowing green — Half-duplex is active
+</td></tr>
+<tr><td><strong>Green 1000</strong> (Speed)</td><td>
+• Ports glowing green — 100 Mbit/sec active<br>
+• Ports not glowing green — 10 Mbit/sec active<br>
+• Ports glowing yellow — 1000 Mbit/sec active
+</td></tr>
+<tr><td><strong>Green AN</strong> (Autonegotiation)</td><td>
+• Ports glowing green — autonegotiation active<br>
+• Ports not glowing green — autonegotiation inactive
+</td></tr>
+<tr><td><strong>Green TP</strong> (Media Type)</td><td>
+• Ports glowing green — twisted-pair ports<br>
+• Ports glowing yellow — fiber-optic ports
+</td></tr>
+<tr><td><strong>Green PoE status</strong></td><td>
+• Ports not glowing — No PoE port or PoE disabled<br>
+• Ports glowing yellow — PoE port searching for terminal device (PD)<br>
+• Ports glowing green — PoE port supplying terminal device (PD)
+</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — The Select Button:</strong> The MD20/MD30 base switch has a Select button that cycles through display modes (L/D, FDX, 1000, AN, TP, PoE). The port LEDs on the media modules change meaning with each mode. If you are reading port LEDs and they seem inconsistent, check which mode is currently selected on the base switch. The most common troubleshooting mode is L/D (Link/Data status).
+</div>
+
+<h2>9.4 Smart Switch LEDs: RM100 and FP20</h2>
+
+<p>The RM100 and FP20 Smart Switches are similar in function to the MD20/MD30 but have a different LED layout for device status.</p>
+
+<h3>9.4.1 RM100/FP20 Device Status LEDs</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th></tr>
+<tr><td>P (Power)</td><td>Green/Yellow</td><td>Green On = both supplies on<br>Yellow On = only one supply on</td><td>Off</td><td>Supply voltage off or too low</td></tr>
+<tr><td>RUN</td><td>Green</td><td>On (continuous) = ready<br>Flashing = booting</td><td>Off</td><td>Device is in reset mode</td></tr>
+<tr><td>LOCK</td><td>Green/Yellow</td><td>Green On = locked<br>Yellow On = temporarily unlocked<br>Flashing green = transitioning to locked</td><td>Off</td><td>Device is in unlocked state</td></tr>
+<tr><td>FAULT</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Reporting an error</td></tr>
+</table>
+
+<h3>9.4.2 RM100/FP20 Port Status LEDs</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th></tr>
+<tr><td>LS (Link Status)</td><td>Green</td><td>On = valid link<br>Flashing once/sec = port in standby<br>Flashing three times/sec = port locked by One-Click Lockdown or NDCC</td><td>Off</td><td>No valid link or connection</td></tr>
+<tr><td>DA (Data)</td><td>Yellow</td><td>Flashing = receiving data</td><td>Off</td><td>Not receiving data</td></tr>
+</table>
+
+<div class="tip">
+<strong>💡 Tip:</strong> The RM100/FP20 Power LED has a built-in redundancy indicator: Green means both power supplies are healthy; Yellow means only one supply is on. If you see Yellow, check the failed supply immediately — the switch is running on a single supply with no redundancy margin.
+</div>
+
+<h2>9.5 Additional I/O Card LEDs</h2>
+
+<h3>9.5.1 DI Mass Connection Board LEDs</h3>
+
+<table>
+<tr><th>Type of LED</th><th>Status</th><th>Meaning</th></tr>
+<tr><td>Power (green)</td><td>On (green)</td><td>Mass connection board is receiving power</td></tr>
+<tr><td>Power (green)</td><td>Off</td><td>Mass connection board is not receiving power</td></tr>
+<tr><td>Channel (yellow — Series 2)<br>Channel (orange/brown — Series 2 Plus)</td><td>On</td><td>Channel signal is available</td></tr>
+<tr><td>Channel</td><td>Off</td><td>Channel signal is not available</td></tr>
+</table>
+
+<h3>9.5.2 DO Mass Connection Board LEDs</h3>
+
+<table>
+<tr><th>Type of LED</th><th>Status</th><th>Meaning</th></tr>
+<tr><td>Power (green)</td><td>On (green)</td><td>Mass connection board is receiving power</td></tr>
+<tr><td>Power (green)</td><td>Off</td><td>Mass connection board is not receiving power</td></tr>
+<tr><td>Channel (yellow)</td><td>On (yellow)</td><td>Channel is turned on</td></tr>
+<tr><td>Channel (yellow)</td><td>Off</td><td>Channel is turned off</td></tr>
+</table>
+
+<h2>9.6 DeltaV Diagnostics: The Software Troubleshooting Layer</h2>
+
+<p>After you have completed the physical checkout (Lesson 7) and verified LED indicators (Lessons 8 and 9), you move to the software layer. DeltaV provides three primary tools for software-level verification:</p>
+
+<h3>9.6.1 DeltaV Explorer Status Indicators</h3>
+
+<p>When you open DeltaV Explorer and look at the Control Network tree, you will see status indicators next to each node. These indicators tell you whether the database matches the physical hardware:</p>
+
+<table>
+<tr><th>Indicator</th><th>Meaning</th><th>Corrective Action</th></tr>
+<tr><td>Installing icon</td><td>The downloading workstation does not have all the information about this node</td><td>Click the node, right-click, select "Install Setup Data"</td></tr>
+<tr><td>Not Communicating icon</td><td>The node is not communicating (bad connection, not powered up, or decommissioned)</td><td>Check LEDs on the node; verify cables are connected to correct ports; check power</td></tr>
+<tr><td>Integrity Problem icon</td><td>The node is communicating but has an integrity problem (I/O mismatch, missing network connections, or Event Chronicle issues)</td><td>Check LEDs; use DeltaV Diagnostics "Check Node Integrity"; compare I/O configuration vs. physical I/O</td></tr>
+<tr><td>No Configuration icon</td><td>The node has never been downloaded or lost its configuration</td><td>Download the node</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Common Mistake:</strong> Do not change your configuration when you see an integrity problem indicator. The problem is almost always a hardware mismatch — the I/O cards physically installed do not match what is configured in the database. Use the Auto-sense I/O Cards command (right-click on the I/O node → Auto-sense I/O Cards) to compare what the controller sees versus what the database expects.
+</div>
+
+<h3>9.6.2 Common Troubleshooting Scenarios</h3>
+
+<table>
+<tr><th>Problem</th><th>Possible Cause</th><th>Corrective Action</th></tr>
+<tr><td>Controller not listed in Decommissioned Controllers</td><td>Node not connected to switch<br>Cable not working correctly<br>Connection on carrier not secure<br>DeltaV Database Server not running</td><td>Check LEDs on controller<br>Test cable between controller and switch<br>Remove controller from carrier for 15 seconds, reseat<br>Exit and restart DeltaV Explorer</td></tr>
+<tr><td>Controller has Not Communicating indicator</td><td>Node not connected to switch<br>Cable not working<br>Looking at wrong controller<br>Primary/secondary CN connections crossed</td><td>Check LEDs on controller<br>Use "Identify Controller" to flash LEDs<br>Verify primary cables to primary ports, secondary to secondary</td></tr>
+<tr><td>Workstation has Not Communicating indicator</td><td>Workstation not set up properly<br>Node not connected to switch<br>Cable not working<br>Workstation address incorrect</td><td>Verify DeltaV Services are running (Control Panel → Services)<br>Check cables and ports<br>Verify IP address matches DeltaV Explorer; run Workstation Configuration</td></tr>
+<tr><td>Node has Integrity Problem indicator</td><td>Hardware mismatch between I/O configuration and physical I/O<br>Controller configured for network redundancy but connections missing<br>Event Chronicle directory does not exist</td><td>Use Auto-sense I/O Cards<br>Verify network redundancy configuration matches physical connections<br>Check Event Chronicle configuration</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Flashing Controller LEDs from DeltaV Explorer:</strong> If you are not sure which physical controller corresponds to a node in DeltaV Explorer, use the "Identify Controller" function: right-click the controller in DeltaV Explorer → Node Properties → Identify Controller. This causes the LEDs on the physical controller to flash, confirming you have found the right device.
+</div>
+
+<h2>9.7 Getting Help: Resources and Support</h2>
+
+<p>When the self-service troubleshooting tools cannot resolve your issue, Emerson provides several support channels:</p>
+
+<ul>
+<li><strong>Online Help</strong> — Available in every DeltaV application via the Help menu. Provides procedural help and popup help for dialog boxes.</li>
+<li><strong>Books Online</strong> — The comprehensive DeltaV documentation library, accessible from Start → DeltaV Help → Books Online. The System Administration and Maintenance manual is particularly useful for hardware troubleshooting.</li>
+<li><strong>Technical Service</strong> — Help desk support, remote diagnosis, 24-hour emergency support, and software update service. Contact via the Emerson Automation Solutions website.</li>
+</ul>
+
+<p>When contacting technical support, have the following information ready:</p>
+<ul>
+<li><strong>System Identification Number</strong></li>
+<li><strong>Software Version Number</strong></li>
+<li><strong>Description of the problem</strong></li>
+</ul>
+
+<div class="tip">
+<strong>💡 Tip:</strong> If possible, be at your DeltaV system when calling technical support. This enables the representative to step you through diagnostic procedures in real time, which is significantly faster than describing the problem over the phone.
+</div>
+
+<h2>9.8 Hazardous Area and NAMUR Installation References</h2>
+
+<p>For installations in hazardous areas or NAMUR-compliant environments, Emerson provides dedicated installation instruction documents. These are available on the DeltaV Documentation Library DVD in PDF format:</p>
+
+<table>
+<tr><th>Document Number</th><th>Title</th></tr>
+<tr><td>12P1293</td><td>DeltaV Scalable Process System, Class I Division 2 Installation Instructions</td></tr>
+<tr><td>12P1892</td><td>DeltaV Scalable Process System, Class I Div. 2 with Class I, II, III Div. 1 Field Circuits</td></tr>
+<tr><td>12P1990</td><td>DeltaV Scalable Process System with Zone 0 Field Circuits</td></tr>
+<tr><td>12P2046</td><td>DeltaV Scalable Process System, Zone 2 Installation Instructions</td></tr>
+<tr><td>12P2524</td><td>DeltaV IS I/O Code of Practice for Installation and Maintenance in Zone 2</td></tr>
+<tr><td>12P2822</td><td>DeltaV Digital Automation System NAMUR NE 21 Installation Instructions</td></tr>
+<tr><td>12P3292</td><td>DeltaV Type KJ7000 Series Zone 1 I/O System Installation Instructions</td></tr>
+<tr><td>12P3517</td><td>DeltaV KJ1710 Single Port Fiber Switch Installation Instructions</td></tr>
+</table>
+
+<h2>9.9 Complete Troubleshooting Workflow Summary</h2>
+
+<p>This three-lesson module (Lessons 7–9) has covered the complete hardware checkout and troubleshooting process. Here is the end-to-end workflow:</p>
+
+<ol>
+<li><strong>Cable verification</strong> — Test all network cables end-to-end with the Microtest PentaScanner (Lesson 7, Section 7.2).</li>
+<li><strong>Power verification</strong> — Measure voltages at PSU, last carrier, and field power terminals; test redundant supplies independently (Lesson 7, Section 7.3).</li>
+<li><strong>LED inspection</strong> — Read Power, Error, and channel LEDs on every device and card (Lessons 8 and 9, Sections 8.1–9.5).</li>
+<li><strong>Field wiring test</strong> — Use test probes at I/O terminal block access points (Lesson 7, Section 7.5).</li>
+<li><strong>Software startup</strong> — Launch DeltaV Explorer and verify node communication status (Lesson 9, Section 9.6).</li>
+<li><strong>Database verification</strong> — Compare configured I/O vs. physical I/O using Auto-sense I/O Cards (Lesson 9, Section 9.6.1).</li>
+<li><strong>Escalation</strong> — Contact Emerson Technical Service with System ID, software version, and problem description (Lesson 9, Section 9.7).</li>
+</ol>
+
+<h2>9.10 Summary</h2>
+
+<p>In this final lesson of the hardware training series, you completed the LED indicator reference by learning the VIM 2 card's six-LED system, the intrinsic safety card LED patterns (I.S. AI, I.S. AO, I.S. DI, I.S. DO), and the smart switch LED systems for the MD20, MD30, RM100, and FP20. You also learned the DeltaV Diagnostics software troubleshooting workflow, including how to interpret DeltaV Explorer status indicators and resolve common communication, integrity, and configuration problems. With all nine lessons complete, you now have a comprehensive understanding of the DeltaV M-series hardware — from system overview and installation planning through checkout, LED diagnostics, and software-level troubleshooting.</p>
+
+<div class="quiz">
+<h3>Quiz</h3>
+
+<p><strong>1.</strong> What are the six LEDs on the VIM 2 card, listed from top to bottom?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">(1) Power (green), (2) Error (red), (3) Active (green), (4) Standby (green), (5) Network (amber), (6) Ctlr Comm (amber).</p>
+</details>
+
+<p><strong>2.</strong> What does it mean when the VIM 2 Network LED is blinking but all other LEDs are in their normal states (Power On, Error Off, Active/Standby in correct state)?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">A blinking Network LED indicates the VIM 2 does not have a valid IP address — it is likely decommissioned. Use VIMNet Explorer to configure a placeholder with the correct IP address, then commission the VIM 2.</p>
+</details>
+
+<p><strong>3.</strong> What distinctive LED pattern indicates that no terminal block is installed (or the wrong type is installed) on an I.S. DI 16-Channel card?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">A "running light" pattern where the yellow channel LEDs light up one by one from Channel 1 to Channel 16, with the Red Error LED simultaneously On.</p>
+</details>
+
+<p><strong>4.</strong> On the MD20/MD30 Smart Switch, what do the port LEDs mean when the display is set to "L/D" mode?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">In L/D (Link/Data) mode: green = valid connection, not glowing = no valid connection, flashing green once per period = port in standby, flashing green three times per period = port locked by lockdown application, flashing yellow = port receiving data.</p>
+</details>
+
+<p><strong>5.</strong> What is the difference between the Power LED on an RM100/FP20 showing green vs. yellow?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Green means both power supplies are on and healthy. Yellow means only one supply voltage is on — the switch is running on a single supply with no redundancy margin. The failed supply should be investigated immediately.</p>
+</details>
+
+<p><strong>6.</strong> When you see a "Not Communicating" indicator next to a controller in DeltaV Explorer, what are the first three things to check?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">(1) Check the LEDs on the physical controller. (2) Check the Control Network cables — make sure they are connected to the correct ports on the switch and controller. (3) Verify that primary cables connect to primary ports and secondary cables to secondary ports (they may be crossed).</p>
+</details>
+
+<p><strong>7.</strong> What does the Auto-sense I/O Cards command do, and when should you use it?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Auto-sense I/O Cards compares the I/O cards physically installed in the controller (auto-sensed type) against what is configured in the database. Use it when you see an integrity problem indicator to identify mismatches between physical and configured I/O.</p>
+</details>
+
+<p><strong>8.</strong> What three pieces of information should you have ready when contacting Emerson Technical Service?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">(1) System Identification Number, (2) Software Version Number, and (3) Description of the problem.</p>
+</details>
+
+<p><strong>9.</strong> How can you identify which physical controller corresponds to a node in DeltaV Explorer?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Right-click the controller in DeltaV Explorer → Node Properties → Identify Controller. This causes the LEDs on the physical controller to flash, confirming you have found the right device.</p>
+</details>
+
+<p><strong>10.</strong> Complete the troubleshooting workflow: After verifying cables and power (physical layer) and inspecting LEDs (device layer), what is the next step before calling technical support?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Start the DeltaV software and verify the node communication status in DeltaV Explorer. Use the status indicators to identify whether nodes are communicating, whether integrity problems exist, and whether configuration is complete. Use Auto-sense I/O Cards to compare physical vs. configured I/O. Only after exhausting software-level diagnostics should you escalate to technical support.</p>
+</details>
+</div>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>

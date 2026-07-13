@@ -1,0 +1,242 @@
+[
+  {
+    "id": "L01",
+    "title": "DeltaV System Overview and Equipment",
+    "pages": [
+      15,
+      22
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 4
+  },
+  {
+    "id": "L02",
+    "title": "Installation Planning and Safety",
+    "pages": [
+      23,
+      27
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 0
+  },
+  {
+    "id": "L03",
+    "title": "DIN Rails, Carriers, and Bussed Field Power",
+    "pages": [
+      28,
+      35
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 8
+  },
+  {
+    "id": "L04",
+    "title": "Installing I/O Interface and Cards",
+    "pages": [
+      36,
+      39
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 3
+  },
+  {
+    "id": "L05",
+    "title": "Installing Controller and Power Supply",
+    "pages": [
+      39,
+      43
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 1
+  },
+  {
+    "id": "L06",
+    "title": "Workstation, Control Network, and Power",
+    "pages": [
+      44,
+      56
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 1
+  },
+  {
+    "id": "L07",
+    "title": "System Checkout and Power Verification",
+    "pages": [
+      57,
+      58
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 0
+  },
+  {
+    "id": "L08",
+    "title": "LED Indicators \u2014 Controllers and I/O Cards",
+    "pages": [
+      58,
+      79
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 0
+  },
+  {
+    "id": "L09",
+    "title": "Smart Switches, Diagnostics, and Troubleshooting",
+    "pages": [
+      79,
+      94
+    ],
+    "mod": "Part 1 \u2014 Core Chapters",
+    "sig_images": 0
+  },
+  {
+    "id": "L10",
+    "title": "Environmental and Carrier Specifications",
+    "pages": [
+      95,
+      124
+    ],
+    "mod": "Part 2 \u2014 Specifications",
+    "sig_images": 11
+  },
+  {
+    "id": "L11",
+    "title": "Interface Specifications \u2014 Digital I/O Cards",
+    "pages": [
+      125,
+      195
+    ],
+    "mod": "Part 2 \u2014 Specifications",
+    "sig_images": 0
+  },
+  {
+    "id": "L12",
+    "title": "Interface Specifications \u2014 Analog I/O Cards",
+    "pages": [
+      195,
+      260
+    ],
+    "mod": "Part 2 \u2014 Specifications",
+    "sig_images": 3
+  },
+  {
+    "id": "L13",
+    "title": "Interface Specifications \u2014 Special Cards",
+    "pages": [
+      260,
+      314
+    ],
+    "mod": "Part 2 \u2014 Specifications",
+    "sig_images": 5
+  },
+  {
+    "id": "L14",
+    "title": "Controllers, Remote Interface Unit, and Power Supplies",
+    "pages": [
+      315,
+      326
+    ],
+    "mod": "Part 3 \u2014 Controllers & Power",
+    "sig_images": 5
+  },
+  {
+    "id": "L15",
+    "title": "Control Network \u2014 Topology and Cable Specs",
+    "pages": [
+      327,
+      380
+    ],
+    "mod": "Part 3 \u2014 Controllers & Power",
+    "sig_images": 2
+  },
+  {
+    "id": "L16",
+    "title": "Control Network \u2014 Installation Rules and Diagrams",
+    "pages": [
+      380,
+      428
+    ],
+    "mod": "Part 3 \u2014 Controllers & Power",
+    "sig_images": 0
+  },
+  {
+    "id": "L17",
+    "title": "Legacy Bulk Power Supplies and Enclosure Guidelines",
+    "pages": [
+      429,
+      442
+    ],
+    "mod": "Part 3 \u2014 Controllers & Power",
+    "sig_images": 4
+  },
+  {
+    "id": "L18",
+    "title": "System Power Guidelines",
+    "pages": [
+      443,
+      488
+    ],
+    "mod": "Part 4 \u2014 Power & Vertical",
+    "sig_images": 4
+  },
+  {
+    "id": "L19",
+    "title": "Bussed Field Power and Controller Redundancy",
+    "pages": [
+      489,
+      494
+    ],
+    "mod": "Part 4 \u2014 Power & Vertical",
+    "sig_images": 3
+  },
+  {
+    "id": "L20",
+    "title": "Vertical Carriers \u2014 Mounting and Configuration",
+    "pages": [
+      495,
+      515
+    ],
+    "mod": "Part 4 \u2014 Power & Vertical",
+    "sig_images": 2
+  },
+  {
+    "id": "L21",
+    "title": "Vertical Carriers \u2014 Wiring and Worksheets",
+    "pages": [
+      515,
+      542
+    ],
+    "mod": "Part 4 \u2014 Power & Vertical",
+    "sig_images": 2
+  },
+  {
+    "id": "L22",
+    "title": "Intrinsically Safe I/O",
+    "pages": [
+      543,
+      548
+    ],
+    "mod": "Part 5 \u2014 Special Topics",
+    "sig_images": 2
+  },
+  {
+    "id": "L23",
+    "title": "Product Type Numbers",
+    "pages": [
+      549,
+      552
+    ],
+    "mod": "Part 5 \u2014 Special Topics",
+    "sig_images": 0
+  },
+  {
+    "id": "L24",
+    "title": "Glossary of DeltaV Hardware Terms",
+    "pages": [
+      553,
+      558
+    ],
+    "mod": "Part 5 \u2014 Special Topics",
+    "sig_images": 0
+  }
+]

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L10: Environmental and Carrier Specifications</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a><br>
+<a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a><br>
+<a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a><br>
+<a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a><br>
+<a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="L09-LEDs-Smart-Switches-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="L10-Environmental-and-Carrier-Specifications.html"><strong>L10: Environmental and Carrier Specifications</strong></a><br>
+<a href="L11-Interface-Specifications---Digital-IO-Cards.html">L11: Interface Specifications — Digital I/O Cards</a><br>
+<a href="L12-Interface-Specifications---Analog-IO-Cards.html">L12: Interface Specifications — Analog I/O Cards</a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a><br>
+</div>
+</details>
+</nav>
+
+<h1>L10: Environmental and Carrier Specifications</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Appendix A, "Environmental Specifications," pp. 95–98; Appendix B, "Carrier Specifications," pp. 99–124.</p>
+
+<p>This lesson covers two foundational reference topics every DeltaV installer must know: <em>what environmental conditions each device can tolerate</em> and <em>the physical and electrical characteristics of every carrier type</em>. These specifications determine where you can mount equipment, how much current a carrier can deliver, and how far a LocalBus cable can run.</p>
+
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0100_1.png" alt="Figure from page 100">
+  <div class="caption">Figure from page 100 (page 100)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0105_1.png" alt="Figure from page 105">
+  <div class="caption">Figure from page 105 (page 105)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0108_1.png" alt="Figure from page 108">
+  <div class="caption">Figure from page 108 (page 108)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0109_1.png" alt="Figure from page 109">
+  <div class="caption">Figure from page 109 (page 109)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0110_1.png" alt="Figure from page 110">
+  <div class="caption">Figure from page 110 (page 110)</div>
+</div>
+10.1 — Why Specifications Matter</h2>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> Every DeltaV device is rated for a specific temperature, humidity, vibration, and contamination range. Exceeding these ratings leads to premature failure, intermittent faults, or loss of warranty coverage. Carrier specifications determine power budgets, slot counts, and maximum cable lengths for your I/O subsystem.
+</div>
+
+<p>All DeltaV system products meet the appropriate European standards for Electromagnetic Compatibility (CE mark) and carry CSA certification. Before selecting a mounting location, verify that the environmental conditions fall within the rated ranges listed below.</p>
+
+<h2>10.2 — Temperature and Relative Humidity Specifications</h2>
+
+<p>The following table lists the operating temperature, storage temperature, and relative humidity limits for all major DeltaV system devices. These are the primary constraints for site selection.</p>
+
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Operating Temperature</th>
+<th>Storage Temperature</th>
+<th>Relative Humidity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workstation</td>
+<td>10°C to 35°C (50°F to 95°F)<br><em>Max 10°C (18°F) change per hour</em></td>
+<td>−20°C to 60°C (−4°F to 140°F)</td>
+<td>20% to 80%, non-condensing</td>
+</tr>
+<tr>
+<td>3Com 3C16700A 8-Port Hub</td>
+<td>0°C to 40°C (32°F to 104°F)</td>
+<td>−30°C to 60°C (−22°F to 140°F)</td>
+<td>0% to 90%, non-condensing</td>
+</tr>
+<tr>
+<td>Allied Telesyn Switches<br><em>(AT-FS708, AT-FS709FC)</em></td>
+<td>0°C to 40°C (32°F to 104°F)</td>
+<td>−25°C to 70°C (−13°F to 158°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Cisco Switches<br><em>(2940, 2950, 2950C, 2960, 3550FX, 3750, 3750G)</em></td>
+<td>0°C to 45°C (32°F to 113°F)</td>
+<td>−25°C to 70°C (−13°F to 158°F)</td>
+<td>10% to 85%, non-condensing</td>
+</tr>
+<tr>
+<td>DeltaV MD20/MD30/FP20 Smart Switches<br><em>(non-ES versions)</em></td>
+<td>0°C to 60°C (32°F to 140°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>10% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>DeltaV MD20/MD30/FP20 Smart Switches<br><em>(ES versions, conformal coating)</em></td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>10% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>DeltaV RM100 Smart Switch</td>
+<td>0°C to 50°C (32°F to 122°F)</td>
+<td>−20°C to 85°C (−4°F to 185°F)</td>
+<td>10% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>DeltaV RM104 Smart Switch</td>
+<td>0°C to 50°C (32°F to 122°F)</td>
+<td>−20°C to 85°C (−4°F to 185°F)</td>
+<td>10% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td><strong>MD Plus Controllers</strong></td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td><strong>MX Controllers</strong></td>
+<td>−40°C to 60°C (−40°F to 140°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Single/Four Port Fiber Switch, Remote Interface Unit</td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Pre-Series 2 Profibus, Pre-Series 2 DeviceNet</td>
+<td>0°C to 55°C (32°F to 131°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td><strong>Series 2 I/O</strong><br><em>(except As-Interface)</em></td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Series 2 As-Interface</td>
+<td>−25°C to 70°C (−13°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>System Power Supplies</td>
+<td>0°C to 60°C (32°F to 140°F)</td>
+<td>−40°C to 70°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>System Power Supply (Dual DC/DC)</td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 70°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Legacy DIN Rail-Mounted Bulk Power Supply</td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 70°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Legacy Panel-Mounted Bulk Power Supply</td>
+<td>0°C to 60°C (32°F to 140°F)<br><em>at 300 W and altitude &lt; 914 m (3000 ft)</em></td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>DeltaV Controller Firewall</td>
+<td>0°C to 55°C (32°F to 131°F)</td>
+<td>−40°C to 80°C (−40°F to 176°F)</td>
+<td>10% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Fiber-Optic Media Converter</td>
+<td>0°C to 60°C (32°F to 140°F)</td>
+<td>−40°C to 70°C (−40°F to 185°F)</td>
+<td>5% to 95%</td>
+</tr>
+<tr>
+<td>Fieldbus H1 Carrier</td>
+<td>−40°C to 70°C (−40°F to 158°F)</td>
+<td>−40°C to 85°C (−40°F to 185°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+<tr>
+<td>Round Ribbon Cable</td>
+<td>0°C to 60°C (0°F to 140°F)</td>
+<td>−20°C to 70°C (−4°F to 158°F)</td>
+<td>5% to 95%, non-condensing</td>
+</tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip:</strong> Notice that Series 2 I/O cards and MD Plus controllers have a significantly wider operating range (−40°C to 70°C) compared to pre-Series 2 I/O (0°C to 55°C). If you are upgrading from pre-Series 2 to Series 2, you gain substantial environmental margin.
+</div>
+
+<h2>10.3 — Airborne Contaminants, Vibration, and Shock</h2>
+
+<p>The following table summarizes vibration, shock, and airborne contaminant specifications for DeltaV devices.</p>
+
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Airborne Contaminants</th>
+<th>Vibration</th>
+<th>Shock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workstation</td>
+<td colspan="3"><em>Refer to manufacturer's specifications</em></td>
+</tr>
+<tr>
+<td>8-Port Hub, All Switches</td>
+<td colspan="3"><em>Refer to manufacturer's specifications</em></td>
+</tr>
+<tr>
+<td><strong>Fieldbus H1 Carrier, System Power Supplies, Controllers, Single Port Fiber Switch, Remote Interface Unit, Pre-Series 2 I/O, Series 2 I/O</strong></td>
+<td>ISA-S71.04-1985<br><strong>Class G3</strong></td>
+<td>1 mm peak-to-peak from 5 Hz to 16 Hz<br>0.5 g from 16 Hz to 150 Hz</td>
+<td>10 g half-sine wave for 11 ms</td>
+</tr>
+<tr>
+<td>DeltaV Controller Firewall</td>
+<td colspan="3"><em>Refer to manufacturer's specifications</em></td>
+</tr>
+<tr>
+<td>Legacy Bulk Power Supplies</td>
+<td>ISA-S71.04-1985<br><strong>Class G2</strong></td>
+<td>MIL-STD-810D Method 514.3,<br>Category 1, Procedure I</td>
+<td>MIL-STD-810D Method 516.3,<br>Procedure III</td>
+</tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — ISA-S71.04 Classes:</strong><br>
+• <strong>Class G1 (Light):</strong> Controlled environment, office-like conditions.<br>
+• <strong>Class G2 (Moderate):</strong> Protected industrial environment with limited contamination.<br>
+• <strong>Class G3 (Harsh):</strong> Industrial environment with significant airborne contaminants (H₂S, SO₂, NOₓ, O₃, etc.). Most DeltaV I/O hardware is rated G3.
+</div>
+
+<h2>10.4 — Carrier Specifications Overview</h2>
+
+<p>The DeltaV system supports multiple carrier types organized into three categories: Horizontal, VerticalPLUS, and Legacy Vertical. There are also Intrinsically Safe carriers for hazardous area applications. Carriers provide the physical mounting platform and electrical backplane for controllers, power supplies, and I/O cards.</p>
+
+<h3>10.4.1 — Horizontal Carriers</h3>
+
+<table>
+<thead>
+<tr>
+<th>Carrier Type</th>
+<th>Capacity</th>
+<th>Max Current</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2-Wide Horizontal Power/Controller</strong></td>
+<td>1 power supply + 1 controller<br><em>or</em> 2 power supplies</td>
+<td>—</td>
+<td>Standard carrier for controller mounting</td>
+</tr>
+<tr>
+<td><strong>2-Wide Horizontal Power</strong></td>
+<td>1 or 2 redundant power supplies</td>
+<td>13 A total output</td>
+<td>Dedicated power-only carrier</td>
+</tr>
+<tr>
+<td><strong>4-Wide Horizontal I/O Interface</strong></td>
+<td>4 I/O cards with terminal blocks</td>
+<td>LocalBus: 8 A<br>Bussed field power: 3.2 A per slot at 30 VDC or 250 VAC</td>
+<td>Smaller I/O subsystems</td>
+</tr>
+<tr>
+<td><strong>8-Wide Horizontal I/O Interface</strong></td>
+<td>8 I/O cards with terminal blocks</td>
+<td>LocalBus: 8 A<br>Bussed field power: 6.5 A per pair or 3.2 A per slot at 30 VDC or 250 VAC</td>
+<td>Primary I/O carrier</td>
+</tr>
+<tr>
+<td><strong>1-Wide Carrier Extenders</strong></td>
+<td>Extends power and LocalBus between carriers</td>
+<td>—</td>
+<td>Left and right extenders; max LocalBus = 6.5 m (21.3 ft)</td>
+</tr>
+</tbody>
+</table>
+
+<div class="pitfall">
+<strong>Pitfall — 4-Wide Carrier Slot Numbering:</strong> When a 4-Wide Horizontal I/O Interface Carrier is used with an M-series controller or Remote Interface Unit, DeltaV software displays four additional blank I/O slots that do not exist. For example, if installed to the right of the first 8-Wide carrier, slots 9–12 appear with blank slots 13–16. The next physical carrier starts at slot 17. This does not occur with a PK Controller.
+</div>
+
+<h3>10.4.2 — Carrier Extender Cable Lengths</h3>
+
+<table>
+<thead>
+<tr>
+<th>Cable Type</th>
+<th>Length</th>
+<th>Typical Use</th>
+<th>Max Carriers (with short cable)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short Cable (KJ4002X1-BF3)</td>
+<td>0.87 m (2.8 ft)</td>
+<td>Single-door cabinet installation</td>
+<td>6 carriers</td>
+</tr>
+<tr>
+<td>Standard Cable (KJ4002X1-BF2)</td>
+<td>1.20 m (3.9 ft)</td>
+<td>Double-door cabinet installation</td>
+<td>Per LocalBus limit</td>
+</tr>
+<tr>
+<td>Extended Cable (KJ4002X1-BF4)</td>
+<td>1.53 m (5.0 ft)</td>
+<td>Custom installations</td>
+<td>Per LocalBus limit</td>
+</tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> The total LocalBus length — including all cabling — must not exceed <strong>6.5 meters (21.3 feet)</strong>. This is a hard limit. If two D-shell cables are used, they must be routed together from the same source to the same destination.
+</div>
+
+<h3>10.4.3 — VerticalPLUS Carriers</h3>
+
+<table>
+<thead>
+<tr>
+<th>Carrier Type</th>
+<th>Capacity</th>
+<th>Max Current</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>4-Wide VerticalPLUS Power/Controller</strong></td>
+<td>2 power supplies + 2 controllers</td>
+<td>—</td>
+<td>Supports DeltaV SIS</td>
+</tr>
+<tr>
+<td><strong>4-Wide VerticalPLUS Power</strong></td>
+<td>2 redundant power supplies</td>
+<td>13 A per output connector</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>4-Wide VerticalPLUS SISNet Repeater</strong></td>
+<td>2 SISNet Repeaters (primary + secondary)</td>
+<td>—</td>
+<td>Safety Instrumented System only</td>
+</tr>
+<tr>
+<td><strong>8-Wide VerticalPLUS I/O Interface</strong></td>
+<td>8 I/O cards or 4 Logic Solvers with terminal blocks</td>
+<td>LocalBus: 15.0 A<br>Bussed field power: 3.25 A per card; 13.0 A per 4-card set at 30 VDC or 250 VAC</td>
+<td>Higher power capacity than horizontal carriers</td>
+</tr>
+<tr>
+<td><strong>1-Wide VerticalPLUS Carrier Extenders</strong></td>
+<td>Extends power and local peer bus signals</td>
+<td>—</td>
+<td>For SIS applications</td>
+</tr>
+</tbody>
+</table>
+
+<h3>10.4.4 — Legacy Vertical Carriers</h3>
+
+<table>
+<thead>
+<tr>
+<th>Carrier Type</th>
+<th>Capacity</th>
+<th>Max Current</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>4-Wide Legacy Vertical Power/Controller</strong></td>
+<td>2 power supplies + 2 controllers<br><em>or</em> 3 power supplies + 1 controller</td>
+<td>—</td>
+<td>Top and bottom versions</td>
+</tr>
+<tr>
+<td><strong>8-Wide Legacy Vertical I/O Interface</strong></td>
+<td>8 I/O cards with terminal blocks</td>
+<td>LocalBus: 15.0 A<br>Bussed field power: 6.5 A per pair at 30 VDC or 250 VAC</td>
+<td>Bottom cable extender: 1.0 m; Top: 2.0 m</td>
+</tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Important:</strong> DeltaV SIS (Safety Instrumented System) is <strong>not</strong> supported on Legacy Vertical carriers. Use VerticalPLUS carriers for SIS applications.
+</div>
+
+<h3>10.4.5 — Fieldbus H1 Carrier</h3>
+
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input Power Rating</td>
+<td>+24 VDC ±20% @ 500 mA (maximum)</td>
+</tr>
+<tr>
+<td>Output Power Rating</td>
+<td>+12 VDC ±5% @ 600 mA (maximum)</td>
+</tr>
+<tr>
+<td>Bussed Field Power</td>
+<td>6.5 A (maximum), shared by both I/O cards</td>
+</tr>
+<tr>
+<td>Fieldbus Port</td>
+<td>Foundation Fieldbus H1 — 31.25 kbit/second</td>
+</tr>
+<tr>
+<td>Fieldbus Power</td>
+<td>9 to 32 VDC, 12 mA (maximum)</td>
+</tr>
+<tr>
+<td>Mounting</td>
+<td>DIN rail (T-rail only), wall, or panel</td>
+</tr>
+</tbody>
+</table>
+
+<h3>10.4.6 — Intrinsically Safe Carriers</h3>
+
+<table>
+<thead>
+<tr>
+<th>Carrier Type</th>
+<th>Capacity</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I.S. Power Supply Carrier</strong></td>
+<td>One I.S. Power Supply</td>
+<td>Mounts on DIN rail</td>
+</tr>
+<tr>
+<td><strong>I.S. 8-Wide Horizontal Carrier</strong></td>
+<td>Eight I.S. I/O cards with terminal blocks</td>
+<td>LocalBus cable: 1.20 m or 2.00 m</td>
+</tr>
+<tr>
+<td><strong>I.S. LocalBus Isolator Carrier</strong></td>
+<td>One LocalBus Isolator card</td>
+<td>Provides galvanic isolation</td>
+</tr>
+</tbody>
+</table>
+
+<h2>10.5 — Carrier Power Budget Quick Reference</h2>
+
+<p>When designing an I/O subsystem, you must ensure the total power draw of all installed cards does not exceed the carrier's LocalBus power capacity. The following table provides a quick reference for power budgets.</p>
+
+<table>
+<thead>
+<tr>
+<th>Carrier</th>
+<th>LocalBus Power</th>
+<th>Bussed Field Power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4-Wide Horizontal I/O</td>
+<td>8 A</td>
+<td>3.2 A per slot at 30 VDC or 250 VAC</td>
+</tr>
+<tr>
+<td>8-Wide Horizontal I/O (per pair)</td>
+<td>8 A</td>
+<td>6.5 A at 30 VDC or 250 VAC</td>
+</tr>
+<tr>
+<td>8-Wide Horizontal I/O (per slot)</td>
+<td>8 A</td>
+<td>3.2 A at 30 VDC or 250 VAC</td>
+</tr>
+<tr>
+<td>8-Wide VerticalPLUS I/O</td>
+<td>15 A</td>
+<td>3.25 A per card; 13.0 A per 4-card set at 30 VDC or 250 VAC</td>
+</tr>
+<tr>
+<td>8-Wide Legacy Vertical I/O</td>
+<td>15 A</td>
+<td>6.5 A per pair at 30 VDC or 250 VAC</td>
+</tr>
+<tr>
+<td>Fieldbus H1 Carrier</td>
+<td>— (powered by H1 bus)</td>
+<td>6.5 A (shared by both I/O cards)</td>
+</tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip:</strong> For large systems, use LocalBus extenders to add more power to the I/O subsystem. The 8-Wide VerticalPLUS carrier provides the highest LocalBus power at 15 A, making it ideal for dense I/O installations.
+</div>
+
+<h2>10.6 — Adding External Power at Carrier Extenders</h2>
+
+<p>If your I/O subsystem requires additional 12 VDC power beyond what the system power supply provides, you can inject external power at the left carrier extender:</p>
+
+<ol>
+<li>Remove the jumper on the left carrier extender.</li>
+<li>Connect a 12 VDC power supply to the terminal block:
+<ul>
+<li><code>+</code> to the center terminal</li>
+<li><code>−</code> to the <code>−</code> terminal</li>
+</ul>
+</li>
+</ol>
+
+<div class="pitfall">
+<strong>Warning:</strong> Removing the jumper removes all 12 VDC power to all cards on all downstream carriers. When 12 VDC power is removed, cards are unable to hold the last value. Always verify your power budget before removing this jumper.
+</div>
+
+<h2>10.7 — Knowledge Check</h2>
+
+<div class="quiz">
+<h3>Quiz: Environmental and Carrier Specifications</h3>
+
+<p><strong>Q1:</strong> What is the maximum operating temperature for Series 2 I/O cards (non-As-Interface)?</p>
+<p><strong>Q2:</strong> What is the maximum total LocalBus cable length allowed across all carrier extender cables?</p>
+<p><strong>Q3:</strong> Which carrier type supports DeltaV Safety Instrumented System (SIS)?</p>
+<p><strong>Q4:</strong> What is the LocalBus power capacity of an 8-Wide VerticalPLUS I/O Interface carrier compared to an 8-Wide Horizontal I/O Interface carrier?</p>
+<p><strong>Q5:</strong> Under what ISA airborne contaminant class are most DeltaV I/O carriers rated?</p>
+
+<details>
+<summary><strong>Show Answers</strong></summary>
+<p><strong>A1:</strong> <span class="answer">−40°C to 70°C (−40°F to 158°F)</span></p>
+<p><strong>A2:</strong> <span class="answer">6.5 meters (21.3 feet)</span></p>
+<p><strong>A3:</strong> <span class="answer">VerticalPLUS carriers</span> (Legacy Vertical carriers do not support SIS.)</p>
+<p><strong>A4:</strong> <span class="answer">VerticalPLUS: 15 A; Horizontal: 8 A</span> — VerticalPLUS provides nearly double the power.</p>
+<p><strong>A5:</strong> <span class="answer">ISA-S71.04-1985 Class G3 (Harsh)</span></p>
+</details>
+</div>
+
+<p class="page-ref">Pages 95–124, Appendices A–B of D800001X312</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

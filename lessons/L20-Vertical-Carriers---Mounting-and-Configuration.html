@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L20 – Vertical Carriers: Mounting and Configuration</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L19-Bussed-Field-Power-and-Controller-Redundancy.html">← L19</a> |
+  <a href="L21-Vertical-Carriers---Wiring-and-Worksheets.html">L21 →</a>
+</nav>
+
+<h1>L20 – Vertical Carriers: Mounting and Configuration</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix M</p>
+<p><label><input type="checkbox" data-lesson="L20" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0514_1.png" alt="Figure from page 514">
+  <div class="caption">Figure from page 514 (page 514)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0515_1.png" alt="Figure from page 515">
+  <div class="caption">Figure from page 515 (page 515)</div>
+</div>
+1. Vertical Carrier Types Overview</h2>
+
+<div class="key-concept">
+<strong>Two Carrier Families:</strong> DeltaV vertical carriers come in two types — <strong>VerticalPLUS</strong> (for both basic process control and Safety Instrumented Systems) and <strong>Legacy Vertical</strong> (for basic process control only, not for SIS).
+</div>
+
+<table>
+<tr><th>Feature</th><th>VerticalPLUS</th><th>Legacy Vertical</th></tr>
+<tr><td>SIS Support</td><td>Yes</td><td>No</td></tr>
+<tr><td>DIN Rail Type</td><td>35 mm T-type</td><td>35 mm T-type or G-type</td></tr>
+<tr><td>LocalBus Max Length</td><td colspan="2">6.5 m (21.3 ft) — includes all cabling</td></tr>
+<tr><td>Orientation Notes</td><td colspan="2">Left/right, top/bottom assume facing the equipment</td></tr>
+<tr><td>Proper Mounting</td><td colspan="2">Lettering must be in the upright position</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Vibration Warning:</strong> Vibration causes vertical carriers to slip down on the DIN rail, disconnecting from the carrier above. <strong>Always install a DIN rail stop</strong> to prevent slippage. Part number: <code>KJ4010X1-BS1</code>.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. VerticalPLUS Carrier Types</h2>
+
+<h3>2.1 4-Wide Power/Controller Carrier</h3>
+<table>
+<tr><th>Attribute</th><th>Detail</th></tr>
+<tr><td>Capacity</td><td>Up to 2 controllers (primary + secondary) and 2 system power supplies</td></tr>
+<tr><td>Position in System</td><td>Top left of vertical system</td></tr>
+<tr><td>Bottom Connector</td><td>96-pin connector — connects to top of a left 8-wide I/O interface carrier</td></tr>
+<tr><td>SIS Support</td><td>Yes</td></tr>
+</table>
+
+<h3>2.2 4-Wide SISNet Repeater Carrier</h3>
+<table>
+<tr><th>Attribute</th><th>Detail</th></tr>
+<tr><td>Capacity</td><td>Primary and secondary SISNet Repeater</td></tr>
+<tr><td>Position in System</td><td>Top right of vertical system</td></tr>
+<tr><td>Bottom Connector</td><td>96-pin connector — connects to top of a right 8-wide I/O interface carrier</td></tr>
+<tr><td>Connectors</td><td>D-shell (for power extension) and BNC (for local peer bus signals/termination)</td></tr>
+</table>
+
+<div class="tip">
+<strong>Tip:</strong> When a 4-wide SISNet Repeater carrier is installed on the top right, there is no need for a 1-wide carrier extender because power can be extended from the D-shell connectors on the SISNet Repeater carrier.
+</div>
+
+<h3>2.3 4-Wide Power Carrier</h3>
+<table>
+<tr><th>Attribute</th><th>Detail</th></tr>
+<tr><td>Capacity</td><td>Redundant power supplies for additional system power</td></tr>
+<tr><td>Position</td><td>Anywhere on the DIN rail in the cabinet</td></tr>
+<tr><td>DC Reference Ground</td><td>Required for legacy 24 VDC bulk power supply only; not required for 12 VDC</td></tr>
+</table>
+
+<h3>2.4 8-Wide I/O Interface Carriers</h3>
+<table>
+<tr><th>Attribute</th><th>Detail</th></tr>
+<tr><td>Capacity</td><td>I/O cards and Logic Solvers</td></tr>
+<tr><td>Power Connectors</td><td>System power and field power insertion points</td></tr>
+<tr><td>Types</td><td>Left 8-wide and Right 8-wide (mirror-image pin layout)</td></tr>
+<tr><td>Addressing</td><td>Positions assigned sequentially from controller outward</td></tr>
+</table>
+
+<h3>2.5 1-Wide Carrier Extenders and Cables</h3>
+<p>Used to extend power and LocalBus signals between left and right 8-wide carriers on separate DIN rails.</p>
+
+<table>
+<tr><th>Component</th><th>Function</th></tr>
+<tr><td>Left 1-wide extender</td><td>Connects to bottom of left 8-wide carrier or top of right 8-wide carrier</td></tr>
+<tr><td>Right 1-wide extender</td><td>Connects to bottom of right 8-wide carrier or top of left 8-wide carrier</td></tr>
+<tr><td>25-pin D-shell cable</td><td>Extends power and LocalBus signals (five lengths available)</td></tr>
+<tr><td>BNC cable</td><td>Extends local peer bus signals for SIS systems</td></tr>
+</table>
+
+<h3>2.6 D-Shell Cable Lengths</h3>
+<table>
+<tr><th>Length (m)</th><th>Length (ft)</th></tr>
+<tr><td>0.4</td><td>1.3</td></tr>
+<tr><td>0.8</td><td>2.6</td></tr>
+<tr><td>1.1</td><td>3.6</td></tr>
+<tr><td>1.5</td><td>4.9</td></tr>
+<tr><td>1.9</td><td>6.2</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ SIS Local Bus Termination:</strong> For SIS systems, the local peer bus must be terminated by 120 ohm BNC terminators at either the 1-wide carrier extender connected to the last 8-wide carrier or at a 4-wide SISNet Repeater carrier. Termination location depends on carrier configuration.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Installing VerticalPLUS Carriers</h2>
+
+<h3>3.1 Installing the DIN Rail Stop</h3>
+
+<table>
+<tr><th>Step</th><th>Action</th><th>Notes</th></tr>
+<tr><td>1</td><td>Verify the arrow on the stop front points <strong>upward</strong> toward the device</td><td>Downward arrows risk screw damage to device pins</td></tr>
+<tr><td>2</td><td>Hook the deeper-notched end over one side of the DIN rail, then hook the shallower notch over the other side</td><td>—</td></tr>
+<tr><td>3</td><td>Screw the stop onto the DIN rail — do not overtighten</td><td>Both sides must be properly secured; observe torque limits</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>DIN Rail Stop Location:</strong> Always install at the <strong>lowest position</strong> on the DIN rail, before installing any carriers.
+</div>
+
+<h3>3.2 Installing and Removing Carriers</h3>
+
+<p><strong>Installation Procedure:</strong></p>
+<table>
+<tr><th>Step</th><th>Action</th></tr>
+<tr><td>1</td><td>Position carrier on DIN rail and push to snap into place</td></tr>
+<tr><td>2</td><td>Slide carrier down until it meets the DIN rail stop</td></tr>
+<tr><td>3</td><td>Snap next carrier onto the DIN rail</td></tr>
+<tr><td>4</td><td>Connect adjacent carriers by sliding pins together</td></tr>
+<tr><td>5</td><td>Connect ground wiring (one ground wire per group of carriers on a DIN rail)</td></tr>
+</table>
+
+<p><strong>Removal Procedure:</strong></p>
+<ol>
+  <li>Use the largest flat-blade screwdriver that fits through the latch access holes</li>
+  <li>Turn the latch cam approximately one-quarter turn to the right (as indicated on the carrier top graphic)</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>4. Extending LocalBus Power</h2>
+
+<p>When VerticalPLUS carriers are on separate DIN rails, carrier extender cables extend LocalBus power through 1-wide VerticalPLUS carrier extenders.</p>
+
+<h3>4.1 Power Extended from Left to Right Carriers (6-Carrier System)</h3>
+<table>
+<tr><th>Step</th><th>Action</th></tr>
+<tr><td>1</td><td>Connect left 1-wide extender to last 8-wide carrier on left side (carrier 3) via 96-pin connectors</td></tr>
+<tr><td>2</td><td>Connect right 1-wide extender to first 8-wide carrier on right side (carrier 4) via 96-pin connectors</td></tr>
+<tr><td>3</td><td>Connect 25-pin D-shell cable to D-shell connector labeled A on left extender; fasten retainer screws</td></tr>
+<tr><td>4</td><td>Connect other end of D-shell cable to D-shell connector labeled A on right extender; fasten retainer screws</td></tr>
+</table>
+
+<h3>4.2 Power Extended from Right to Left Carriers (Up to 8 Carriers)</h3>
+<table>
+<tr><th>Step</th><th>Action</th></tr>
+<tr><td>1</td><td>Connect left 1-wide extender (or SISNet Repeater carrier) to last carrier on right side (carrier 6)</td></tr>
+<tr><td>2</td><td>Connect right 1-wide extender to first carrier on left side (carrier 7)</td></tr>
+<tr><td>3</td><td>Connect 25-pin D-shell cable to D-shell labeled A on right extender/SISNet Repeater</td></tr>
+<tr><td>4</td><td>Connect other end to D-shell labeled A on left extender; fasten screws</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. Inserting System Power</h2>
+
+<p>When the total power draw exceeds the power supply's capability at a given position:</p>
+<ol>
+  <li>Calculate power per position on the carrier</li>
+  <li>Identify the position where the limit is exceeded (count from the power supply end)</li>
+  <li>Locate the power jumper just <strong>before</strong> that position</li>
+  <li>Remove the jumper and insert additional 12 VDC power at that node</li>
+</ol>
+
+<div class="pitfall">
+<strong>⚠ Warning:</strong> Removing the jumper removes <strong>all 12 VDC power</strong> to all cards on all downstream carriers. Cards will be unable to hold the last value during the power transition.
+</div>
+
+<div class="tip">
+<strong>Grounding Rule:</strong> When multiple power supplies are used, ensure they are grounded at the same point.
+</div>
+
+<table>
+<tr><th>Terminals</th><th>Connection</th></tr>
+<tr><td>Center terminal</td><td>+ (positive) 12 VDC</td></tr>
+<tr><td>Negative terminal</td><td>– (negative)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. Bussed Field Power with VerticalPLUS Carriers</h2>
+
+<p>The bussed field power connectors on VerticalPLUS carriers differ from horizontal and Legacy Vertical carriers. Key principles:</p>
+
+<table>
+<tr><th>Principle</th><th>Detail</th></tr>
+<tr><td>Max Current per Connection</td><td>13 A</td></tr>
+<tr><td>Voltage Matching</td><td>Extended field power must match the same field voltage requirements</td></tr>
+<tr><td>Factory Jumpers</td><td>Must be removed when powering only one I/O card per supply</td></tr>
+<tr><td>Adjacent 250 VAC Sources</td><td>Must be the same phase</td></tr>
+</table>
+
+<h3>6.1 Screw Terminal Assignments</h3>
+<table>
+<tr><th>Terminals 1–4</th><th>Terminals 5–8</th></tr>
+<tr><td>+ Field Power connections</td><td>– Field Power connections</td></tr>
+</table>
+
+<h3>6.2 Field Power Configurations</h3>
+<table>
+<tr><th>Configuration</th><th>Jumpers</th><th>Notes</th></tr>
+<tr><td>One power supply per I/O card (redundant cards)</td><td>Removed</td><td>Ensure factory jumpers are removed</td></tr>
+<tr><td>One power supply per two I/O cards</td><td>Installed between card positions</td><td>Add jumper wires to extend power</td></tr>
+<tr><td>One power supply per four I/O cards</td><td>Installed across four positions</td><td>Optional wires extend to next connector slots</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. Legacy Vertical Carriers</h2>
+
+<h3>7.1 Carrier Types</h3>
+<table>
+<tr><th>Type</th><th>Details</th></tr>
+<tr><td>Top 4-wide Power/Controller</td><td>Connects to left 8-wide I/O carrier; 96-pin connector at bottom; holds cards 1-8 (top to bottom)</td></tr>
+<tr><td>Bottom 4-wide Power/Controller</td><td>Connects to right 8-wide I/O carrier; 96-pin connector at top; holds cards 8-1 (top to bottom)</td></tr>
+<tr><td>Left 8-wide I/O Interface</td><td>Card positions 1–8 from top to bottom</td></tr>
+<tr><td>Right 8-wide I/O Interface</td><td>Card positions 8–1 from top to bottom</td></tr>
+</table>
+
+<h3>7.2 Cable Extenders</h3>
+<table>
+<tr><th>Cable</th><th>Length</th><th>Purpose</th></tr>
+<tr><td>Bottom cable extender</td><td>1 meter (39.37 in.)</td><td>Left → Right carrier at bottom of DIN rails</td></tr>
+<tr><td>Top cable extender</td><td>2 meters (78.74 in.)</td><td>Right → Left carrier at top of DIN rails (bridge)</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Cable Warning:</strong> Failure to use the correct cables can result in a <strong>corrupt addressing scheme</strong>. Bottom cable exits downward; top cable exits upward.
+</div>
+
+<h3>7.3 Legacy Vertical Power Splitting</h3>
+<p>The 8-wide Legacy Vertical I/O carriers have a <strong>split high-side power plane</strong> with a shared common return plane. A jumper bridges both high-side planes. To add power:</p>
+<ol>
+  <li>Calculate power per position on the carrier</li>
+  <li>Find the position where the limit is exceeded (counting from the power supply end)</li>
+  <li>Remove the jumper just before that position</li>
+  <li>Insert additional 12 VDC power at the node</li>
+</ol>
+
+<div class="pitfall">
+<strong>⚠ Right Carrier Caution:</strong> On right 8-wide Legacy Vertical carriers, removing the jumper only disconnects the 96-pin carrier connector — it does <strong>not</strong> disconnect the 48-pin cable connector. Be careful when power is extended to a right carrier with a connected cable.
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Legacy Vertical System Length Calculation</h2>
+
+<div class="key-concept">
+<strong>Maximum LocalBus Length:</strong> 6.5 m (21.3 ft) — same for vertical and horizontal systems. This supports up to eight 8-wide carriers, one 4-wide carrier, one bottom cable extender, and one top cable extender.
+</div>
+
+<h3>8.1 Length Calculation Table (Table M-1)</h3>
+<p>Each carrier (C1–C8) = 22 inches. Carriers C6 and C7 are spurs (not counted in series length).</p>
+
+<table>
+<tr><th>Carrier End</th><th>Path Calculation</th><th>Total Length</th></tr>
+<tr><td>C6</td><td>C1 + C2 + C3 + 1m + C4 + C5 + C6</td><td>14.3 ft</td></tr>
+<tr><td>C7</td><td>C1 + C2 + C3 + 1m + C4 + C5 + 2m + C7</td><td>20.8 ft</td></tr>
+<tr><td>C8</td><td>C1 + C2 + C3 + 1m + C4 + C5 + 2m + C8</td><td>20.8 ft</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Do Not Extend Spurs:</strong> Connecting additional carriers to a spur (e.g., to the end of carrier 6) will corrupt the addressing scheme — the new carrier will become carrier 7, conflicting with the existing carrier 7 at the end of the 2-meter cable.
+</div>
+
+<!-- ============================================================ -->
+<h2>9. Reference Summary</h2>
+
+<table>
+<tr><th>Topic</th><th>Key Point</th></tr>
+<tr><td>DIN Rail Stop</td><td>Part #KJ4010X1-BS1; install at lowest position before carriers</td></tr>
+<tr><td>VerticalPLUS vs Legacy</td><td>VerticalPLUS supports SIS; Legacy does not</td></tr>
+<tr><td>LocalBus Max Length</td><td>6.5 m (21.3 ft) — includes all cabling</td></tr>
+<tr><td>Power jumper removal</td><td>Kills all 12 VDC to downstream cards</td></tr>
+<tr><td>Bussed field power limit</td><td>13 A per connection on VerticalPLUS</td></tr>
+<tr><td>Legacy cable types</td><td>1m bottom (L→R) and 2m top (R→L) — wrong cable = corrupt addressing</td></tr>
+<tr><td>Spur rule</td><td>No additional carriers on spurs; corrupts addressing</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="quiz">
+<h3>Review Questions</h3>
+
+<p><strong>1.</strong> What is the maximum LocalBus length for both vertical and horizontal DeltaV systems?</p>
+<p class="answer">6.5 m (21.3 ft), including all cabling.</p>
+
+<p><strong>2.</strong> Why must a DIN rail stop be installed before mounting vertical carriers?</p>
+<p class="answer">Vibration causes vertical carriers to slip down the DIN rail, disconnecting from the carrier above. The stop prevents this slippage.</p>
+
+<p><strong>3.</strong> What happens when you remove a power jumper on a VerticalPLUS carrier?</p>
+<p class="answer">All 12 VDC power is removed from all cards on all downstream carriers. Cards are unable to hold their last value.</p>
+
+<p><strong>4.</strong> In a Legacy Vertical system, why must you use the correct cable type (1m vs 2m)?</p>
+<p class="answer">Using the wrong cable results in a corrupt addressing scheme. The 1m bottom cable connects left-to-right carriers at the bottom; the 2m top cable bridges right-to-left carriers at the top.</p>
+
+<p><strong>5.</strong> What is the significance of carriers C6 and C7 in an 8-carrier Legacy Vertical system length calculation?</p>
+<p class="answer">They are spurs, not in series with the rest of the system. Their lengths are not counted in the overall LocalBus length calculation, but spur lengths must be ≤ total system length. No additional carriers may be connected to spurs.</p>
+</div>
+
+<p class="page-ref">Pages referenced: 495–526</p>
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L11: Interface Specifications — Digital I/O Cards</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a><br>
+<a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a><br>
+<a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a><br>
+<a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a><br>
+<a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="L09-LEDs-Smart-Switches-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="L10-Environmental-and-Carrier-Specifications.html">L10: Environmental and Carrier Specifications</a><br>
+<a href="L11-Interface-Specifications---Digital-IO-Cards.html"><strong>L11: Interface Specifications — Digital I/O Cards</strong></a><br>
+<a href="L12-Interface-Specifications---Analog-IO-Cards.html">L12: Interface Specifications — Analog I/O Cards</a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a><br>
+</div>
+</details>
+</nav>
+
+<h1>L11: Interface Specifications — Digital I/O Cards</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Appendix C, "Interface Specifications," pp. 125–178.</p>
+
+<p>This lesson provides a comprehensive master reference for every digital (discrete) I/O card supported by the DeltaV system. Use the tables below to select the correct card for your application, verify wiring compatibility, and plan your power budget.</p>
+
+<h2>11.1 — Digital I/O Card Types at a Glance</h2>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> DeltaV digital I/O cards fall into three categories: <strong>Discrete Input (DI)</strong> for reading on/off signals, <strong>Discrete Output (DO)</strong> for driving on/off loads, and <strong>Discrete Shared Control (DSC)</strong> for specialized applications. Each card type is available in multiple voltage ranges (24 VDC, 120 VAC, 230 VAC), isolation configurations (dry contact vs. isolated), and channel counts (8 or 32 channels). Series 2 versions add wider temperature ranges and redundancy support.
+</div>
+
+<h2>11.2 — Master Reference Table: All Digital I/O Cards</h2>
+
+<p>The following table provides a complete comparison of every digital I/O card available in the DeltaV system. Use this as your primary card selection reference.</p>
+
+<table>
+<thead>
+<tr>
+<th>Card Type</th>
+<th>Channels</th>
+<th>Voltage Range</th>
+<th>Current Rating</th>
+<th>Isolation</th>
+<th>Termination Type</th>
+<th>Redundancy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DI, 8-Channel, 24 VDC, Dry Contact</strong></td>
+<td>8</td>
+<td>24 VDC</td>
+<td>100 mA at 24 VDC (±10%)</td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O, 16-pin Mass Term</em></td>
+<td>Yes (Series 2)</td>
+</tr>
+<tr>
+<td><strong>DI, 8-Channel, 24 VDC, Isolated</strong></td>
+<td>8</td>
+<td>24 VDC</td>
+<td>100 mA at 24 VDC (±10%)</td>
+<td>Channel-to-system: 1500 VDC<br><strong>Channel-to-channel isolated</strong></td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DI, 8-Channel, 120 VAC, Dry Contact</strong></td>
+<td>8</td>
+<td>120 VAC</td>
+<td>7 mA at 120 VAC (field power)</td>
+<td>Channel-to-system: 250 VAC<br>Optically isolated</td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DI, 8-Channel, 120 VAC, Isolated</strong></td>
+<td>8</td>
+<td>120 VAC</td>
+<td>None (no field power)</td>
+<td>Channel-to-system: 250 VAC<br><strong>Channel-to-channel: 250 VAC</strong></td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O</em></td>
+<td>Yes (Series 2)</td>
+</tr>
+<tr>
+<td><strong>DI, 8-Channel, 230 VAC, Dry Contact</strong></td>
+<td>8</td>
+<td>230 VAC</td>
+<td>7 mA at 230 VAC (field power)</td>
+<td>Channel-to-system: 250 VAC<br>Optically isolated</td>
+<td>Fused I/O Terminal Block<br><em>Optional: I/O Block</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DI, 8-Channel, 230 VAC, Isolated</strong></td>
+<td>8</td>
+<td>230 VAC</td>
+<td>None (no field power)</td>
+<td>Channel-to-system: 250 VAC<br><strong>Channel-to-channel: 250 VAC</strong></td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DI, 32-Channel, 24 VDC, Dry Contact</strong></td>
+<td>32</td>
+<td>24 VDC</td>
+<td>150 mA at 24 VDC (±10%)</td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>32-Channel Terminal Block<br><em>Optional: 40-pin Mass Term</em></td>
+<td>Yes (Series 2 Plus)</td>
+</tr>
+<tr>
+<td><strong>DO, 8-Channel, 24 VDC, High-Side</strong></td>
+<td>8</td>
+<td>2–60 VDC<br><em>(Series 2: 24 VDC ±10%)</em></td>
+<td>1.0 A continuous per channel<br>Inrush: 4.0 A (&lt;100 ms), 6.0 A (&lt;20 ms)<br>3.0 A max per card</td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>Fused I/O Terminal Block<br><em>Optional: I/O, 10/16-pin Mass Term</em></td>
+<td>Yes (Series 2)</td>
+</tr>
+<tr>
+<td><strong>DO, 8-Channel, 24 VDC, Isolated</strong></td>
+<td>8</td>
+<td>2–60 VDC</td>
+<td>1.0 A continuous per channel<br>Inrush: 4.0 A (&lt;100 ms), 6.0 A (&lt;20 ms)</td>
+<td>Channel-to-system: 1500 VDC<br><strong>Channel-to-channel isolated</strong></td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O, 16-pin Mass Term</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DO, 8-Channel, 120/230 VAC, High-Side</strong></td>
+<td>8</td>
+<td>20–250 VAC</td>
+<td>1.0 A continuous per channel<br>Inrush: 5 A (&lt;100 ms), 20 A (&lt;20 ms)<br>3.0 A max per card up to 5°C<br>2.0 A max per card up to 60°C</td>
+<td>Channel-to-system: 250 VAC<br>Optically isolated</td>
+<td>Fused I/O Terminal Block<br><em>Optional: I/O Block</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DO, 8-Channel, 120 VAC/230 VAC, Isolated</strong></td>
+<td>8</td>
+<td>20–250 VAC</td>
+<td>1.0 A continuous per channel<br>Inrush: 5 A (&lt;100 ms), 20 A (&lt;20 ms)<br>3.0 A max per card up to 50°C<br>2.0 A max per card up to 60°C</td>
+<td>Channel-to-system: 250 VAC<br><strong>Channel-to-channel: 250 VAC</strong></td>
+<td>I/O Terminal Block<br><em>Optional: Fused I/O</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>DO, 32-Channel, 24 VDC, High-Side</strong></td>
+<td>32</td>
+<td>24 VDC (±10%)<br><em>(Series 2: 24 VDC −15%/+20%)</em></td>
+<td>100 mA per channel<br>3.2 A at 24 VDC per card</td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>32-Channel Terminal Block<br><em>Optional: 40-pin Mass Term</em></td>
+<td>Yes (Series 2 Plus)</td>
+</tr>
+<tr>
+<td><strong>I.S. DI, 16-Channel</strong></td>
+<td>16</td>
+<td>7.0–9.0 V (sensor voltage)</td>
+<td>350 mA (LocalBus)</td>
+<td>LocalBus-to-channel: 60 VAC<br>I.S. channel-to-non-I.S. rail: 250 VAC</td>
+<td>I.S. 16-Channel Terminal Block<br><em>(required)</em></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>I.S. DO, 4-Channel</strong></td>
+<td>4</td>
+<td>25 VDC (max)<br>11 V at 45 mA</td>
+<td>45 mA min per channel<br>560 mA LocalBus</td>
+<td>LocalBus-to-channel: 60 VAC<br>I.S. channel-to-non-I.S. rail: 250 VAC</td>
+<td>I.S. 8-Channel Terminal Block<br><em>Optional: I.S. loop disconnect</em></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>11.3 — Discrete Input Card Specifications</h2>
+
+<h3>11.3.1 — DI, 8-Channel, 24 VDC, Dry Contact (Table C-9)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Optically isolated from system; factory tested to 1500 VDC</td></tr>
+<tr><td>Detection Level for ON</td><td>&gt; 2.2 mA</td></tr>
+<tr><td>Detection Level for OFF</td><td>&lt; 1 mA</td></tr>
+<tr><td>Impedance</td><td>5 kΩ</td></tr>
+<tr><td>LocalBus Current</td><td>75 mA typical, 100 mA max<br><em>S2: 90 mA typical, 150 mA max</em></td></tr>
+<tr><td>Field Circuit Power</td><td>100 mA at 24 VDC (±10%)</td></tr>
+<tr><td>Optional Fuse (Simplex only)</td><td>2.0 A</td></tr>
+</tbody>
+</table>
+
+<h3>11.3.2 — DI, 8-Channel, 120 VAC, Isolated (Table C-10)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 250 VAC<br><strong>Channel-to-channel: 250 VAC</strong></td></tr>
+<tr><td>Detection Level for ON</td><td>84 VAC to 130 VAC</td></tr>
+<tr><td>Detection Level for OFF</td><td>0 VAC to 34 VAC</td></tr>
+<tr><td>Input Load (Contact Cleaning)</td><td>2 mA at 120 VAC</td></tr>
+<tr><td>Input Impedance</td><td>60 kΩ</td></tr>
+<tr><td>LocalBus Current</td><td>75 mA typical, 100 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>None</td></tr>
+</tbody>
+</table>
+
+<h3>11.3.3 — DI, 8-Channel, 230 VAC, Dry Contact (Table C-11)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 250 VAC; optically isolated</td></tr>
+<tr><td>Detection Level for ON</td><td>&gt; 0.71 mA</td></tr>
+<tr><td>Detection Level for OFF</td><td>&lt; 0.28 mA</td></tr>
+<tr><td>Impedance</td><td>238 kΩ</td></tr>
+<tr><td>LocalBus Current</td><td>75 mA typical, 100 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>7 mA at 230 VAC</td></tr>
+</tbody>
+</table>
+
+<h3>11.3.4 — DI, 8-Channel, 230 VAC, Isolated (Table C-12)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 250 VAC<br><strong>Channel-to-channel: 250 VAC</strong></td></tr>
+<tr><td>Detection Level for ON</td><td>168 VAC to 250 VAC</td></tr>
+<tr><td>Detection Level for OFF</td><td>0 VAC to 68 VAC</td></tr>
+<tr><td>Input Load (Contact Cleaning)</td><td>1 mA at 230 VAC</td></tr>
+<tr><td>Input Impedance</td><td>238 kΩ</td></tr>
+<tr><td>LocalBus Current</td><td>75 mA typical, 100 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>None</td></tr>
+</tbody>
+</table>
+
+<h3>11.3.5 — DI, 32-Channel, 24 VDC, Dry Contact (Table C-13)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>32</td></tr>
+<tr><td>Isolation</td><td>Optically isolated from system; factory tested to 1500 VDC</td></tr>
+<tr><td>Detection Level for ON</td><td>&gt; 2 mA</td></tr>
+<tr><td>Detection Level for OFF</td><td>&lt; 0.25 mA</td></tr>
+<tr><td>Impedance</td><td>5 kΩ</td></tr>
+<tr><td>LocalBus Current</td><td>50 mA typical, 75 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>150 mA at 24 VDC (±10%)<br><em>S2: 150 mA at 24 VDC (−15%/+20%)</em></td></tr>
+</tbody>
+</table>
+
+<h2>11.4 — Discrete Output Card Specifications</h2>
+
+<h3>11.4.1 — DO, 8-Channel, 24 VDC, High-Side (Table C-14)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Optically isolated from system; factory tested to 1500 VDC</td></tr>
+<tr><td>Output Range</td><td>2 VDC to 60 VDC<br><em>S2: 24 VDC ±10%</em></td></tr>
+<tr><td>Output Rating</td><td>1.0 A continuous per channel<br>Inrush: 4.0 A (&lt;100 ms), 6.0 A (&lt;20 ms)<br>3.0 A max per card</td></tr>
+<tr><td>Off-State Leakage</td><td>1.2 mA maximum</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max<br><em>S2: 90 mA typical, 150 mA max</em></td></tr>
+<tr><td>Field Circuit Power</td><td>3.0 A at 24 VDC (±10%)</td></tr>
+<tr><td>Line Fault Detection (S2)</td><td>Short: &lt; 5 Ω for &gt; 3 s<br>Open: &gt; 25 kΩ for guaranteed detection</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — Line Fault Detection:</strong> The Series 2 DO 8-Channel 24 VDC High-Side card has channel-by-channel line fault detection. When enabled, the card pulses the output to the opposite state (max 200 µs) to verify the line. High-speed inputs connected to a DO channel with line fault enabled must account for these pulses.
+</div>
+
+<h3>11.4.2 — DO, 8-Channel, 24 VDC, Isolated (Table C-15)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td><strong>Channel-to-system: 1500 VDC; channel-to-channel isolated</strong></td></tr>
+<tr><td>Output Range</td><td>2 VDC to 60 VDC</td></tr>
+<tr><td>Output Rating</td><td>1.0 A continuous per channel<br>Inrush: 4.0 A (&lt;100 ms), 6.0 A (&lt;20 ms)</td></tr>
+<tr><td>Off-State Leakage</td><td>1.2 mA maximum</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>None</td></tr>
+<tr><td>Optional Fuse</td><td>2.0 A (inrush 5.0 A for &lt;10 ms at 0.1% duty cycle)</td></tr>
+</tbody>
+</table>
+
+<h3>11.4.3 — DO, 8-Channel, 120/230 VAC, High-Side (Table C-16)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 250 VAC; optically isolated</td></tr>
+<tr><td>Output Range</td><td>20 VAC to 250 VAC</td></tr>
+<tr><td>Output Rating</td><td>1.0 A continuous per channel<br>Inrush: 5 A (&lt;100 ms), 20 A (&lt;20 ms)<br>3.0 A max per card up to 5°C<br>2.0 A max per card up to 60°C<br><em>S2: 3.0 A max per card</em></td></tr>
+<tr><td>Off-State Leakage</td><td>2 mA max at 120 VAC; 4 mA max at 230 VAC</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>3.0 A at 120 VAC or 230 VAC</td></tr>
+</tbody>
+</table>
+
+<h3>11.4.4 — DO, 8-Channel, 120 VAC/230 VAC, Isolated (Table C-17)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td><strong>Channel-to-system: 250 VAC; channel-to-channel: 250 VAC</strong></td></tr>
+<tr><td>Output Range</td><td>20 VAC to 250 VAC</td></tr>
+<tr><td>Output Rating</td><td>1.0 A continuous per channel<br>Inrush: 5 A (&lt;100 ms), 20 A (&lt;20 ms)<br>3.0 A max per card up to 50°C<br>2.0 A max per card up to 60°C<br><em>S2: 3.0 A max per card</em></td></tr>
+<tr><td>Off-State Leakage</td><td>2 mA max at 120 VAC; 4 mA max at 230 VAC</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>None</td></tr>
+</tbody>
+</table>
+
+<h3>11.4.5 — DO, 32-Channel, 24 VDC, High-Side (Table C-18)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>32</td></tr>
+<tr><td>Isolation</td><td>Optically isolated from system; factory tested to 1500 VDC</td></tr>
+<tr><td>Output Range</td><td>24 VDC (±10%)<br><em>S2: 24 VDC (−15%/+20%)</em></td></tr>
+<tr><td>Output Rating</td><td>100 mA per channel</td></tr>
+<tr><td>Off-State Leakage</td><td>0.1 mA maximum</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>3.2 A at 24 VDC (±10%)<br><em>S2: 3.2 A at 24 VDC (−15%/+20%)</em></td></tr>
+</tbody>
+</table>
+
+<div class="pitfall">
+<strong>Pitfall — 32-Channel DO Fuse Groups:</strong> A resettable 1A fuse protects each group of four channels (1–4, 5–8, … 29–32). Excessive current on any single channel can trip the fuse and disable all four channels in the group. Turn off or disconnect the group and allow the fuse to cool and reset.
+</div>
+
+<h2>11.5 — Configurable Channel Types (DO Cards)</h2>
+
+<p>DeltaV DO cards support three configurable channel types. Each channel can be independently configured:</p>
+
+<table>
+<thead>
+<tr>
+<th>Channel Type</th>
+<th>Description</th>
+<th>Fail-Action: Hold Last Value</th>
+<th>Fail-Action: Go to Configured State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Discrete Output</strong></td>
+<td>Output stays in the last state submitted by the controller</td>
+<td>Output holds last state</td>
+<td>Output drives to configured faultstate value</td>
+</tr>
+<tr>
+<td><strong>Momentary Output</strong></td>
+<td>Output is active for a pre-configured time period (100 ms to 100 s)</td>
+<td>Output finishes current pulse</td>
+<td>Output drives to faultstate; channel re-configured as latched</td>
+</tr>
+<tr>
+<td><strong>Continuous Pulse Output</strong></td>
+<td>Output is active as a percentage of a pre-configured base time period (100 ms to 100 s)</td>
+<td>Output continues pulsing</td>
+<td>Output drives to faultstate; channel re-configured as latched</td>
+</tr>
+</tbody>
+</table>
+
+<h2>11.6 — Dry Contact vs. Isolated: When to Use Each</h2>
+
+<div class="key-concept">
+<strong>Key Concept:</strong><br>
+• <strong>Dry Contact</strong> cards share a common return path. They are simpler and less expensive but require that all connected devices reference the same voltage potential.<br>
+• <strong>Isolated</strong> cards provide channel-to-channel isolation (tested to 1500 VDC for DC cards, 250 VAC for AC cards). Use isolated cards when field devices operate at different voltage potentials, when you need to prevent ground loops, or when field wiring runs through different areas with different ground references.
+</div>
+
+<h2>11.7 — Intrinsically Safe Digital I/O</h2>
+
+<h3>11.7.1 — I.S. DI, 16-Channel (Table C-43)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>16</td></tr>
+<tr><td>Isolation</td><td>LocalBus-to-channel: 60 VAC<br>I.S. channel-to-non-I.S. rail: 250 VAC</td></tr>
+<tr><td>Detection Level for ON</td><td>&gt; 2.1 mA</td></tr>
+<tr><td>Detection Level for OFF</td><td>&lt; 1.2 mA</td></tr>
+<tr><td>Voltage Applied to Sensor</td><td>7.0 to 9.0 V from 1 kΩ ±10%</td></tr>
+<tr><td>Line Fault Detection</td><td>Short: &lt; 100 Ω; Open: &gt; 50 kΩ</td></tr>
+<tr><td>Max Input Frequency</td><td>20 Hz</td></tr>
+<tr><td>Min Pulse Width Detected</td><td>45 ms</td></tr>
+<tr><td>LocalBus Current</td><td>350 mA</td></tr>
+</tbody>
+</table>
+
+<h3>11.7.2 — I.S. DO, 4-Channel (Table C-44)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>4</td></tr>
+<tr><td>Isolation</td><td>LocalBus-to-channel: 60 VAC<br>I.S. channel-to-non-I.S. rail: 250 VAC</td></tr>
+<tr><td>Output Range</td><td>22 V (open circuit); 11 V at 45 mA; 25 VDC max</td></tr>
+<tr><td>Output Rating</td><td>45 mA minimum</td></tr>
+<tr><td>Current Limit per Channel</td><td>45 mA</td></tr>
+<tr><td>LocalBus Current</td><td>560 mA</td></tr>
+<tr><td>Channel Types</td><td>Discrete output, Momentary output, Continuous pulse output</td></tr>
+</tbody>
+</table>
+
+<div class="pitfall">
+<strong>Warning:</strong> Before substituting an I.S. AO card with an I.S. AO HART card, you must perform a loop analysis or reassess the field parameters. Refer to installation instructions 12P1892, 12P2524, or 12P1990 for valid field parameters.
+</div>
+
+<h2>11.8 — Digital I/O Card Power Budget Summary</h2>
+
+<p>When planning your I/O subsystem, ensure the total LocalBus current draw of all installed cards does not exceed the carrier's capacity. The following table summarizes LocalBus current requirements.</p>
+
+<table>
+<thead>
+<tr>
+<th>Card Type</th>
+<th>LocalBus Current (typical)</th>
+<th>LocalBus Current (max)</th>
+<th>Field Power Required</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>DI, 8-Ch, 24 VDC, Dry Contact</td><td>75 mA</td><td>100 mA (S2: 150 mA)</td><td>100 mA at 24 VDC</td></tr>
+<tr><td>DI, 8-Ch, 120/230 VAC, any</td><td>75 mA</td><td>100 mA</td><td>7 mA (Dry) / None (Isolated)</td></tr>
+<tr><td>DI, 32-Ch, 24 VDC, Dry Contact</td><td>50 mA</td><td>75 mA</td><td>150 mA at 24 VDC</td></tr>
+<tr><td>DO, 8-Ch, 24 VDC, High-Side</td><td>100 mA (S2: 90 mA)</td><td>150 mA</td><td>3.0 A at 24 VDC</td></tr>
+<tr><td>DO, 8-Ch, 24 VDC, Isolated</td><td>100 mA</td><td>150 mA</td><td>None (self-powered)</td></tr>
+<tr><td>DO, 8-Ch, 120/230 VAC, any</td><td>100 mA</td><td>150 mA</td><td>3.0 A (High-Side) / None (Isolated)</td></tr>
+<tr><td>DO, 32-Ch, 24 VDC, High-Side</td><td>100 mA</td><td>150 mA</td><td>3.2 A at 24 VDC</td></tr>
+<tr><td>I.S. DI, 16-Ch</td><td>—</td><td>350 mA</td><td>None</td></tr>
+<tr><td>I.S. DO, 4-Ch</td><td>—</td><td>560 mA</td><td>None (I.S. power)</td></tr>
+</tbody>
+</table>
+
+<h2>11.9 — Knowledge Check</h2>
+
+<div class="quiz">
+<h3>Quiz: Digital I/O Card Specifications</h3>
+
+<p><strong>Q1:</strong> What is the maximum continuous current per channel for a DO, 8-Channel, 24 VDC, High-Side card?</p>
+<p><strong>Q2:</strong> Which DI card type provides channel-to-channel isolation: Dry Contact or Isolated?</p>
+<p><strong>Q3:</strong> What is the output rating per channel for the DO, 32-Channel, 24 VDC, High-Side card?</p>
+<p><strong>Q4:</strong> How many channels does the I.S. DO card support, and what is the current limit per channel?</p>
+<p><strong>Q5:</strong> What is the maximum LocalBus current for the I.S. DO, 4-Channel card?</p>
+
+<details>
+<summary><strong>Show Answers</strong></summary>
+<p><strong>A1:</strong> <span class="answer">1.0 A continuous per channel</span> (inrush: 4.0 A for &lt;100 ms; 6.0 A for &lt;20 ms)</p>
+<p><strong>A2:</strong> <span class="answer">Isolated</span> — Isolated cards provide channel-to-channel isolation. Dry Contact cards share a common return.</p>
+<p><strong>A3:</strong> <span class="answer">100 mA per channel</span></p>
+<p><strong>A4:</strong> <span class="answer">4 channels; 45 mA current limit per channel</span></p>
+<p><strong>A5:</strong> <span class="answer">560 mA</span></p>
+</details>
+</div>
+
+<p class="page-ref">Pages 125–178, Appendix C of D800001X312</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

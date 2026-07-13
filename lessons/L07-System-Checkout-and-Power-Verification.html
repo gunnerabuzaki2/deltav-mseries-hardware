@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7: System Checkout and Power Verification — DeltaV M-series Hardware</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; vertical-align: top; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav style="margin-bottom:1.5em;font-size:0.9em;">
+<a href="../index.html">← Home</a> &nbsp;|&nbsp;
+<a href="L06-Workstation-Control-Network-and-Power.html">← Previous</a> &nbsp;|&nbsp;
+<a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">Next →</a>
+</nav>
+
+<details>
+<summary style="cursor:pointer;font-weight:bold;font-size:1.1em;color:#2c5f2d;">📚 All Lessons</summary>
+<div style="margin-top:0.8em;line-height:2;">
+<strong>Module 1 — System Overview</strong><br>
+<label><input type="checkbox" data-lesson="L01" onchange="saveProgress()"> <a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a></label><br>
+<strong>Module 2 — Installation</strong><br>
+<label><input type="checkbox" data-lesson="L02" onchange="saveProgress()"> <a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a></label><br>
+<label><input type="checkbox" data-lesson="L03" onchange="saveProgress()"> <a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a></label><br>
+<label><input type="checkbox" data-lesson="L04" onchange="saveProgress()"> <a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L05" onchange="saveProgress()"> <a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a></label><br>
+<label><input type="checkbox" data-lesson="L06" onchange="saveProgress()"> <a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a></label><br>
+<strong>Module 3 — Checkout &amp; Troubleshooting</strong><br>
+<label><input type="checkbox" data-lesson="L07" onchange="saveProgress()"> <a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a></label><br>
+<label><input type="checkbox" data-lesson="L08" onchange="saveProgress()"> <a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L09" onchange="saveProgress()"> <a href="L09-Smart-Switches-Diagnostics-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a></label><br>
+<span id="progress-text"></span>
+</div>
+</details>
+
+<h1>Lesson 7: System Checkout and Power Verification</h1>
+<p class="page-ref">Pages 57–58 — System checkout procedures for cables, power supplies, and field wiring.</p>
+<p class="source">Source: Emerson DeltaV M-series Hardware Installation and Reference Manual (D800001X312, April 2021), Chapter 3, Pages 57–58</p>
+
+<input type="checkbox" data-lesson="L07" onchange="saveProgress()"> Mark lesson complete
+
+<h2>7.1 Why System Checkout Matters</h2>
+
+<p>After you have physically installed all the DeltaV hardware — mounted the DIN rails, seated the controllers, connected the I/O cards, and wired the network — you are not done. The difference between a smooth startup and a week of debugging often comes down to a disciplined <strong>system checkout</strong> before you ever power up the DeltaV software. System checkout is a structured sequence of verifications that confirms every cable, every power connection, and every field wiring point is correctly installed and within specification.</p>
+
+<p>The manual recommends four checkpoint steps, performed in order:</p>
+<ol>
+<li><strong>Check the cable connections</strong> for all cables.</li>
+<li><strong>Check the power supply voltages</strong> at every relevant point.</li>
+<li><strong>Check the LED indicators</strong> on each device and I/O card.</li>
+<li><strong>Test the field wiring connections</strong> at the terminal blocks.</li>
+</ol>
+
+<div class="key-concept">
+<strong>Key Concept — The Checkout Sequence:</strong> Each step builds on the previous one. Checking cables first ensures the physical layer is sound before you apply power. Checking power voltages before reading LEDs prevents misdiagnosis — a dark LED might mean the device is fine but simply has no power. Always follow the four steps in order.
+</div>
+
+<h2>7.2 Step 1: Checking the Cable Connections</h2>
+
+<p>The first checkpoint is the simplest but most commonly rushed: verify that all power, ground, and carrier connections are correctly installed, and that all network cables are correctly installed. For the Control Network cables specifically, Emerson specifies the use of the <strong>Microtest PentaScanner</strong> cable testing tool to test all cables to the specifications in the "Control Network Specifications" section of the manual.</p>
+
+<p>The critical detail here is that <strong>the test equipment must be connected to both ends of the cable</strong>. A cable can appear to be physically seated at both ends while still having a pin-out error or a break in one conductor that only reveals itself when tested end-to-end. Make sure every cable passes each test before moving on.</p>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Label every cable at both ends before testing. If a cable fails, you need to know exactly which run to replace without tracing it through trays and conduits. A simple label scheme (e.g., "CN-SW1-P1" for Control Network, Switch 1, Port 1) saves hours during both checkout and future maintenance.
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Common Mistake:</strong> Do not assume a cable is good just because it "clicks" into place. The Microtest PentaScanner tests for wire-map, length, attenuation, return loss, and other parameters that a physical inspection cannot reveal. Skipping the scanner test is the single most common cause of mysterious network problems after startup.
+</div>
+
+<h2>7.3 Step 2: Checking the Power Supply Voltages</h2>
+
+<p>With all cables confirmed, the next step is to power up the system and verify that the supply voltages are within the proper range at all associated screw terminal connections. The exact voltage targets depend on whether your system uses 12 VDC or 24 VDC power distribution.</p>
+
+<h3>7.3.1 For 12 VDC Systems</h3>
+
+<p>Verify the following voltage measurements:</p>
+
+<table>
+<tr><th>Measurement Point</th><th>Expected Value</th></tr>
+<tr><td>System Power Supply (Dual DC/DC) output</td><td>12.1 – 12.3 VDC</td></tr>
+<tr><td>Voltage at the last carrier</td><td>Greater than 11 VDC</td></tr>
+<tr><td>Bussed field power</td><td>24 VDC or 115/230 VAC (as applicable)</td></tr>
+</table>
+
+<h3>7.3.2 For 24 VDC Systems</h3>
+
+<p>Verify the following voltage measurements:</p>
+
+<table>
+<tr><th>Measurement Point</th><th>Expected Value</th></tr>
+<tr><td>System Power Supply (Dual DC/DC) output</td><td>24.2 – 24.6 VDC</td></tr>
+<tr><td>Voltage at the last carrier</td><td>Greater than 11 VDC</td></tr>
+<tr><td>Bussed field power</td><td>24 VDC or 115/230 VAC (as applicable)</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Why "Greater Than 11 VDC" at the Last Carrier?</strong> The Dual DC/DC power supply converts and regulates the input voltage for the controller and I/O cards on the carrier backplane. However, there is some voltage drop along the carrier backplane from the first slot to the last. If the voltage at the last carrier drops below 11 VDC, the I/O card in that slot may not function correctly. This is why you must measure at the <em>last</em> carrier, not just at the power supply output.
+</div>
+
+<h3>7.3.3 Redundant Power Supplies</h3>
+
+<p>For systems with <strong>redundant System Power Supplies</strong>, there is an important exception: you must <strong>remove one power supply before verifying the voltage</strong>. This ensures that the remaining power supply can independently support the full load. If you test with both supplies feeding the bus simultaneously, you may see acceptable voltages that mask an undersized individual supply or a degraded unit.</p>
+
+<div class="pitfall">
+<strong>⚠️ Common Mistake:</strong> Technicians sometimes forget to remove the redundant supply during voltage testing. This is dangerous because a failing supply may be masked by the healthy one, and you will not discover the problem until the first supply fails in the field — at which point the second supply cannot carry the load alone.
+</div>
+
+<h3>7.3.4 Output Loading Verification</h3>
+
+<p>Beyond the supply voltages themselves, you must also check the output loading and verify that the voltages — where present — are in the proper range at all associated screw terminal connections. Every output circuit has a maximum load capacity. If the expected load exceeds that capacity, the supply voltage will sag under load, leading to intermittent errors that are extremely difficult to diagnose later.</p>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Refer to the Installation Worksheets (provided with the hardware) to record your measured voltages at each point. This creates a baseline you can compare against during future troubleshooting. A system that starts with 24.3 VDC at the last carrier and later measures 22.1 VDC may indicate a corroding connection or a failing supply — but only if you have the baseline to compare against.
+</div>
+
+<h2>7.4 Step 3: Checking LED Indicators on Each Device</h2>
+
+<p>With cables verified and power confirmed, you can now read the LED indicators on every hardware component in the system. The LEDs provide the first visual indication of operating status or fault conditions. Each device — power supplies, controllers, remote interface units, media converters, and I/O cards — has its own set of LEDs with specific meanings.</p>
+
+<p>A complete LED reference for every component type is covered in detail in the next two lessons:</p>
+<ul>
+<li><strong>Lesson 8</strong> covers controller LEDs, power supply LEDs, remote interface unit LEDs, media converter LEDs, fiber switch LEDs, and the LEDs for all major I/O card types (AI, AO, DI, DO, Fieldbus H1, AS-Interface, DeviceNet, Profibus DP, RTD/Thermocouple, Sequence of Events, and Serial cards).</li>
+<li><strong>Lesson 9</strong> covers VIM 2 card LEDs, I.S. card LEDs, smart switch LEDs (MD20, MD30, RM100, FP20), and the DeltaV Diagnostics troubleshooting workflow.</li>
+</ul>
+
+<div class="key-concept">
+<strong>Key Concept — The Universal LED Pattern:</strong> Nearly every DeltaV device shares a common LED pattern: a <strong>Green Power LED</strong> (should be solid On when powered), a <strong>Red Error LED</strong> (should be Off under normal operation), and one or more <strong>Yellow/Amber indicator LEDs</strong> that show channel-level or port-level status. When you see a Red Error LED on, that is always the first thing to investigate.
+</div>
+
+<h2>7.5 Step 4: Testing the Field Wiring Connections</h2>
+
+<p>The final checkout step verifies the field wiring — the connections between the I/O terminal blocks and the actual field instruments (transmitters, valves, switches, etc.). This is where the rubber meets the road: your controller and I/O cards are healthy, but the signals they see depend entirely on the integrity of the field wiring.</p>
+
+<p>Test access points are located on the I/O terminal blocks. The access point for each wire connection is located in the <strong>square hole above the corresponding field screw terminal</strong>. To contact the field signals, use a test probe at least <strong>25 mm (1 inch) long</strong> and <strong>2 mm (0.08 in.) or less in diameter</strong>.</p>
+
+<div class="pitfall">
+<strong>⚠️ Critical Warning:</strong> The test probe is <strong>not retained within the access hole</strong>. It can fall out and short across field wiring if it is not held in place. Exercise extreme caution — a short across field wiring can damage the I/O card, the field instrument, or both. Always hold the probe firmly and do not leave it unattended in the access hole.
+</div>
+
+<p>To determine the expected voltage levels for your application, you need to consult two sources:</p>
+<ul>
+<li>The <strong>wiring diagrams</strong> for the specific I/O card type in the "Interface Specifications" section of the manual.</li>
+<li>The <strong>connection information</strong> supplied with your field device.</li>
+</ul>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Before testing field wiring, isolate the channel if possible by removing the terminal block. This protects both the test equipment and the I/O card from accidental damage during the measurement process. Refer to the specific card type's wiring diagrams for the correct voltage levels at each terminal.
+</div>
+
+<h2>7.6 The Complete Checkout Checklist</h2>
+
+<p>Here is a consolidated checklist you can use at the job site. Work through each item in order, and do not proceed to the next section until the current one is fully verified:</p>
+
+<table>
+<tr><th>Step</th><th>What to Check</th><th>Tool / Method</th><th>Pass Criteria</th></tr>
+<tr><td>1</td><td>All network cables</td><td>Microtest PentaScanner (both ends)</td><td>All tests pass to Control Network Specifications</td></tr>
+<tr><td>2</td><td>Power supply output (12V or 24V system)</td><td>Digital multimeter at PSU terminals</td><td>12.1–12.3 V or 24.2–24.6 V</td></tr>
+<tr><td>3</td><td>Voltage at last carrier</td><td>Digital multimeter at last carrier screw terminals</td><td>Greater than 11 VDC</td></tr>
+<tr><td>4</td><td>Bussed field power</td><td>Digital multimeter at field power terminals</td><td>24 VDC or 115/230 VAC as applicable</td></tr>
+<tr><td>5</td><td>Redundant PSU independent test</td><td>Remove one PSU, measure voltage with single supply</td><td>Voltage remains in spec</td></tr>
+<tr><td>6</td><td>LED indicators on all devices</td><td>Visual inspection</td><td>Power LEDs on, Error LEDs off</td></tr>
+<tr><td>7</td><td>Field wiring at I/O terminal blocks</td><td>Test probe (25 mm × 2 mm) in access holes</td><td>Voltages match wiring diagrams</td></tr>
+</table>
+
+<h2>7.7 What Happens After Checkout</h2>
+
+<p>Once all four checkout steps are complete and every item passes, you are ready to start up the DeltaV software following the instructions in the <em>Getting Started with Your DeltaV Software</em> manual. After the software is running, you will use three primary tools to verify and troubleshoot your hardware installation:</p>
+
+<ul>
+<li><strong>DeltaV Explorer</strong> — provides a view of the overall structure and layout of your system, showing control strategies and the hierarchy of nodes on the Control Network.</li>
+<li><strong>Diagnostics utilities</strong> — check workstation hardware (memory, processors, video, disk controller, ports).</li>
+<li><strong>DeltaV Diagnostics</strong> — view diagnostics data for any DeltaV hardware component, including controllers and I/O cards.</li>
+</ul>
+
+<div class="key-concept">
+<strong>Key Concept — Hardware vs. Software Verification:</strong> System checkout (this lesson) verifies the physical hardware layer. The DeltaV software tools (covered in Lesson 9) verify the logical configuration layer — whether the database matches what is physically installed, whether nodes are communicating, and whether the I/O configuration is correct. Both layers must be verified for a successful startup.
+</div>
+
+<h2>7.8 Summary</h2>
+
+<p>In this lesson, you learned the four-step system checkout procedure that must be completed before powering up the DeltaV software. You checked cable connections using the Microtest PentaScanner, verified power supply voltages at multiple points (including the last carrier for voltage drop), confirmed that redundant power supplies can each independently support the load, inspected LED indicators on every device, and tested field wiring connections at the I/O terminal blocks. In the next lesson, we will dive into the detailed LED indicator tables for every controller and I/O card type in the DeltaV M-series system.</p>
+
+<div class="quiz">
+<h3>Quiz — Lesson 7</h3>
+
+<p><strong>1.</strong> What are the four system checkout steps, in order?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">(1) Check cable connections, (2) Check power supply voltages, (3) Check LED indicators, (4) Test field wiring connections.</p>
+</details>
+
+<p><strong>2.</strong> Why must the test equipment be connected to both ends of the cable when testing network cables?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">A cable can appear physically seated at both ends while having a pin-out error, a break in a conductor, or other faults that only reveal themselves when tested end-to-end. The PentaScanner tests for wire-map, length, attenuation, return loss, and other parameters that require access to both ends.</p>
+</details>
+
+<p><strong>3.</strong> What voltage should you measure at the System Power Supply (Dual DC/DC) for a 24 VDC system?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">24.2 – 24.6 VDC.</p>
+</details>
+
+<p><strong>4.</strong> Why is the voltage at the last carrier required to be greater than 11 VDC?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">There is voltage drop along the carrier backplane from the first slot to the last. If the voltage at the last carrier drops below 11 VDC, the I/O card in that slot may not function correctly.</p>
+</details>
+
+<p><strong>5.</strong> When testing a system with redundant power supplies, what must you do before verifying voltages?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Remove one power supply before verifying the voltage. This ensures the remaining supply can independently support the full load, preventing a situation where a degraded supply is masked by the healthy one.</p>
+</details>
+
+<p><strong>6.</strong> What are the dimensions of the test probe used to contact field signals at I/O terminal block access points?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">At least 25 mm (1 inch) long and 2 mm (0.08 in.) or less in diameter.</p>
+</details>
+
+<p><strong>7.</strong> Why is it dangerous to leave a test probe unattended in the access hole on an I/O terminal block?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">The test probe is not retained within the access hole. It can fall out and short across field wiring, potentially damaging the I/O card, the field instrument, or both.</p>
+</details>
+</div>
+
+<p class="source">Source: DeltaV M-series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021, Chapter 3: Checking Out and Troubleshooting Your DeltaV System, pp. 57–58.</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L12: Interface Specifications — Analog I/O Cards</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a><br>
+<a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a><br>
+<a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a><br>
+<a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a><br>
+<a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="L09-LEDs-Smart-Switches-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="L10-Environmental-and-Carrier-Specifications.html">L10: Environmental and Carrier Specifications</a><br>
+<a href="L11-Interface-Specifications---Digital-IO-Cards.html">L11: Interface Specifications — Digital I/O Cards</a><br>
+<a href="L12-Interface-Specifications---Analog-IO-Cards.html"><strong>L12: Interface Specifications — Analog I/O Cards</strong></a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a><br>
+</div>
+</details>
+</nav>
+
+<h1>L12: Interface Specifications — Analog I/O Cards</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Appendix C, "Interface Specifications," pp. 125–200.</p>
+
+<p>This lesson provides a comprehensive master reference for every analog I/O card supported by the DeltaV system. Analog cards handle continuously variable signals — 4–20 mA current loops, 1–5 VDC voltage signals, thermocouple and RTD temperature inputs, and HART digital communication superimposed on analog signals. Use the tables below to select the correct card for your application.</p>
+
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0197_1.png" alt="Figure from page 197">
+  <div class="caption">Figure from page 197 (page 197)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0201_1.png" alt="Figure from page 201">
+  <div class="caption">Figure from page 201 (page 201)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0240_1.png" alt="Figure from page 240">
+  <div class="caption">Figure from page 240 (page 240)</div>
+</div>
+12.1 — Analog I/O Card Types at a Glance</h2>
+
+<div class="key-concept">
+<strong>Key Concept:</strong> DeltaV analog I/O cards fall into five major categories:<br>
+• <strong>Analog Input (AI)</strong> — reads 4–20 mA, 1–5 VDC, or HART signals from transmitters<br>
+• <strong>Analog Output (AO)</strong> — drives 4–20 mA current loops to final elements<br>
+• <strong>Thermocouple/mV</strong> — reads millivolt signals from thermocouples and low-level voltage sources<br>
+• <strong>RTD/Ohms</strong> — reads resistance temperature detectors and ohmic sensors<br>
+• <strong>Isolated Input</strong> — multi-function card supporting TC, mV, RTD, ohms, and voltage inputs with per-channel isolation<br>
+• <strong>Multifunction</strong> — combines discrete input and pulse input capabilities
+</div>
+
+<h2>12.2 — Master Reference Table: All Analog I/O Cards</h2>
+
+<p>The following table provides a complete comparison of every analog I/O card available in the DeltaV system. Use this as your primary card selection reference.</p>
+
+<table>
+<thead>
+<tr>
+<th>Card Type</th>
+<th>Channels</th>
+<th>Signal Range</th>
+<th>Isolation</th>
+<th>Resolution</th>
+<th>Accuracy</th>
+<th>HART</th>
+<th>Redundancy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AI, 8-Channel, 4–20 mA</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22.5 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>16 bits</td>
+<td>0.1% of span</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>AI, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22.5 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>16 bits</td>
+<td>0.1% of span</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>S2 AI, 8-Channel, 4–20 mA</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22.5 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>16 bits</td>
+<td>0.1% of span</td>
+<td>No</td>
+<td>Simplex only</td>
+</tr>
+<tr>
+<td><strong>S2 AI, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22.5 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>16 bits</td>
+<td>0.1% of span</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>AI, 8-Channel, 1–5 VDC</strong></td>
+<td>8</td>
+<td>1–5 VDC<br><em>Full: 0.25–5.64 VDC</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>16 bits</td>
+<td>0.1% of span</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>S2 AI, 16-Channel, 4–20 mA, HART</strong></td>
+<td>16</td>
+<td>4–20 mA<br><em>Full: 2–22 mA</em></td>
+<td>Field-to-system: 1000 VDC<br><strong>No channel-to-channel isolation</strong></td>
+<td>16 bits</td>
+<td>0.2% of span</td>
+<td><strong>Yes</strong></td>
+<td>Simplex only</td>
+</tr>
+<tr>
+<td><strong>S2 Plus AI, 16-Channel, 4–20 mA, HART</strong></td>
+<td>16</td>
+<td>4–20 mA<br><em>Full: 2–22 mA</em></td>
+<td>Field-to-system: 1000 VDC<br><strong>No channel-to-channel isolation</strong></td>
+<td>16 bits</td>
+<td>0.2% of span</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>AO, 8-Channel, 4–20 mA</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–23 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>12 bits</td>
+<td>0.25% of span</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>AO, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–23 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>14 bits</td>
+<td>0.25% of span</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>S2 AO, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–23 mA</em></td>
+<td>Channel-to-system: 1500 VDC<br>Optically isolated</td>
+<td>14 bits</td>
+<td>0.25% (0–60°C)<br>0.4% (−40 to 70°C)</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>S2 Plus AO, 16-Channel, 4–20 mA, HART</strong></td>
+<td>16</td>
+<td>4–20 mA<br><em>Full: 1–23 mA</em></td>
+<td>Galvanic, 1000 VDC<br><strong>No channel-to-channel isolation</strong></td>
+<td>14 bits</td>
+<td>0.25% of span</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>Thermocouple, mV</strong></td>
+<td>8</td>
+<td>TC: B, E, J, K, N, R, S, T<br>mV: −100 to +100 mV</td>
+<td>Channel-to-system: 1500 VDC<br><em>Ch 1–4 isolated from 5–8</em></td>
+<td>16 bits</td>
+<td>Varies by TC type<br><em>(see Table C-38)</em></td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>S2 Thermocouple, mV</strong></td>
+<td>8</td>
+<td>TC: B, E, J, K, N, R, S, T<br>mV: −100 to +100 mV</td>
+<td>Channel-to-system: 1500 VDC<br><em>Ch 1–4 isolated from 5–8</em></td>
+<td>16 bits</td>
+<td>Varies by TC type<br><em>(see Table C-38)</em></td>
+<td>No</td>
+<td>Simplex only</td>
+</tr>
+<tr>
+<td><strong>RTD, Ohms</strong></td>
+<td>8</td>
+<td>Pt100, Pt200, Pt500, Ni120, Cu10, Resistance, User-defined</td>
+<td>Channel-to-system: 1500 VDC</td>
+<td>16 bits</td>
+<td>Varies by sensor<br><em>(see Table C-30)</em></td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>S2 RTD, Ohms</strong></td>
+<td>8</td>
+<td>Pt100, Pt200, Pt500, Ni120, Cu10, Resistance, User-defined</td>
+<td>Channel-to-system: 1500 VDC</td>
+<td>16 bits</td>
+<td>Varies by sensor<br><em>(see Table C-30)</em></td>
+<td>No</td>
+<td>Simplex only</td>
+</tr>
+<tr>
+<td><strong>Isolated Input</strong></td>
+<td>4</td>
+<td>TC, mV, RTD, Ohms, Voltage (0–5, 0–10, 1–5 V)</td>
+<td>Ch-to-system: 5000 VDC (600 VAC)<br><strong>Ch-to-ch: 3100 VDC (600 VAC)</strong></td>
+<td>16 bits</td>
+<td>Varies by sensor<br><em>(see Tables C-22–C-26)</em></td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Multifunction</strong></td>
+<td>4</td>
+<td>DI: 4.8 VDC ON / 1.0 VDC OFF<br>Pulse: 0.1 Hz–50 kHz</td>
+<td>Channel-to-system: 1500 VDC<br>Channel-to-channel isolated</td>
+<td>32-bit counter</td>
+<td>0.1% reading (10 Hz–50 kHz)</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>I.S. AI, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 2–22 mA</em></td>
+<td>LocalBus-to-ch: 60 VAC<br>I.S. ch-to-non-I.S. rail: 250 VAC</td>
+<td>16 bits</td>
+<td>±0.006% of span/°C</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>I.S. AO, 8-Channel, 4–20 mA</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22 mA</em></td>
+<td>LocalBus-to-ch: 60 VAC<br>I.S. ch-to-non-I.S. rail: 250 VAC</td>
+<td>12 bits</td>
+<td>±20 µA @ 25°C</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>I.S. AO, 8-Channel, 4–20 mA, HART</strong></td>
+<td>8</td>
+<td>4–20 mA<br><em>Full: 1–22 mA</em></td>
+<td>LocalBus-to-ch: 60 VAC<br>I.S. ch-to-non-I.S. rail: 250 VAC</td>
+<td>12 bits</td>
+<td>±20 µA @ 25°C</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>12.3 — Analog Input Card Specifications</h2>
+
+<h3>12.3.1 — AI, 8-Channel, 4–20 mA / HART (Table C-1)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 1500 VDC; optically isolated</td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>1 to 22.5 mA, with overrange checking</td></tr>
+<tr><td>Valid Range for LED</td><td>0.75 to 23 mA</td></tr>
+<tr><td>LocalBus Current</td><td>120 mA typical, 150 mA max<br><em>S2 Redundant: 175 mA typical, 250 mA max</em></td></tr>
+<tr><td>Field Circuit Power</td><td>300 mA max at 24 VDC (±10%)<br>Per channel: 32 mA max (S2: 30 mA max)</td></tr>
+<tr><td>Accuracy</td><td>0.1% of span</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+<tr><td>Repeatability</td><td>0.05% of span</td></tr>
+<tr><td>Rolloff Frequency</td><td>−3 dB at 2.7 Hz</td></tr>
+<tr><td>HART Scan Time</td><td>600–800 ms (typical) per enabled channel</td></tr>
+<tr><td>Calibration</td><td>None required</td></tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — HART Protocol:</strong> The HART (Highway Addressable Remote Transmitter) protocol layers digital information on top of the standard analog 4–20 mA process signal. HART-enabled AI cards can perform pass-through request/response, variable reporting, and field device status reporting — all without interrupting the analog signal.
+</div>
+
+<h3>12.3.2 — AI, 8-Channel, 1–5 VDC (Table C-2)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 1500 VDC; optically isolated</td></tr>
+<tr><td>Nominal Signal Range</td><td>1 to 5 VDC</td></tr>
+<tr><td>Full Signal Range</td><td>0.25 to 5.64 VDC, with overrange checking</td></tr>
+<tr><td>Valid Range for LED</td><td>0.18 to 5.77 VDC</td></tr>
+<tr><td>LocalBus Current</td><td>100 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>100 mA (used on card) at 24 VDC (±10%)</td></tr>
+<tr><td>Input Impedance</td><td>2 MΩ</td></tr>
+<tr><td>Accuracy</td><td>0.1% of span</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+<tr><td>Rolloff Frequency</td><td>−3 dB at 1.3 Hz</td></tr>
+</tbody>
+</table>
+
+<h3>12.3.3 — AI, 16-Channel, 4–20 mA, HART (Table C-3)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>16</td></tr>
+<tr><td>Isolation</td><td>Field-to-system: 1000 VDC<br><strong>No channel-to-channel isolation</strong></td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>2 to 22 mA</td></tr>
+<tr><td>2-Wire Transmitter Power</td><td>13.5 V min at 20 mA (current limited to 29 mA max)</td></tr>
+<tr><td>LocalBus Current</td><td>85 mA typical, 150 mA max</td></tr>
+<tr><td>Field Circuit Power</td><td>600 mA max at 24 VDC (±10%); 30 mA max per channel</td></tr>
+<tr><td>Accuracy</td><td>0.2% of span</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+<tr><td>Filtering</td><td>−3 dB at 2.7 Hz; −90 dB at 1200 Hz</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — 16-Channel vs. 8-Channel AI:</strong> The 16-Channel AI card provides double the density but sacrifices channel-to-channel isolation and has slightly lower accuracy (0.2% vs. 0.1%). Use 16-Channel cards when channel density is critical and all sensors share a common ground reference.
+</div>
+
+<h2>12.4 — Analog Output Card Specifications</h2>
+
+<h3>12.4.1 — AO, 8-Channel, 4–20 mA / HART (Table C-4)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 1500 VDC; optically isolated</td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>1 to 23 mA</td></tr>
+<tr><td>LocalBus Current</td><td>120 mA typical, 150 mA max<br><em>S2 Redundant: 175 mA typical, 250 mA max</em></td></tr>
+<tr><td>Field Circuit Power</td><td>300 mA max at 24 VDC (±10%)</td></tr>
+<tr><td>Accuracy</td><td>0.25% of span (0–60°C)<br><em>S2: 0.4% at −40 to 70°C</em></td></tr>
+<tr><td>Resolution</td><td>12 bits (non-HART); 14 bits (HART and S2 HART)</td></tr>
+<tr><td>Output Compliance</td><td>20 mA at 21.6 VDC supply into 700 Ω load</td></tr>
+<tr><td>HART Scan Time</td><td>600–800 ms (typical) per enabled channel</td></tr>
+</tbody>
+</table>
+
+<h3>12.4.2 — AO, 16-Channel, 4–20 mA, HART, Series 2 Plus (Table C-5)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>16</td></tr>
+<tr><td>Isolation</td><td>Galvanic, 1000 VDC<br><strong>No channel-to-channel isolation</strong></td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>1 to 23 mA</td></tr>
+<tr><td>LocalBus Current</td><td>260 mA max in redundant configurations</td></tr>
+<tr><td>Field Power</td><td>400 mA max at 24 VDC per card</td></tr>
+<tr><td>Accuracy</td><td>0.25% of span</td></tr>
+<tr><td>Resolution</td><td>14 bits</td></tr>
+<tr><td>Output Compliance</td><td>14 V min at 20 mA; 700 Ω max load</td></tr>
+<tr><td>Open Loop Detection</td><td>Threshold: 0.70 mA</td></tr>
+</tbody>
+</table>
+
+<h2>12.5 — Thermocouple and Millivolt Card Specifications</h2>
+
+<h3>12.5.1 — Thermocouple, mV Card (Table C-37)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Sensor Types</td><td>TC: B, E, J, K, N, R, S, T, uncharacterized<br>mV: Low-level voltage source (−100 to +100 mV)</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 1500 VDC<br>Ch 1–4 isolated from Ch 5–8 (1500 VDC)<br><em>Channels within each group are NOT isolated; must be within ±0.7 VDC of each other</em></td></tr>
+<tr><td>LocalBus Power</td><td>12 VDC, 350 mA (S2: 210 mA)</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+<tr><td>Repeatability</td><td>0.05% of span</td></tr>
+<tr><td>Cold Junction Compensation</td><td>±1°C</td></tr>
+<tr><td>CMRR</td><td>120 dB</td></tr>
+<tr><td>Calibration</td><td>None required</td></tr>
+</tbody>
+</table>
+
+<h3>12.5.2 — Thermocouple Sensor Type Specifications (Table C-38)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Sensor Type</th>
+<th>Full Scale</th>
+<th>Operating Range</th>
+<th>25°C Reference Accuracy</th>
+<th>Temperature Drift</th>
+<th>Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>B</strong></td><td>250 to 1810°C</td><td>500 to 1810°C</td><td>±2.4°C</td><td>±0.056°C/°C</td><td>~0.18°C</td></tr>
+<tr><td><strong>E</strong></td><td>−200 to 1000°C</td><td>−200 to 1000°C</td><td>±0.6°C</td><td>±0.008°C/°C</td><td>~0.07°C</td></tr>
+<tr><td><strong>J</strong></td><td>−210 to 1200°C</td><td>−190 to 1200°C</td><td>±0.8°C</td><td>±0.011°C/°C</td><td>~0.05°C</td></tr>
+<tr><td><strong>K</strong></td><td>−270 to 1372°C</td><td>−200 to 1372°C</td><td><strong>±0.5°C</strong></td><td>±0.016°C/°C</td><td>~0.18°C</td></tr>
+<tr><td><strong>N</strong></td><td>−270 to 1300°C</td><td>−190 to 1300°C</td><td>±1.0°C</td><td>±0.007°C/°C</td><td>~0.10°C</td></tr>
+<tr><td><strong>R</strong></td><td>−50 to 1768°C</td><td>−50 to 1768°C</td><td>±2.1°C</td><td>±0.013°C/°C</td><td>~0.14°C</td></tr>
+<tr><td><strong>S</strong></td><td>−50 to 1768°C</td><td>−40 to 1768°C</td><td>±2.2°C</td><td>±0.067°C/°C</td><td>~0.24°C</td></tr>
+<tr><td><strong>T</strong></td><td>−270 to 400°C</td><td>−200 to 400°C</td><td>±0.7°C</td><td>±0.001°C/°C</td><td>~0.04°C</td></tr>
+<tr><td><strong>Uncharacterized</strong></td><td>−100 to 100 mV</td><td>−100 to 100 mV</td><td>0.1 mV</td><td>±0.002 mV/°C</td><td>~0.003 mV</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip:</strong> Type K thermocouples offer the best reference accuracy (±0.5°C) among common TC types. For high-temperature applications above 1400°C, use Type B, R, or S — but expect lower accuracy (±2.1 to ±2.4°C).
+</div>
+
+<h2>12.6 — RTD and Ohms Card Specifications</h2>
+
+<h3>12.6.1 — RTD, Ohms Card (Table C-29)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Sensor Types</td><td>2, 3, or 4-wire: Pt100, Pt200, Pt500, Ni120, Cu10, Resistance, User-defined</td></tr>
+<tr><td>Isolation</td><td>Channel-to-system: 1500 VDC</td></tr>
+<tr><td>LocalBus Power</td><td>12 VDC, 160 mA</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+<tr><td>Repeatability</td><td>0.05% of span</td></tr>
+<tr><td>CMRR</td><td>120 dB</td></tr>
+<tr><td>Ambient Temperature</td><td>0 to 60°C (S2: −40 to 70°C)</td></tr>
+</tbody>
+</table>
+
+<h3>12.6.2 — RTD Sensor Type Specifications (Table C-30)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Sensor Type</th>
+<th>Full Scale</th>
+<th>Operating Range</th>
+<th>25°C Reference Accuracy</th>
+<th>Temperature Drift</th>
+<th>Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Pt100</strong></td><td>−200 to 850°C</td><td>−200 to 850°C</td><td>±0.5°C</td><td>±0.018°C/°C</td><td>~0.05°C</td></tr>
+<tr><td><strong>Pt200</strong></td><td>−200 to 850°C</td><td>−200 to 850°C</td><td>±0.5°C</td><td>±0.012°C/°C</td><td>~0.05°C</td></tr>
+<tr><td><strong>Pt500</strong></td><td>−200 to 850°C</td><td>−200 to 850°C</td><td>±3.5°C</td><td>±0.063°C/°C</td><td>~0.18°C</td></tr>
+<tr><td><strong>Ni120</strong></td><td>−70 to 300°C</td><td>−70 to 300°C</td><td><strong>±0.2°C</strong></td><td>±0.006°C/°C</td><td>~0.02°C</td></tr>
+<tr><td><strong>Cu10</strong></td><td>−30 to 140°C</td><td>−30 to 140°C</td><td>±2.0°C</td><td>±0.157°C/°C</td><td>~0.23°C</td></tr>
+<tr><td><strong>Resistance</strong></td><td>0 to 2,000 Ω</td><td>0 to 2,000 Ω</td><td>±6.2 Ω</td><td>±0.112 Ω/°C</td><td>~0.02 Ω</td></tr>
+<tr><td><strong>User-defined</strong></td><td>0 to 1000 Ω</td><td>0 to 1000 Ω</td><td>±0.4 Ω</td><td>±0.009 Ω/°C</td><td>~0.05 Ω</td></tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — RTD vs. Thermocouple:</strong><br>
+• <strong>RTDs</strong> (Pt100, Ni120) offer better accuracy (±0.2 to ±0.5°C) and stability over time but have a limited temperature range (typically −200 to 850°C).<br>
+• <strong>Thermocouples</strong> cover a much wider temperature range (up to 1810°C for Type B) but have lower accuracy (±0.5 to ±2.4°C) and require cold junction compensation.<br>
+• Choose RTDs for precision measurement in moderate ranges; choose thermocouples for extreme temperatures.
+</div>
+
+<h2>12.7 — Isolated Input Card Specifications</h2>
+
+<h3>12.7.1 — Isolated Input Card Overview (Table C-20)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>4</td></tr>
+<tr><td>Isolation</td><td><strong>Channel-to-system: 5000 VDC (600 VAC double insulation)</strong><br><strong>Channel-to-channel: 3100 VDC (600 VAC basic insulation)</strong><br>CAN/CSA-C22.2 No.1010.1 compliant; Installation Cat II, Pollution Degree 2</td></tr>
+<tr><td>ADC Resolution</td><td>16 bits</td></tr>
+<tr><td>Filter Frequency</td><td>−3 dB at 2.7 Hz</td></tr>
+<tr><td>CMRR</td><td>120 dB</td></tr>
+<tr><td>Input Impedance</td><td>10 MΩ</td></tr>
+<tr><td>TC Sensor Types</td><td>B, E, J, K, N, R, S, T, uncharacterized</td></tr>
+<tr><td>RTD Sensor Types</td><td>PT100, PT200, Ni120, Cu10, resistance, user-defined</td></tr>
+<tr><td>Input Type Mix</td><td>Independently configurable per channel</td></tr>
+<tr><td>Ambient Temperature</td><td>−40 to 70°C</td></tr>
+<tr><td>LocalBus Power</td><td>12 VDC, 350 mA (no field power required)</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Why Use the Isolated Input Card?</strong> The Isolated Input card is the most versatile analog input card in the DeltaV system. Each of its 4 channels can be independently configured for a different sensor type (TC, RTD, mV, or voltage). With 5000 VDC channel-to-system isolation and 3100 VDC channel-to-channel isolation, it is ideal for applications where sensors are in different electrical environments or where hazardous voltages may be present.
+</div>
+
+<h3>12.7.2 — Isolated Input TC Specifications (Table C-22)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Sensor</th>
+<th>25°C Accuracy</th>
+<th>Drift</th>
+<th>Resolution</th>
+<th>Operating Range</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>K</strong></td><td>±0.5°C</td><td>±0.013°C/°C</td><td>0.05°C</td><td>−140 to 1372°C</td></tr>
+<tr><td><strong>J</strong></td><td>±0.6°C</td><td>±0.005°C/°C</td><td>0.06°C</td><td>−190 to 1200°C</td></tr>
+<tr><td><strong>T</strong></td><td>±0.7°C</td><td>±0.025°C/°C</td><td>0.04°C</td><td>−200 to 400°C</td></tr>
+<tr><td><strong>E</strong></td><td>±0.5°C</td><td>±0.004°C/°C</td><td>0.05°C</td><td>−200 to 1000°C</td></tr>
+<tr><td><strong>N</strong></td><td>±1.0°C</td><td>±0.015°C/°C</td><td>0.05°C</td><td>−190 to 1300°C</td></tr>
+<tr><td><strong>B</strong></td><td>±1.2°C</td><td>±0.116°C/°C</td><td>0.09°C</td><td>500 to 1810°C</td></tr>
+<tr><td><strong>R</strong></td><td>±1.7°C</td><td>±0.083°C/°C</td><td>0.06°C</td><td>0 to 1768°C</td></tr>
+<tr><td><strong>S</strong></td><td>±1.8°C</td><td>±0.095°C/°C</td><td>0.08°C</td><td>0 to 1768°C</td></tr>
+</tbody>
+</table>
+
+<h3>12.7.3 — Isolated Input RTD Specifications (Table C-25)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Sensor</th>
+<th>25°C Accuracy</th>
+<th>Drift</th>
+<th>Resolution</th>
+<th>Operating Range</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Pt100</strong></td><td>±0.5°C</td><td>±0.018°C/°C</td><td>0.05°C</td><td>−200 to 850°C</td></tr>
+<tr><td><strong>Pt200</strong></td><td>±0.5°C</td><td>±0.012°C/°C</td><td>0.05°C</td><td>−200 to 850°C</td></tr>
+<tr><td><strong>Ni120</strong></td><td>±0.2°C</td><td>±0.006°C/°C</td><td>0.02°C</td><td>−70 to 300°C</td></tr>
+<tr><td><strong>Cu10</strong></td><td>±2.0°C</td><td>±0.076°C/°C</td><td>0.23°C</td><td>−30 to 140°C</td></tr>
+<tr><td><strong>Resistance</strong></td><td>±0.5 Ω</td><td>±0.018 Ω/°C</td><td>0.02 Ω</td><td>1 to 1000 Ω</td></tr>
+</tbody>
+</table>
+
+<h2>12.8 — Intrinsically Safe Analog I/O</h2>
+
+<h3>12.8.1 — I.S. AI, 8-Channel, 4–20 mA, HART (Table C-41)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>LocalBus-to-channel: 60 VAC<br>Channel-to-channel: None<br>I.S. channel-to-non-I.S. rail: 250 VAC</td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>2 to 22 mA</td></tr>
+<tr><td>LocalBus Current</td><td>600 mA</td></tr>
+<tr><td>Line Fault Detection</td><td>Short: &gt;21.5 mA; Open: &lt;0.5 mA</td></tr>
+<tr><td>Accuracy</td><td>±0.006% of span per °C<br>EMC: 1% of span</td></tr>
+<tr><td>Resolution</td><td>16 bits</td></tr>
+</tbody>
+</table>
+
+<div class="pitfall">
+<strong>Warning:</strong> Hand-held, two-way radios should not be keyed within 0.5 m (1.64 ft) of Intrinsically Safe Analog Input cards. Radiated emissions from these units can interfere with system operation.
+</div>
+
+<h3>12.8.2 — I.S. AO, 8-Channel, 4–20 mA / HART (Table C-42)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Number of Channels</td><td>8</td></tr>
+<tr><td>Isolation</td><td>LocalBus-to-channel: 60 VAC<br>Channel-to-channel: None<br>I.S. channel-to-non-I.S. rail: 250 VAC</td></tr>
+<tr><td>Nominal Signal Range</td><td>4 to 20 mA</td></tr>
+<tr><td>Full Signal Range</td><td>1 to 22 mA</td></tr>
+<tr><td>Voltage to Load</td><td>13 V min at 20 mA</td></tr>
+<tr><td>Load Resistance</td><td>450 Ω max (650 Ω max with HART)</td></tr>
+<tr><td>LocalBus Current</td><td>630 mA</td></tr>
+<tr><td>Accuracy (@ 25°C)</td><td>±20 µA</td></tr>
+<tr><td>Resolution</td><td>12 bits</td></tr>
+</tbody>
+</table>
+
+<h2>12.9 — Analog I/O Power Budget Summary</h2>
+
+<table>
+<thead>
+<tr>
+<th>Card Type</th>
+<th>LocalBus Current</th>
+<th>Field Power Required</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>AI, 8-Ch, 4–20 mA / HART</td><td>120 mA typ / 150 mA max</td><td>300 mA at 24 VDC</td></tr>
+<tr><td>S2 AI, 8-Ch, 4–20 mA, HART (Redundant)</td><td>175 mA typ / 250 mA max</td><td>300 mA at 24 VDC</td></tr>
+<tr><td>AI, 8-Ch, 1–5 VDC</td><td>100 mA typ / 150 mA max</td><td>100 mA at 24 VDC</td></tr>
+<tr><td>S2 AI, 16-Ch, 4–20 mA, HART</td><td>85 mA typ / 150 mA max</td><td>600 mA at 24 VDC</td></tr>
+<tr><td>AO, 8-Ch, 4–20 mA / HART</td><td>120 mA typ / 150 mA max</td><td>300 mA at 24 VDC</td></tr>
+<tr><td>S2 AO, 8-Ch, 4–20 mA, HART (Redundant)</td><td>175 mA typ / 250 mA max</td><td>300 mA at 24 VDC</td></tr>
+<tr><td>S2 Plus AO, 16-Ch, 4–20 mA, HART</td><td>260 mA max</td><td>400 mA at 24 VDC</td></tr>
+<tr><td>Thermocouple, mV</td><td>350 mA (S2: 210 mA)</td><td>None</td></tr>
+<tr><td>RTD, Ohms</td><td>160 mA</td><td>None</td></tr>
+<tr><td>Isolated Input</td><td>350 mA</td><td>None</td></tr>
+<tr><td>I.S. AI, 8-Ch, 4–20 mA, HART</td><td>600 mA</td><td>None (I.S. power)</td></tr>
+<tr><td>I.S. AO, 8-Ch, 4–20 mA / HART</td><td>630 mA</td><td>None (I.S. power)</td></tr>
+</tbody>
+</table>
+
+<h2>12.10 — Knowledge Check</h2>
+
+<div class="quiz">
+<h3>Quiz: Analog I/O Card Specifications</h3>
+
+<p><strong>Q1:</strong> What is the channel-to-system isolation voltage for the standard AI, 8-Channel, 4–20 mA card?</p>
+<p><strong>Q2:</strong> How does the 16-Channel AI card differ from the 8-Channel AI card in terms of channel-to-channel isolation?</p>
+<p><strong>Q3:</strong> What is the resolution difference between the AO, 8-Channel, 4–20 mA card (non-HART) and the HART version?</p>
+<p><strong>Q4:</strong> Which RTD sensor type provides the best accuracy on the RTD, Ohms card?</p>
+<p><strong>Q5:</strong> What makes the Isolated Input card different from the standard Thermocouple, mV card?</p>
+
+<details>
+<summary><strong>Show Answers</strong></summary>
+<p><strong>A1:</strong> <span class="answer">1500 VDC</span> — Each channel is optically isolated from the system.</p>
+<p><strong>A2:</strong> <span class="answer">The 16-Channel AI card has NO channel-to-channel isolation</span>, while the 8-Channel card provides 1500 VDC channel-to-system isolation (though channels share a common return).</p>
+<p><strong>A3:</strong> <span class="answer">12 bits (non-HART) vs. 14 bits (HART)</span> — The HART version provides 4 additional bits of resolution.</p>
+<p><strong>A4:</strong> <span class="answer">Ni120</span> with ±0.2°C accuracy and ±0.006°C/°C drift.</p>
+<p><strong>A5:</strong> <span class="answer">The Isolated Input card supports 5000 VDC channel-to-system isolation and 3100 VDC channel-to-channel isolation</span> (vs. 1500 VDC for TC card), and each of its 4 channels can be independently configured for a different sensor type.</p>
+</details>
+</div>
+
+<p class="page-ref">Pages 125–200, Appendix C of D800001X312</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

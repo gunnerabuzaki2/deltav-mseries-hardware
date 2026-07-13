@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L06 — Workstation, Control Network, and Power | DeltaV M-Series Hardware Training</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+<strong>Lessons:</strong>
+<select onchange="if(this.value) window.location.href=this.value">
+<option value="">— Select Lesson —</option>
+<option value="L01-DeltaV-System-Overview-and-Equipment.html">L01 — DeltaV System Overview and Equipment</option>
+<option value="L02-System-Architecture-and-Components.html">L02 — System Architecture and Components</option>
+<option value="L03-Installation-Planning-and-Safety.html">L03 — Installation Planning and Safety</option>
+<option value="L04-Installing-IO-Interface-and-Cards.html">L04 — Installing I/O Interface &amp; Cards</option>
+<option value="L05-Installing-Controller-and-Power-Supply.html">L05 — Installing Controller &amp; Power Supply</option>
+<option value="L06-Workstation-Control-Network-and-Power.html" selected>L06 — Workstation, Control Network &amp; Power</option>
+<option value="L07-System-Checkout---Cables-and-Power.html">L07 — System Checkout — Cables and Power</option>
+<option value="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08 — LED Indicators — Controllers and I/O Cards</option>
+<option value="L09-Analog-IO-Cards-and-Wiring.html">L09 — Analog I/O Cards and Wiring</option>
+<option value="L10-Digital-IO-Cards-and-Wiring.html">L10 — Digital I/O Cards and Wiring</option>
+<option value="L11-Series-2-IO-and-Redundancy.html">L11 — Series 2 I/O and Redundancy</option>
+<option value="L12-IO-Terminal-Block-Wiring-Reference.html">L12 — I/O Terminal Block Wiring Reference</option>
+<option value="L13-Controller-Specifications-and-Features.html">L13 — Controller Specifications and Features</option>
+<option value="L14-Controller-Redundancy-Configuration.html">L14 — Controller Redundancy Configuration</option>
+<option value="L15-Power-Supply-Specifications-and-Grounding.html">L15 — Power Supply Specifications and Grounding</option>
+<option value="L16-Control-Network-Specifications.html">L16 — Control Network Specifications</option>
+<option value="L17-Remote-Network-and-Time-Server.html">L17 — Remote Network and Time Server</option>
+<option value="L18-Smart-Switches-and-Network-Config.html">L18 — Smart Switches and Network Configuration</option>
+<option value="L19-Carrier-Types-and-Configurations.html">L19 — Carrier Types and Configurations</option>
+<option value="L20-Vertical-and-VerticalPLUS-Carriers.html">L20 — Vertical and VerticalPLUS Carriers</option>
+<option value="L21-Enclosure-Mounting-and-Physical-Install.html">L21 — Enclosure Mounting and Physical Installation</option>
+<option value="L22-Power-Grounding-and-UPS.html">L22 — Power, Grounding, and UPS</option>
+<option value="L23-Troubleshooting-and-Maintenance.html">L23 — Troubleshooting and Maintenance</option>
+<option value="L24-Comprehensive-Review-and-Certification.html">L24 — Comprehensive Review and Certification</option>
+</select>
+<br><br>
+<label><input type=\"checkbox\" data-lesson="L06" onchange="saveProgress()"> Mark as completed</label>
+<span id="progress-text" style="margin-left:1em;"></span>
+</nav>
+
+<h1>Lesson 06 — Workstation, Control Network, and Power</h1>
+<p class="source">Source: DeltaV M-Series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021, pp.&nbsp;44–56.</p>
+
+<p>The controller and I/O cards are installed (Lessons 04–05), but they cannot do anything useful until the <strong>workstation</strong> is connected and the <strong>Control Network</strong> links everything together. This lesson covers the final steps of a DeltaV hardware installation: workstation setup, Control Network cabling (including fiber-optic options), connecting to the plant LAN, bulk power distribution, the Remote Network, and Network Time Server configuration. By the end, you will have a fully connected, powered DeltaV system ready for software installation.</p>
+
+<h2>6.1 Installing the DeltaV Workstation</h2>
+
+<p>The workstation is the human interface to the DeltaV system — it is where operators monitor processes, engineers configure control strategies, and maintenance personnel troubleshoot issues. Installation involves connecting peripherals, applying labels, and installing the system identifier.</p>
+
+<ol>
+<li><strong>Connect peripherals</strong> — follow the instructions supplied with your workstation to connect the monitor, keyboard, and mouse to the central processing unit (CPU). Refer to the workstation documentation for I/O port details.</li>
+<li><strong>Apply the DeltaV label</strong> — if the DeltaV label is not already on your monitor, apply it to the lower right corner of the monitor faceplate. This is a visual identification requirement for DeltaV workstations.</li>
+<li><strong>Install the system identifier</strong> — plug the DeltaV System Identifier into a USB port on the workstation. This device contains the system license.</li>
+<li><strong>Install printer and UPS</strong> (optional) — follow the documentation supplied with each device for hardware installation.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0045_1.png" alt="Workstation Installation — monitor, keyboard, mouse, and System Identifier USB dongle">
+<div class="caption">Figure 2-19: Workstation installation — connect the monitor, keyboard, mouse, and System Identifier USB dongle. The workstation and all peripherals must share one power distribution and system ground. (D800001X312, p.&nbsp;45)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — System Identifier:</strong> The DeltaV System Identifier is a USB dongle that contains the system license. There is one per system, and it must be plugged into the ProfessionalPLUS workstation for the system to operate. Without this dongle, the DeltaV software will not function. Treat it with the same care as a software activation key.
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> After hardware installation, refer to the DeltaV media pack installation pamphlet for software installation on the workstation. The hardware is only half the equation — the software brings the system to life. Ensure all workstations share one power distribution and system ground to prevent ground loop issues.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.12, pp.&nbsp;44–45</div>
+
+<h2>6.2 Setting Up the DeltaV Control Network</h2>
+
+<p>The Control Network is an <strong>isolated Ethernet LAN</strong> that provides communication between controllers and workstations. It is <strong>dedicated to the DeltaV system</strong> — no other devices can be attached to it. This isolation is a fundamental security and reliability requirement. A separate Ethernet interface through the Application Station or ProfessionalPLUS connects the DeltaV system to the plant-wide LAN.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Network Isolation:</strong> The Control Network is an isolated Ethernet LAN dedicated exclusively to DeltaV communication. No other devices can be attached. A separate Ethernet interface through the Application Station or ProfessionalPLUS provides the gateway to the plant-wide LAN. This isolation protects the control system from network-borne threats and prevents control traffic from being disrupted by plant network activity.
+</div>
+
+<h3>6.2.1 No-Hub (Direct Connection) Systems</h3>
+
+<p>If your system consists of <strong>one workstation and one controller only</strong>, you can connect the DeltaV network without using a hub. The cable must be routed directly from the workstation to the controller using a <strong>crossover cable</strong>.</p>
+
+<div class="screenshot">
+<img src="../images/page_0046_1.png" alt="No Hub System Example — single crossover cable connects workstation to controller">
+<div class="caption">Figure 2-20: No-hub system example — a single crossover cable connects the workstation directly to the controller. (D800001X312, p.&nbsp;46)</div>
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Crossover vs. Straight-Through:</strong> No-hub cable (crossover cable) has different wiring from straight-through Ethernet cables. Using a straight-through cable in a no-hub configuration will <em>not</em> work. The crossover cable has 568B pinouts on one end and 568A pinouts on the opposite end. Label crossover cables clearly to avoid confusion during installation.
+</div>
+
+<h3>6.2.2 Hub/Switch-Based Systems</h3>
+
+<p>For systems with multiple controllers and workstations, you need one or more Ethernet hubs or switches. Each hub is equivalent to a single IEEE 802.3 repeater (1 hop). The hop limits depend on the network speed:</p>
+
+<table>
+<thead>
+<tr><th>Network Speed</th><th>Maximum Hops</th><th>Maximum Hubs in Series</th></tr>
+</thead>
+<tbody>
+<tr><td>10 Mbit</td><td>4</td><td>4</td></tr>
+<tr><td>100 Mbit</td><td>2</td><td>2</td></tr>
+</tbody>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Hop Limits:</strong> 10Mbit networks allow four repeater hops (four hubs in series), while 100Mbit networks allow only two. Exceeding these limits causes collisions and communication failures. Always plan your network topology within these constraints. If you need more than two hops at 100Mbit, consider using fiber-optic links to bridge longer distances.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.13, pp.&nbsp;45–46</div>
+
+<h2>6.3 Control Network Cable Specifications</h2>
+
+<p>The Control Network supports two cable types: <strong>Cat5 twisted pair (TP)</strong> and <strong>fiber-optic</strong>. All cables must be made, installed, and tested by an experienced LAN installer. Substandard cables are the single most common cause of Control Network problems — take the time to get them right.</p>
+
+<h3>6.3.1 Cat5 Twisted Pair Requirements</h3>
+
+<ul>
+<li>All cables must be made from <strong>screened Category 5 cable</strong> with a maximum length of 100&nbsp;m (328&nbsp;ft).</li>
+<li>Insulated conductor diameter: 0.89 to 0.99&nbsp;mm (0.035 to 0.040&nbsp;in).</li>
+<li><strong>Straight-through cables:</strong> RJ45 connectors to EIA/TIA 568B pinouts at both ends.</li>
+<li><strong>Crossover cables:</strong> RJ45 connectors to 568B on one end and 568A on the opposite end.</li>
+<li><strong>Hub-to-hub cascade cables:</strong> unshielded connector on one end, shielded connector on the opposite end.</li>
+<li><strong>Workstation connections:</strong> unshielded RJ45 connectors at the workstation end.</li>
+<li><strong>Controller and hub/switch connections:</strong> shielded RJ45 connectors at the controller and hub/switch ends.</li>
+<li>All cables must be tested with the <strong>Microtest PentaScanner™</strong> testing tool.</li>
+<li>Ethernet wall outlets, punchdown blocks, and patch panels are <strong>not supported</strong>.</li>
+</ul>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Substandard Cables:</strong> Substandard cables can create serious communication problems that are extremely difficult to diagnose. Always make sure all cables meet the specifications listed above. Test <em>every</em> cable — do not assume a cable is good just because it was purchased new. The Microtest PentaScanner checks cable mapping, length, crosstalk, attenuation, impedance, loop resistance, and capacitance.
+</div>
+
+<table>
+<thead>
+<tr><th>Cable Test</th><th>What It Checks</th><th>Why It Matters</th></tr>
+</thead>
+<tbody>
+<tr><td>Cable Mapping</td><td>Pin-to-pin continuity</td><td>Verifies correct wiring at both ends</td></tr>
+<tr><td>Length</td><td>Cable run distance</td><td>Must not exceed 100 m for Cat5</td></tr>
+<tr><td>Crosstalk</td><td>Signal leakage between pairs</td><td>Causes data corruption at high speeds</td></tr>
+<tr><td>Attenuation</td><td>Signal strength loss</td><td>Excessive loss causes dropped packets</td></tr>
+<tr><td>Impedance</td><td>Cable impedance matching</td><td>Mismatched impedance causes reflections</td></tr>
+<tr><td>Loop Resistance</td><td>DC resistance of the loop</td><td>High resistance indicates poor connections</td></tr>
+<tr><td>Capacitance</td><td>Cable capacitance</td><td>High capacitance degrades signal quality</td></tr>
+</tbody>
+</table>
+
+<h3>6.3.2 Fiber-Optic Cable Guidelines</h3>
+
+<p>Fiber-optic cables are used for longer distances and higher speeds. The type of fiber required depends on the equipment's port specifications, the site's physical layout, and the distance between devices:</p>
+
+<table>
+<thead>
+<tr><th>Fiber Type</th><th>Application</th><th>Max Distance</th><th>Typical Fiber</th></tr>
+</thead>
+<tbody>
+<tr><td>Multimode</td><td>100BASE-FX (100 Mb/s)</td><td>2 km</td><td>50/125 or 62.5/125 µm</td></tr>
+<tr><td>Single-mode</td><td>1000BASE-LX/LH (gigabit)</td><td>Beyond 2 km</td><td>9/125 µm</td></tr>
+<tr><td>Multimode</td><td>1000BASE-SX (gigabit)</td><td>~500 m</td><td>50/125 or 62.5/125 µm</td></tr>
+</tbody>
+</table>
+
+<p>Fiber-optic cables are terminated with <strong>ST, SC, MTRJ, or LC connectors</strong> depending on the physical port type on the device. All fiber-optic links should be tested for attenuation (light loss) with an optical power meter, and at least a <strong>3&nbsp;dB margin</strong> should be left below the equipment manufacturer's loss budget.</p>
+
+<div class="tip">
+<strong>💡 Tip:</strong> The Modal Bandwidth specification (MHz/km) is a distance-limiting factor for gigabit communications on multimode fiber. The actual supported distance may be significantly shorter than 500&nbsp;m depending on the fiber grade. Always check the manufacturer's specifications for supported distances on gigabit over multimode fiber.
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Caution:</strong> Substandard fiber-optic cables can create serious communication problems. The entire link — including all assembled cables, connectors, and splices from end to end — must be measured and must not exceed the equipment manufacturer's loss budget specification. Always leave at least a 3&nbsp;dB margin.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.13, pp.&nbsp;46–48</div>
+
+<h2>6.4 Installing the Control Network Cables</h2>
+
+<p>After making and testing all cables, connect them to the network hardware. The procedure differs depending on whether you have a simplex or redundant Control Network.</p>
+
+<h3>6.4.1 Simplex Control Network</h3>
+
+<p>Connect the <strong>unshielded end</strong> of a network cable to the twisted pair port on the primary Network Interface Card (NIC) in the workstation, and connect the <strong>shielded end</strong> to the primary hub.</p>
+
+<div class="screenshot">
+<img src="../images/page_0040_1.png" alt="Simplex Control Network Cable Connections — unshielded to NIC, shielded to hub">
+<div class="caption">Figure 2-21: Simplex control network cable connections — the unshielded end goes to the workstation NIC, the shielded end goes to the hub. (D800001X312, p.&nbsp;48)</div>
+</div>
+
+<h3>6.4.2 Redundant Control Network</h3>
+
+<p>For redundant networks, you need two NICs in each workstation and two hubs/switches:</p>
+
+<ol>
+<li>Connect the <strong>unshielded end</strong> to the workstation's <strong>primary NIC</strong> and the <strong>shielded end</strong> to the <strong>primary hub</strong>.</li>
+<li>Connect another cable from the <strong>secondary NIC</strong> to the <strong>secondary hub</strong>.</li>
+</ol>
+
+<p>Use color-coded boots for identification: <strong>yellow</strong> for primary Control Network cables and <strong>black</strong> for secondary Control Network cables. This convention makes it much easier to trace cables during troubleshooting.</p>
+
+<div class="screenshot">
+<img src="../images/page_0038_1.png" alt="Redundant Control Network Cable Connections — primary and secondary NICs to separate hubs">
+<div class="caption">Figure 2-22: Redundant control network cable connections — primary (yellow boot) and secondary (black boot) cables connect to separate hubs and NICs. (D800001X312, p.&nbsp;49)</div>
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Pitfall — Crosswired Networks:</strong> Make sure you are consistent in your primary and secondary network connections so they are not crosswired. If the primary cable connects to the secondary NIC, the redundancy will not function correctly and may cause network failures. Verify the NIC binding order to differentiate between primary and secondary NICs.
+</div>
+
+<h3>6.4.3 Controller Network Connections</h3>
+
+<p>Connect network cables from the hub(s) to the RJ45 connectors on the bottom of each controller. The <strong>front connector</strong> is for the primary Control Network and the <strong>rear connector</strong> is for the secondary Control Network.</p>
+
+<div class="screenshot">
+<img src="../images/page_0040_1.png" alt="Control Network Cable Connections for a Simplex Controller — front is primary, rear is secondary">
+<div class="caption">Figure 2-23: Control network cable connections for a simplex controller — the front RJ45 is primary, the rear RJ45 is secondary. Both use shielded connectors. (D800001X312, p.&nbsp;50)</div>
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> For hub-to-hub connections, one end of the cable must have unshielded connectors. This is specific to DeltaV network requirements — standard Ethernet does not have this restriction. Always follow the DeltaV-specific cabling conventions, not generic Ethernet best practices.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.13, pp.&nbsp;48–50</div>
+
+<h2>6.5 Connecting DeltaV to the Plant LAN</h2>
+
+<p>The DeltaV system can connect to a plant-wide LAN through the <strong>third NIC</strong> on the Application Station. This provides a gateway between the isolated Control Network and other networks. However, this connection must be carefully managed for security.</p>
+
+<div class="pitfall">
+<strong>⚠️ Security Warning:</strong> Emerson strongly recommends that you do <em>not</em> connect the DeltaV Professional, Operator, and Base workstations to a plant LAN or gateway. The ProfessionalPLUS station should also not be connected to the plant LAN, as the engineering database must be protected from unauthorized external access. Use a firewall (Emerson Smart Firewall recommended) at all connection points between the DeltaV Control Network and any external network.
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0046_1.png" alt="Recommended Network Architecture — DeltaV controllers, workstations, and remote connections with firewall protection">
+<div class="caption">Figure 2-24: Recommended network architecture showing DeltaV controllers, workstations, and remote connections with Emerson Smart Firewall protection at each boundary. (D800001X312, p.&nbsp;51)</div>
+</div>
+
+<table>
+<thead>
+<tr><th>Network Level</th><th>Devices</th><th>Security Requirement</th></tr>
+</thead>
+<tbody>
+<tr><td>Control Network (Level 2)</td><td>Controllers, Workstations, Smart Switches</td><td>Isolated LAN, no external access</td></tr>
+<tr><td>DeltaV ACN (Level 2.5)</td><td>Application Station (3rd NIC)</td><td>Gateway with firewall</td></tr>
+<tr><td>Plant LAN (Level 3)</td><td>Host systems, remote workstations</td><td>Firewall required at boundary</td></tr>
+<tr><td>Remote Network</td><td>Remote workstations, thin clients</td><td>Firewall required</td></tr>
+</tbody>
+</table>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.13, pp.&nbsp;50–51</div>
+
+<h2>6.6 Connecting Power to the System</h2>
+
+<p>A bulk power supply converts AC or DC power to the power required for the system power supply and, optionally, for field devices. The wiring method depends on your existing power supply, distribution scheme, and grounding techniques. Refer to the DeltaV Power and Grounding manual for recommended power and grounding techniques.</p>
+
+<h3>6.6.1 Bulk AC to 12 or 24 VDC Power Supply</h3>
+
+<p>The simplex bulk AC power supply connects from the AC power distribution/UPS through optional isolation transformers to the bulk supply. The output provides 12&nbsp;VDC or 24&nbsp;VDC with DC Return (Ground) to a dedicated plant ground grid point.</p>
+
+<div class="screenshot">
+<img src="../images/page_0037_1.png" alt="Simplex Power and Ground Wiring Diagram for Legacy Bulk AC to 12 or 24 VDC Power Supply">
+<div class="caption">Figure 2-25: Simplex power and ground wiring diagram for legacy bulk AC to 12 or 24 VDC power supply — showing the path from AC distribution through the bulk supply to the dedicated plant ground grid point. (D800001X312, p.&nbsp;52)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — Ground Isolation:</strong> The bulk power supply provides an isolated common ground reference. The DC return (ground) connects to a <strong>dedicated plant ground grid point</strong>, separate from the AC ground. This separation prevents noise coupling between AC and DC systems and is essential for clean, reliable power delivery to the DeltaV system.
+</div>
+
+<h3>6.6.2 Bulk 24 VDC to 12 VDC Power Supply</h3>
+
+<p>When the plant already has a 24&nbsp;VDC supply, a DC-to-DC bulk converter steps it down to 12&nbsp;VDC for the DeltaV system. The wiring connects from the DC power distribution through the bulk supply to the carrier, with the ground reference connected to the dedicated plant ground grid point.</p>
+
+<div class="screenshot">
+<img src="../images/page_0038_1.png" alt="Simplex Power and Ground Wiring Diagram for Legacy Bulk 24 VDC to 12 VDC Power Supply">
+<div class="caption">Figure 2-26: Simplex power and ground wiring diagram for legacy bulk 24 VDC to 12 VDC power supply — the ground reference connects to the dedicated plant ground grid point. (D800001X312, p.&nbsp;53)</div>
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> Refer to the DeltaV Power and Grounding manual for recommended power and grounding techniques. The method of connecting power depends on your existing power supply, power distribution scheme, and grounding techniques — there is no one-size-fits-all approach. Appendix H provides legacy bulk power supply specifications and dimensions.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.14, pp.&nbsp;51–53</div>
+
+<h2>6.7 Setting Up the DeltaV Remote Network</h2>
+
+<p>The Remote Network allows remote workstations to connect to the DeltaV system. Users must assign their own PC names and IP addresses <strong>before</strong> installing DeltaV software. If the remote workstation is already on the plant-wide LAN, it may already have a name and IP address that can be used for DeltaV communications.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Remote Network Reconfiguration:</strong> If the IP address of either the Remote Network or the DeltaV ACN changes, you must run Workstation Configuration on all workstations in this specific order: (1) ProfessionalPLUS (only if a download is indicated), (2) the RAS node, (3) the Remote Workstations. Skipping or reordering these steps can cause communication failures.
+</div>
+
+<p>The cable installation requirements for the Remote Network are the same as for the Control Network — screened Cat5 or fiber-optic cable with the same connector and testing requirements.</p>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.15, pp.&nbsp;53–54</div>
+
+<h2>6.8 Setting Up a Network Time Server</h2>
+
+<p>DeltaV supports GPS Network Time Server equipment for precise time synchronization across the system. The time server connects to the Control Network and has specific IP address requirements that must be configured before the server is connected to the network.</p>
+
+<table>
+<thead>
+<tr><th>Time Server</th><th>Primary Control Network</th><th>Secondary Control Network</th></tr>
+</thead>
+<tbody>
+<tr><td>Primary NTS</td><td>10.4.128.1</td><td>10.8.128.1</td></tr>
+<tr><td>Backup NTS</td><td>10.4.128.2</td><td>10.8.128.2</td></tr>
+</tbody>
+</table>
+
+<p>The subnet mask for both time servers is <code>255.254.0.0</code>. For redundant control network systems, attach the primary NTS to the primary control network and the backup NTS to the secondary control network. For simplex systems, attach both to the primary control network.</p>
+
+<div class="key-concept">
+<strong>Key Concept — NTS Placement:</strong> For redundant systems: primary NTS → primary control network, backup NTS → secondary control network. For simplex systems: both NTS → primary control network. A default gateway (route) is not required for the Network Time Servers — the subnet mask alone is sufficient for time synchronization on the control network.
+</div>
+
+<div class="tip">
+<strong>💡 Tip:</strong> If you are attaching a Network Time Server to a DeltaV Remote Network (rather than the Control Network), the IP address is not predefined. Your network administrator must assign a valid IP address for the remote network segment, and this address must be used in the Remote Network properties dialog box in DeltaV Explorer.
+</div>
+
+<div class="page-ref">Ref: D800001X312, Section 2.5.16, pp.&nbsp;54–56</div>
+
+<h2>Quiz — Lesson 06</h2>
+
+<div class="quiz">
+<h3>Knowledge Check</h3>
+
+<details>
+<summary><strong>Q1:</strong> What type of cable is needed for a no-hub (direct connection) system?</summary>
+<p class="answer">A crossover cable is required, with 568B pinouts on one end and 568A pinouts on the opposite end. A standard straight-through cable will not work in this configuration because both devices are trying to transmit on the same pins.</p>
+</details>
+
+<details>
+<summary><strong>Q2:</strong> What is the maximum number of repeater hops allowed on a 100Mbit Control Network?</summary>
+<p class="answer">A 100Mbit network allows a maximum of two repeater hops (two hubs in series). A 10Mbit network allows four hops. Exceeding these limits causes collisions and communication failures.</p>
+</details>
+
+<details>
+<summary><strong>Q3:</strong> Why does Emerson recommend not connecting DeltaV workstations directly to a plant LAN?</summary>
+<p class="answer">Security. Connecting DeltaV workstations directly to a plant LAN exposes the system to potential unauthorized external access. Emerson recommends using a firewall (such as the Emerson Smart Firewall) at all connection points to protect the DeltaV network.</p>
+</details>
+
+<details>
+<summary><strong>Q4:</strong> What is the correct connector shield convention for Control Network cables?</summary>
+<p class="answer">Unshielded RJ45 connectors are used at all workstation connections. Shielded RJ45 connectors are used at all controller connections and all hub/switch connections to nodes. For hub-to-hub cascade cables, one end is unshielded and the other is shielded.</p>
+</details>
+
+<details>
+<summary><strong>Q5:</strong> What IP address should be assigned to the primary Network Time Server on the primary Control Network?</summary>
+<p class="answer">The primary NTS on the primary control network uses IP address 10.4.128.1 with subnet mask 255.254.0.0. No default gateway is required.</p>
+</details>
+
+<details>
+<summary><strong>Q6:</strong> What is the purpose of the DeltaV System Identifier, and where must it be installed?</summary>
+<p class="answer">The DeltaV System Identifier is a USB dongle that contains the system license. There is one per system, and it must be plugged into the ProfessionalPLUS workstation. Without this dongle, the DeltaV software will not function.</p>
+</details>
+
+<details>
+<summary><strong>Q7:</strong> If the IP address of the Remote Network changes, in what order must Workstation Configuration be run?</summary>
+<p class="answer">Workstation Configuration must be run in this order: (1) ProfessionalPLUS (only if a download is indicated), (2) the RAS node, (3) the Remote Workstations. Skipping or reordering these steps can cause communication failures.</p>
+</details>
+
+<details>
+<summary><strong>Q8:</strong> What tests does the Microtest PentaScanner perform on Cat5 cables?</summary>
+<p class="answer">The PentaScanner tests: cable mapping, length, crosstalk, attenuation, attenuation-to-crosstalk ratio, impedance, loop resistance, and capacitance. All cables must pass every test before installation.</p>
+</details>
+</div>
+
+<p style="margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em;">
+<em>Previous: <a href="L05-Installing-Controller-and-Power-Supply.html">L05 — Installing Controller &amp; Power Supply</a> | Next: <a href="L07-System-Checkout---Cables-and-Power.html">L07 — System Checkout — Cables and Power</a></em>
+</p>
+
+</body>
+</html>

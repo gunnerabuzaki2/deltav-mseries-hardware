@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L16 – Control Network: Installation Rules and Diagrams</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L15-Control-Network---Topology-and-Cable-Specs.html">← L15</a> |
+  <a href="L17-Legacy-Bulk-Power-Supplies-and-Enclosure-Guidelines.html">L17 →</a>
+</nav>
+
+<h1>L16 – Control Network: Installation Rules and Diagrams</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix G, Sections G.5.9–G.6.5</p>
+<p><label><input type="checkbox" data-lesson="L16" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>1. Overview</h2>
+<p>This lesson provides a reference of supported network installation diagrams for the DeltaV Control Network, covering Cisco 3750, 2960, and DeltaV Smart Switch topologies. Each diagram includes numbered callouts that define cabling, grounding, and configuration requirements.</p>
+
+<div class="key-concept">
+  <strong>Key Rule — Duplex Auto-Negotiation:</strong> All twisted pair ports are configured to auto-sense speed and auto-negotiate duplex. <strong>Never</strong> hard-configure speed or duplex on twisted pair switch ports — duplex mismatches cause communications failures.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Universal Cabling Rules</h2>
+<p>Every network diagram references these core cabling callout descriptions. Memorize them — they apply across all topologies.</p>
+
+<table>
+  <tr><th>Callout</th><th>Applies To</th><th>Description</th></tr>
+  <tr>
+    <td><strong>1</strong></td>
+    <td>Switch-to-switch (twisted pair)</td>
+    <td>100 m (max) straight-through or crossover cable. <strong>Cat. 5(e) Screened Twisted Pair</strong> cable is required between switches.</td>
+  </tr>
+  <tr>
+    <td><strong>2</strong></td>
+    <td>Switch-to-switch (ground loop prevention)</td>
+    <td>Build with a <strong>shielded, metal-enclosed RJ45 connector on one end</strong> and an <strong>isolated, plastic-enclosed RJ45 connector on the other</strong>. The metal connector end can be placed on either switch.</td>
+  </tr>
+  <tr>
+    <td><strong>3</strong></td>
+    <td>Controller-to-switch</td>
+    <td>100 m (max) straight-through cable. The controller's RJ45 shield connects only to a Faraday cage (not DC ground) — connectors are floating. Build with <strong>shielded, metal-enclosed RJ45 connectors on both ends</strong>.</td>
+  </tr>
+  <tr>
+    <td><strong>4</strong></td>
+    <td>Workstation-to-switch</td>
+    <td>100 m (max) straight-through cable. To prevent ground loops, build with <strong>shielded metal on switch end, plastic on PC end</strong>. Metal connector end must be on the switch, not the PC.</td>
+  </tr>
+  <tr>
+    <td><strong>5 / 7</strong></td>
+    <td>Switch-to-switch (fiber, 100Mbit)</td>
+    <td>2 km (max) full duplex Multimode Fiber with MTRJ connectors.</td>
+  </tr>
+  <tr>
+    <td><strong>6</strong></td>
+    <td>Switch management</td>
+    <td>A <strong>dedicated non-DeltaV PC</strong> is required for switch management via telnet or web browser.</td>
+  </tr>
+  <tr>
+    <td><strong>8 / 10</strong></td>
+    <td>Cisco stacking</td>
+    <td>A Cisco stacking cable connects two 3750-series switches into a single managed unit with one IP address.</td>
+  </tr>
+</table>
+
+<div class="pitfall">
+  <strong>Critical Warning — Ground Loops:</strong> The controller's RJ45 shield is floating (Faraday cage only, not DC ground). The single point of ground is at the hub/switch. Mixing shield types on the wrong ends creates ground loops that cause intermittent communications failures.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Cisco Catalyst 3750 Topologies</h2>
+
+<h3>3.1 100Mbit Twisted Pair Cascaded Network</h3>
+<p class="page-ref">Pages 380–381, Figure G-65</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switch Model</td><td>Cisco Catalyst 3750-24TS</td></tr>
+  <tr><td>Topology</td><td>Cascaded (daisy-chain of up to 6 switches)</td></tr>
+  <tr><td>Cable between switches</td><td>Cat. 5(e) Screened Twisted Pair, 100 m max</td></tr>
+  <tr><td>Switch-to-switch ground</td><td>Metal RJ45 on one end, plastic on the other (Callout 2)</td></tr>
+  <tr><td>Controller cable</td><td>Shielded RJ45 on both ends (Callout 3)</td></tr>
+  <tr><td>Workstation cable</td><td>Metal on switch end, plastic on PC end (Callout 4)</td></tr>
+  <tr><td>SFP slots</td><td>Two gigabit slots — not used in this topology</td></tr>
+</table>
+
+<h3>3.2 Gigabit Twisted Pair Network Cascade</h3>
+<p class="page-ref">Pages 381–383, Figure G-66</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switch Model</td><td>Cisco Catalyst 3750-24TS</td></tr>
+  <tr><td>Uplink</td><td>Gigabit Twisted Pair SFP Modules in SFP slots</td></tr>
+  <tr><td>Topology</td><td>Cascaded with gigabit uplinks between switches</td></tr>
+  <tr><td>Same cabling rules</td><td>Callouts 1–8 identical to 100Mbit cascade</td></tr>
+</table>
+
+<h3>3.3 Gigabit Fiber-Optic Network Cascade</h3>
+<p class="page-ref">Pages 383–385, Figure G-67</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switch Model</td><td>Cisco Catalyst 3750-24TS</td></tr>
+  <tr><td>Uplink</td><td>Gigabit Fiber-Optic SFP Modules</td></tr>
+  <tr><td>Fiber Type — SX Module</td><td>Multimode, up to 550 m, 62.5/125 µm or 50/125 µm</td></tr>
+  <tr><td>Fiber Type — LH Module</td><td>Single Mode, up to 10 km, 9 µm</td></tr>
+  <tr><td>Connector</td><td>LC duplex fiber-optic</td></tr>
+  <tr><td>Wiring</td><td>Crossover: transmit on one end → receive on the other</td></tr>
+</table>
+
+<div class="tip">
+  <strong>SFP Module Note:</strong> Splices, patch panels, and connector losses reduce the overall distances listed above. Always account for the total loss budget in your fiber link design.
+</div>
+
+<h3>3.4 Gigabit Fiber-Optic Network Star</h3>
+<p class="page-ref">Pages 385–387, Figure G-68</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Central Switch</td><td>Cisco Catalyst 3750G-12S (12-port SFP)</td></tr>
+  <tr><td>Edge Switches</td><td>Cisco Catalyst 3750-24TS</td></tr>
+  <tr><td>Topology</td><td>Star — central fiber switch with fiber uplinks to edge switches</td></tr>
+  <tr><td>Stacking</td><td>Cisco stacking cable between central switches (Callout 9)</td></tr>
+  <tr><td>Controller/Workstation Cables</td><td>Same twisted pair rules (Callouts 3–4)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. Cisco Catalyst 2960 Topologies</h2>
+
+<h3>4.1 100Mbit Twisted Pair Cascaded Network</h3>
+<p class="page-ref">Pages 389–391, Figure G-70</p>
+<table>
+  <tr><th>Switch Model</th><th>Ports</th></tr>
+  <tr><td>Cisco Catalyst 2960-24TT-L</td><td>24 × 10/100Mbit + 2 × Gigabit</td></tr>
+  <tr><td>Cisco Catalyst 2960-48TT-L</td><td>48 × 10/100Mbit + 2 × Gigabit</td></tr>
+  <tr><td>Cisco Catalyst 2960-8TC-L</td><td>8 × 10/100Mbit + 1 × Gigabit (RJ45/SFP combo)</td></tr>
+</table>
+<div class="tip"><strong>Note:</strong> The 2960-8TC-L has a single gigabit port that can be used as RJ45 or SFP. If fitted with a 100BASE-FX SFP (GLC-FE-100FX), it operates at 100Mbit. This port is typically unused in cascade examples.</div>
+
+<h3>4.2 Gigabit Twisted Pair Cascaded Network</h3>
+<p class="page-ref">Pages 391–393, Figure G-71</p>
+<p>Same switch models as 4.1. All cabling and grounding rules are identical (Callouts 1–8). The difference is that gigabit SFP modules may be used on inter-switch links.</p>
+
+<h3>4.3 Gigabit Fiber-Optic Cascaded Network</h3>
+<p class="page-ref">Pages 393–395, Figure G-72</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switch Models</td><td>Cisco 2960-24TC-L, 2960-48TC-L, 2960-8TC-L</td></tr>
+  <tr><td>Fiber Uplink</td><td>SFP slots — SX or LH modules</td></tr>
+  <tr><td>Optional 100Mbit fiber (2960-24TC-L/48TC-L)</td><td>GLC-GE-100FX 100BASE-FX SFP module</td></tr>
+  <tr><td>Optional 100Mbit fiber (2960-8TC-L)</td><td>GLC-FE-100FX 100BASE-FX SFP module</td></tr>
+</table>
+
+<h3>4.4 Gigabit Fiber-Optic Network Star</h3>
+<p class="page-ref">Pages 395–397, Figure G-73</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Central Switch</td><td>Cisco Catalyst 3750G-12S + 3750-24TS (stacked)</td></tr>
+  <tr><td>Edge Switches</td><td>Cisco 2960-48TC-L, 2960-8TC-L</td></tr>
+  <tr><td>Fiber Type</td><td>SX (multimode, 550 m) or LH (single mode, 10 km)</td></tr>
+  <tr><td>Optional 100Mbit fiber</td><td>GLC-GE-100FX or GLC-FE-100FX SFP modules</td></tr>
+</table>
+
+<h3>4.5 100Mbit Fiber-Optic Network Star</h3>
+<p class="page-ref">Pages 397–399, Figure G-74</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switches</td><td>Cisco 2960-48TC-L (center) + 2950C (edge)</td></tr>
+  <tr><td>Fiber on 2960-48TC-L</td><td>GLC-GE-100FX 100BASE-FX SFP module <strong>only</strong></td></tr>
+  <tr><td>Fiber on 2950C</td><td>100BASE-FX with duplex LC at SFP, MTRJ at 2950C</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>SFP Module Compatibility:</strong> Not all SFP modules work in all switches. The GLC-GE-100FX is the <strong>only</strong> module supported in the 2960-48TC-L for 100Mbit fiber. The GLC-FE-100FX is the <strong>only</strong> module supported in the 2960-8TC-L. Using the wrong module causes link failures.
+</div>
+
+<h3>4.6 100Mbit Multimode Fiber-Optic Network</h3>
+<p class="page-ref">Pages 399–401, Figure G-75</p>
+<table>
+  <tr><th>Parameter</th><th>Specification</th></tr>
+  <tr><td>Switches</td><td>Cisco 2960-24TC-L, 2960-8TC-L, 2950C</td></tr>
+  <tr><td>2960-24TC-L fiber</td><td>GLC-GE-100FX 100BASE-FX SFP <strong>only</strong></td></tr>
+  <tr><td>2960-8TC-L fiber</td><td>GLC-FE-100FX 100BASE-FX SFP <strong>only</strong></td></tr>
+  <tr><td>Connector types</td><td>Duplex LC on SFP modules, MTRJ on 2950C</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. DeltaV Smart Switch Topologies</h2>
+
+<h3>5.1 RM100 and FP20 — Twisted Pair with Twisted Pair Uplink</h3>
+<p class="page-ref">Pages 401–403, Figure G-76</p>
+<table>
+  <tr><th>Callout</th><th>Detail</th></tr>
+  <tr><td>5</td><td>Ring tongue terminal on ground screw → suitable shield ground</td></tr>
+  <tr><td>6</td><td>FP20 switches: 8 × 10/100Mbit twisted pair ports, no SFP ports, no gigabit</td></tr>
+  <tr><td>7</td><td>RM100: 2 × fixed gigabit uplinks + 2 × SFP uplinks (only 2 active at once)</td></tr>
+  <tr><td>8</td><td>Ports auto-sense speed, auto-negotiate duplex, auto-detect polarity</td></tr>
+  <tr><td>9</td><td>Use gigabit uplinks for switch-to-switch connections (performance headroom)</td></tr>
+  <tr><td>10</td><td>Serial port: out-of-band switch setup/management only</td></tr>
+  <tr><td>11</td><td>+24VDC power supply input and relay contacts connector</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Port Lockdown:</strong> After all initial connections are made, unused ports can be deactivated via software command from the DeltaV station. Only the original device can communicate on its original port in lockdown state. Additional connections require an unlock command.
+</div>
+
+<h3>5.2 RM100 and FP20 — Twisted Pair with SFP and Fiber-Optic Uplinks</h3>
+<p class="page-ref">Pages 403–405, Figure G-77</p>
+<table>
+  <tr><th>Callout</th><th>Detail</th></tr>
+  <tr><td>6</td><td>FP20: 2 × 100Mbit full duplex multimode fiber-optic uplink ports (no SFP, no gigabit)</td></tr>
+  <tr><td>14</td><td>100Mbit/sec full duplex multimode fiber link — up to 5 km depending on SFP and splices</td></tr>
+</table>
+
+<h3>5.3 RM100 with Fiber Uplinks + FP20 with Fiber/TP Uplinks</h3>
+<p class="page-ref">Pages 406–407, Figure G-78</p>
+<table>
+  <tr><th>Callout</th><th>Detail</th></tr>
+  <tr><td>6</td><td>FP20: 1 × 100Mbit full duplex single mode fiber-optic uplink (no SFP, no gigabit)</td></tr>
+  <tr><td>13</td><td>100Mbit/sec full duplex single mode fiber link — up to 40 km depending on SFP and splices</td></tr>
+</table>
+
+<h3>5.4 RM104 with Fiber and Twisted-Pair Uplinks</h3>
+<p class="page-ref">Page 408–409, Figure G-79</p>
+<table>
+  <tr><th>Callout</th><th>Detail</th></tr>
+  <tr><td>2</td><td>ProfessionalPLUS connected to RM104 port → gigabit link</td></tr>
+  <tr><td>4</td><td>RM104: 4 combination ports (SFP/TP pairs — only one per pair, never two adjacent). RM100: 2 combination ports, same rule.</td></tr>
+  <tr><td>8</td><td>Controllers/CIOCs on the same switch as workstations are <strong>not</strong> protected by firewall IPD</td></tr>
+</table>
+
+<h3>5.5 Smart Switches in Twisted Pair Networks (General)</h3>
+<p class="page-ref">Pages 409–410, Figure G-80</p>
+<div class="pitfall">
+  <strong>Maximum Switch Hops:</strong> There can be <strong>no more than six switches in series</strong> between any two devices in any path in twisted pair Smart Switch networks.
+</div>
+
+<!-- ============================================================ -->
+<h2>6. Summary — Network Topology Quick Reference</h2>
+<table>
+  <tr><th>Topology</th><th>Switch</th><th>Uplink Type</th><th>Max Distance</th></tr>
+  <tr><td>100Mbit TP Cascade</td><td>3750, 2960</td><td>Twisted pair</td><td>100 m per link</td></tr>
+  <tr><td>Gigabit TP Cascade</td><td>3750, 2960</td><td>Gigabit TP SFP</td><td>100 m per link</td></tr>
+  <tr><td>Gigabit FO Cascade</td><td>3750, 2960</td><td>Fiber SFP (SX/LH)</td><td>550 m (SX) / 10 km (LH)</td></tr>
+  <tr><td>Gigabit FO Star</td><td>3750G-12S center</td><td>Fiber SFP</td><td>550 m (SX) / 10 km (LH)</td></tr>
+  <tr><td>100Mbit FO Star</td><td>2960 + 2950C</td><td>100BASE-FX</td><td>2 km (MTRJ multimode)</td></tr>
+  <tr><td>Smart Switch TP</td><td>RM100, FP20, MD30</td><td>TP or Fiber</td><td>100 m (TP) / 5 km (FO MM) / 40 km (FO SM)</td></tr>
+</table>
+
+<div class="key-concept">
+  <strong>Design Principles Recap:</strong>
+  <ul>
+    <li>Always use screened twisted pair between switches</li>
+    <li>Metal/plastic RJ45 combinations prevent ground loops</li>
+    <li>Controller shields are floating — ground at the switch</li>
+    <li>Never hard-configure speed/duplex on TP ports</li>
+    <li>Use gigabit links for switch-to-switch, 100Mbit for edge devices</li>
+    <li>Lock down unused ports after installation</li>
+    <li>Maximum 6 switches in series in Smart Switch TP networks</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> When building a cable assembly to connect a DeltaV controller to a switch, how should the RJ45 connectors be configured, and why?</p>
+  <p><span class="answer">A: Shielded metal-enclosed RJ45 on both ends. The controller's shield connects only to a Faraday cage (floating), so the single point of ground is at the switch.</span></p>
+
+  <p><strong>Q2:</strong> What happens if you hard-configure speed or duplex on a twisted pair switch port in a DeltaV system?</p>
+  <p><span class="answer">A: Duplex mismatches will occur, creating communications failures. All TP ports must auto-sense and auto-negotiate.</span></p>
+
+  <p><strong>Q3:</strong> How many switches can be in series between any two devices in a DeltaV Smart Switch twisted pair network?</p>
+  <p><span class="answer">A: No more than six switches.</span></p>
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Related Information</h2>
+<ul>
+  <li>Fiber-Optic Cable Specifications</li>
+  <li>Ethernet Cable Specifications and Installation Rules</li>
+  <li>Building Twisted Pair Cable Assemblies</li>
+  <li>Reserved DeltaV IP Addresses</li>
+  <li>The Management Station</li>
+  <li>Connecting the Management Station</li>
+  <li>Managing Cisco Switches (Books Online)</li>
+</ul>
+
+</body>
+</html>

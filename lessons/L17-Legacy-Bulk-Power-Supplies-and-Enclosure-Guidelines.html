@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L17 – Legacy Bulk Power Supplies and Enclosure Guidelines</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L16-Control-Network---Installation-Rules-and-Diagrams.html">← L16</a> |
+  <a href="L18-System-Power-Guidelines.html">L18 →</a>
+</nav>
+
+<h1>L17 – Legacy Bulk Power Supplies and Enclosure Guidelines</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendices H &amp; I</p>
+<p><label><input type="checkbox" data-lesson="L17" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>1. Overview — Legacy Bulk Power Supplies</h2>
+<p>Bulk power supplies provide power to the DeltaV system and/or to field devices. System power is isolated from field power. There are three types of DeltaV Legacy Bulk Power Supplies:</p>
+
+<table>
+  <tr><th>Type</th><th>Input</th><th>Output</th><th>Mounting</th><th>Status</th></tr>
+  <tr><td>Bulk AC to 24 VDC</td><td>120/230 VAC</td><td>24 VDC → field devices &amp; System Power Supplies</td><td>Panel &amp; DIN-rail</td><td>Available</td></tr>
+  <tr><td>Bulk AC to 12 VDC</td><td>120/230 VAC</td><td>12 VDC → System Power Supplies (DC/DC)</td><td>Panel &amp; DIN-rail</td><td>Available</td></tr>
+  <tr><td>Bulk 24 VDC to 12 VDC</td><td>24 VDC</td><td>12 VDC → System Power Supplies (DC/DC)</td><td>Panel</td><td><strong>Discontinued</strong></td></tr>
+</table>
+
+<div class="tip">
+  <strong>Note:</strong> For DeltaV Bulk Power Supplies (non-legacy), refer to the <em>DeltaV S-series and CHARMs Hardware Reference Manual</em>.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Legacy DIN Rail-Mounted Power Supply Specifications</h2>
+<p class="page-ref">Pages 430–432, Tables H-1 &amp; H-2</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>AC Input</td><td>120/230 VAC nominal, 90–264 VAC range, 47–63 Hz, single-phase</td></tr>
+  <tr><td>Input Current</td><td>3.6 A (12 VDC model) / 4.5 A (24 VDC model)</td></tr>
+  <tr><td>Output (60°C)</td><td>12.3 VDC @ 12.0 A <em>or</em> 24.6 VDC @ 12.0 A</td></tr>
+  <tr><td>Output (70°C)</td><td>12.3 VDC @ 9.0 A <em>or</em> 24.6 VDC @ 9.0 A</td></tr>
+  <tr><td>Inrush Current</td><td>40/25 A max (hot/cold start)</td></tr>
+  <tr><td>Hold-up Time</td><td>20 ms (90–264 VAC input)</td></tr>
+  <tr><td>Ripple &amp; Noise</td><td>1% PK-to-PK max (20 MHz BW)</td></tr>
+  <tr><td>Overvoltage Protection</td><td>110%–120%</td></tr>
+  <tr><td>Power Factor</td><td>0.98 at full rated load</td></tr>
+  <tr><td>Fuse</td><td>Internally fused, non-replaceable (internal fault only)</td></tr>
+  <tr><td>Alarm Relay</td><td>30 VDC @ 2.0 A, 250 VAC @ 2.0 A</td></tr>
+  <tr><td>Redundancy OR-ing Diode</td><td>Integrated — no external diode required</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>13.5 × 24.0 × 10.6 cm (5.3 × 9.5 × 4.2 in)</td></tr>
+</table>
+
+<h3>Connector Summary — DIN Rail-Mounted</h3>
+<table>
+  <tr><th>Connector</th><th>Description</th></tr>
+  <tr><td>AC+ / AC−</td><td>AC line / neutral</td></tr>
+  <tr><td>Protective Ground</td><td>Earth ground</td></tr>
+  <tr><td>V<sub>OUT</sub> (×2)</td><td>DC voltage output (+)</td></tr>
+  <tr><td>RTN (×2)</td><td>DC voltage return (−)</td></tr>
+  <tr><td>ENA / ENA RTN</td><td>Output enable (factory-wired internally)</td></tr>
+  <tr><td>SHARE</td><td>Required for redundancy / load-sharing</td></tr>
+  <tr><td>RELAY+ / RELAY−</td><td>Alarm contacts (250 VAC, 30 VDC)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>3. Legacy Panel-Mounted Power Supply Specifications</h2>
+<p class="page-ref">Pages 432–434, Table H-3</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>AC Input</td><td>120/230 VAC nominal, 90–264 VAC range, 47–63 Hz, single-phase</td></tr>
+  <tr><td>Output Rating</td><td>24 VDC @ 12.5 A <em>or</em> 12 VDC @ 25 A</td></tr>
+  <tr><td>Output Power</td><td>300 W at 60°C</td></tr>
+  <tr><td>Input Current</td><td>5 A</td></tr>
+  <tr><td>Inrush Current</td><td>100/40 A max (hot/cold start)</td></tr>
+  <tr><td>Hold-up Time</td><td>20 ms (90–264 VAC input)</td></tr>
+  <tr><td>Ripple &amp; Noise</td><td>1% PK-to-PK max (20 MHz BW)</td></tr>
+  <tr><td>Overvoltage Protection</td><td>125% (±5%)</td></tr>
+  <tr><td>Power Factor</td><td>0.98 at full rated load</td></tr>
+  <tr><td>Fuse</td><td>15 A, 250 VAC 3AB, non-replaceable (internal fault only)</td></tr>
+  <tr><td>Dimensions (H × W × D)</td><td>12.70 × 39.37 × 6.35 cm (5 × 15.5 × 2.5 in)</td></tr>
+</table>
+
+<div class="pitfall">
+  <strong>Important:</strong> The panel-mounted supply <strong>cannot</strong> be used in load-sharing applications — only the DIN rail-mounted supply supports load sharing.
+</div>
+
+<!-- ============================================================ -->
+<h2>4. Legacy Bulk 24 VDC to 12 VDC Power Supply</h2>
+<p class="page-ref">Page 434, Table H-4</p>
+
+<table>
+  <tr><th>Item</th><th>Specification</th></tr>
+  <tr><td>DC Input Voltage</td><td>24 VDC nominal (30 VDC max)</td></tr>
+  <tr><td>Output Rating</td><td>12 VDC @ 25 A</td></tr>
+  <tr><td>Output Power</td><td>300 W at 60°C, altitude &lt; 914 m (3000 ft)</td></tr>
+  <tr><td>Power Requirement</td><td>20 A</td></tr>
+  <tr><td>Inrush Current</td><td>25 A/peak (cold start)</td></tr>
+  <tr><td>Hold-up Time</td><td>20 ms after loss of nominal DC input</td></tr>
+  <tr><td>Fuse</td><td>GMA-15, 15 A/125 V, non-replaceable</td></tr>
+  <tr><td>Dimensions (H × D × W)</td><td>12.70 × 30.50 × 6.35 cm (5 × 12 × 2.5 in)</td></tr>
+  <tr><td>Weight</td><td>1.6 kg (3.5 lb)</td></tr>
+</table>
+
+<div class="tip">
+  <strong>Discontinued:</strong> This power supply is no longer available from Emerson Process Management. Refer to current S-series documentation for replacement options.
+</div>
+
+<!-- ============================================================ -->
+<h2>5. Enclosure Selection</h2>
+<p class="page-ref">Pages 435–438, Appendix I</p>
+<p>All enclosures must conform to applicable federal, state, and local codes and regulations. For EU installations, ensure compliance with applicable directives (e.g., 73/23/EEC Low Voltage Directive, 89/336/EEC EMC).</p>
+
+<h3>5.1 Key Selection Criteria</h3>
+<table>
+  <tr><th>Factor</th><th>Consideration</th></tr>
+  <tr><td>System Environment</td><td>Indoor/outdoor, corrosive atmosphere, washdown, hazardous area classification</td></tr>
+  <tr><td>Wire Management</td><td>Access through gland plates or conduited entries; plan areas for wiring</td></tr>
+  <tr><td>Heat Dissipation</td><td>Enclosure must dissipate generated heat and maintain ambient below rated temperature for all enclosed equipment</td></tr>
+</table>
+
+<h3>5.2 Enclosure Types</h3>
+<ul>
+  <li>Simple sheet metal boxes (NEMA 1 equivalent)</li>
+  <li>NEMA 4X-rated enclosures (washdown, corrosive environments)</li>
+  <li>Horizontal or vertical mounting configurations</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>6. Power Dissipation Reference Table</h2>
+<p class="page-ref">Pages 439–441</p>
+<p>To determine total heat load in an enclosure, sum the power dissipation of all enclosed components.</p>
+
+<div class="tip">
+  <strong>Note:</strong> Power dissipation for DC-powered discrete and analog devices includes the loss of a 75% efficient power supply. If the supply is not in the enclosure, adjust accordingly.
+</div>
+
+<h3>6.1 Controllers and Interface Units</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>Controllers (MD Plus and MX)</td><td>14 W</td></tr>
+  <tr><td>Remote Interface Unit</td><td>6.0 W</td></tr>
+</table>
+
+<h3>6.2 Analog I/O Cards</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>AI, 8-Channel, 4-20 mA</td><td>10.1 W</td></tr>
+  <tr><td>AI, 8-Channel, 4-20 mA, HART</td><td>10.1 W</td></tr>
+  <tr><td>AI, 8-Channel, 1-5 VDC</td><td>10.1 W</td></tr>
+  <tr><td>AO, 8-Channel, 4-20 mA</td><td>11.9 W</td></tr>
+  <tr><td>AO, 8-Channel, 4-20 mA, HART</td><td>11.9 W</td></tr>
+</table>
+
+<h3>6.3 Digital I/O Cards</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>DI, 8-Channel, 24 VDC, Isolated</td><td>3.6 W</td></tr>
+  <tr><td>DI, 8-Channel, 24 VDC, Dry Contact</td><td>2.9 W</td></tr>
+  <tr><td>DI, 8-Channel, 120 VAC, Isolated</td><td>3.4 W</td></tr>
+  <tr><td>DI, 8-Channel, 120 VAC, Dry Contact</td><td>3.4 W</td></tr>
+  <tr><td>DI, 8-Channel, 230 VAC, Isolated</td><td>3.6 W</td></tr>
+  <tr><td>DI, 8-Channel, 230 VAC, Dry Contact</td><td>3.6 W</td></tr>
+  <tr><td>DI, 32-Channel, 24 VDC, Dry Contact</td><td>5.7 W</td></tr>
+  <tr><td>DO, 8-Channel, 120/230 VAC, Isolated</td><td>6.1 W</td></tr>
+  <tr><td>DO, 8-Channel, 120/230 VAC, High Side</td><td>6.1 W</td></tr>
+  <tr><td>DO, 8-Channel, 24 VDC, Isolated</td><td>4.9 W</td></tr>
+  <tr><td>DO, 8-Channel, 24 VDC, High Side</td><td>3.7 W + load-dependent*</td></tr>
+  <tr><td>DO, 32-Channel, 24 VDC, High-Side</td><td>3.0 W + load-dependent*</td></tr>
+</table>
+<p><em>* DO 8-ch 24 VDC High-Side: max 25 W at 24 V. DO 32-ch: max 27 W at 24 V.</em></p>
+
+<h3>6.4 Special and Communication Cards</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>AS-Interface</td><td>9.6 W</td></tr>
+  <tr><td>DeviceNet</td><td>11.4 W</td></tr>
+  <tr><td>Fieldbus H1 Card</td><td>10.2 W</td></tr>
+  <tr><td>Multifunction</td><td>8.2 W</td></tr>
+  <tr><td>Profibus DP</td><td>10.1 W</td></tr>
+  <tr><td>RTD, ohms</td><td>2.7 W</td></tr>
+  <tr><td>Sequence of Events</td><td>3.5 W</td></tr>
+  <tr><td>Serial Card, 2 Ports, RS232/RS485</td><td>5.1 W</td></tr>
+  <tr><td>Thermocouple, mV</td><td>5.9 W</td></tr>
+</table>
+
+<h3>6.5 Series 2 I/O Cards</h3>
+<table>
+  <tr><th>Product</th><th>Simplex</th><th>Redundant (per card)</th></tr>
+  <tr><td>Series 2 AI, 4-20 mA with HART</td><td>8.4 W</td><td>9.1 W</td></tr>
+  <tr><td>Series 2 AI, 16-channel, 4-20 mA HART</td><td>12.7 W</td><td>—</td></tr>
+  <tr><td>Series 2 AO, 4-20 mA with HART</td><td>10.2 W</td><td>10.2 W</td></tr>
+  <tr><td>Series 2 AS-Interface</td><td>9.6 W</td><td>—</td></tr>
+  <tr><td>Series 2 DeviceNet</td><td>11.4 W</td><td>—</td></tr>
+  <tr><td>Series 2 DI, 8-Channel, 24 VDC</td><td>3.7 W</td><td>3.7 W</td></tr>
+  <tr><td>Series 2 DI, 32-Channel, 24 VDC</td><td>5.7 W</td><td>—</td></tr>
+  <tr><td>Series 2 DO, 8-Channel, 24 VDC High-Side</td><td>3.7 W</td><td>3.7 W</td></tr>
+  <tr><td>Series 2 DO, 32-Channel, 24 VDC High-Side</td><td>3.0 W + load*</td><td>—</td></tr>
+  <tr><td>Series 2 H1</td><td>6.1 W</td><td>6.1 W</td></tr>
+  <tr><td>Series 2 Isolated Input</td><td>5.9 W</td><td>—</td></tr>
+  <tr><td>Series 2 Profibus</td><td>10.1 W</td><td>—</td></tr>
+  <tr><td>Series 2 RTD, ohms</td><td>2.7 W</td><td>—</td></tr>
+  <tr><td>Series 2 Thermocouple</td><td>3.5 W</td><td>—</td></tr>
+  <tr><td>Series 2 Serial</td><td>5.1 W</td><td>5.1 W</td></tr>
+</table>
+<p><em>* Series 2 DO 32-ch: max 27 W at 24 V load-dependent power dissipation.</em></p>
+
+<h3>6.6 Intrinsically Safe I/O Cards</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>I.S. AI, 8-Channel, 4-20 mA, HART</td><td>9.8 W</td></tr>
+  <tr><td>I.S. AO, 8-Channel, 4-20 mA (and HART)</td><td>11.3 W</td></tr>
+  <tr><td>I.S. DI, 16-Channel</td><td>7.6 W</td></tr>
+  <tr><td>I.S. DO, 4-Channel</td><td>10.1 W</td></tr>
+</table>
+
+<h3>6.7 Power Supplies (Internal Heat Loss)</h3>
+<table>
+  <tr><th>Power Supply</th><th>Power Dissipation</th></tr>
+  <tr><td>Legacy DIN Rail-Mounted Bulk AC to 12 VDC</td><td>12 W</td></tr>
+  <tr><td>Legacy DIN Rail-Mounted Bulk AC to 24 VDC</td><td>12 W</td></tr>
+  <tr><td>Legacy Panel-Mounted Bulk AC to 12 VDC</td><td>22 W</td></tr>
+  <tr><td>Legacy Panel-Mounted Bulk AC to 24 VDC</td><td>22 W</td></tr>
+  <tr><td>Legacy Bulk 24 VDC to 12 VDC</td><td>14.5 W</td></tr>
+  <tr><td>System Power Supply (AC/DC)</td><td>4.4 W</td></tr>
+  <tr><td>System Power Supply (Dual DC/DC) — 12 VDC in</td><td>11.4 W</td></tr>
+  <tr><td>System Power Supply (Dual DC/DC) — 24 VDC in</td><td>26.4 W</td></tr>
+</table>
+
+<h3>6.8 SIS and Miscellaneous</h3>
+<table>
+  <tr><th>Product</th><th>Power Dissipation</th></tr>
+  <tr><td>Simplex Logic Solver</td><td>16.0 W</td></tr>
+  <tr><td>Redundant Logic Solvers</td><td>24.0 W</td></tr>
+  <tr><td>SISNet Repeaters (per unit)</td><td>9.6 W</td></tr>
+  <tr><td>Auxiliary Relay Modules (24 VDC)</td><td>4.65 W</td></tr>
+  <tr><td>Auxiliary Relay Diode Module</td><td>2.25 W</td></tr>
+  <tr><td>Fieldbus H1 Carrier</td><td>5.2 W</td></tr>
+  <tr><td>Media Converter</td><td>5.1 W</td></tr>
+  <tr><td>Single Port Fiber Switch</td><td>8.2 W</td></tr>
+  <tr><td>Four Port Fiber Switch</td><td>8.4 W</td></tr>
+  <tr><td>I.S. LocalBus Isolator</td><td>1.2 W</td></tr>
+  <tr><td>I.S. System Power Supply</td><td>1.5 W</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. Example Enclosure Calculation</h2>
+<p class="page-ref">Pages 441–442</p>
+
+<div class="lab">
+  <strong>Example:</strong> Assume the system contains:
+  <table>
+    <tr><th>Qty</th><th>Component</th><th>Power</th></tr>
+    <tr><td>1</td><td>Controller (MD Plus/MX)</td><td>14 W</td></tr>
+    <tr><td>1</td><td>AI, 8-ch, 4-20 mA HART</td><td>10.1 W</td></tr>
+    <tr><td>1</td><td>AO, 8-ch, 4-20 mA</td><td>11.9 W</td></tr>
+    <tr><td>1</td><td>DI, 8-ch, 24 VDC isolated</td><td>3.6 W</td></tr>
+    <tr><td>1</td><td>DO, 8-ch, 24 VDC high-side (8 solenoids)</td><td>3.7 + 16.4 = 20.1 W</td></tr>
+    <tr><td>2</td><td>DO, 8-ch, 120/230 VAC isolated</td><td>12.2 W</td></tr>
+    <tr><td>2</td><td>DI, 8-ch, 120 VAC isolated</td><td>6.8 W</td></tr>
+    <tr><td>1</td><td>System Power Supply (AC/DC)</td><td>4.4 W</td></tr>
+    <tr><td>1</td><td>Bulk AC to 24 VDC Supply</td><td>22 W</td></tr>
+    <tr><td colspan="2"><strong>Total</strong></td><td><strong>105.1 W</strong></td></tr>
+  </table>
+  <p>If ambient temperature is 35°C and components are rated for 60°C, the enclosure temperature rise must be <strong>less than 25°C</strong> with 105.1 W of heat dissipation. If the surface area is insufficient, use fans or blowers.</p>
+  <p><em>Cabinet manufacturers recommend a safety margin of 25%.</em></p>
+</div>
+
+<div class="key-concept">
+  <strong>Enclosure Design Checklist:</strong>
+  <ul>
+    <li>Calculate total power dissipation of all enclosed components</li>
+    <li>Determine allowable temperature rise (component rating − max ambient)</li>
+    <li>Verify enclosure surface area can dissipate heat passively</li>
+    <li>If insufficient, add forced-air cooling (fans/blowers)</li>
+    <li>Apply 25% safety margin per manufacturer recommendation</li>
+    <li>Plan wire management via gland plates or conduits</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Quiz</h2>
+<div class="quiz">
+  <h3>Knowledge Check</h3>
+  <p><strong>Q1:</strong> What is the difference between the DIN rail-mounted and panel-mounted legacy bulk power supplies in terms of load sharing?</p>
+  <p><span class="answer">A: The DIN rail-mounted supply supports both redundancy and load sharing. The panel-mounted supply can only be used for redundancy — it cannot support load sharing.</span></p>
+
+  <p><strong>Q2:</strong> Why does the DO 8-channel 24 VDC High-Side card have a variable power dissipation?</p>
+  <p><span class="answer">A: Its power dissipation is base (3.7 W) plus load-dependent power that varies with the number and type of field devices (solenoids, etc.) being driven, up to 25 W maximum at 24 V.</span></p>
+
+  <p><strong>Q3:</strong> If a legacy bulk power supply has an integrated OR-ing diode, what additional component is needed for redundancy?</p>
+  <p><span class="answer">A: None — the integrated OR-ing diode is sufficient. Connect the SHARE terminals between units. External OR-ing diodes are only needed for supplies without integrated diodes (e.g., panel-mounted).</span></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8: LED Indicators — Controllers and I/O Cards — DeltaV M-series Hardware</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; vertical-align: top; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav style="margin-bottom:1.5em;font-size:0.9em;">
+<a href="../index.html">← Home</a> &nbsp;|&nbsp;
+<a href="L07-System-Checkout-and-Power-Verification.html">← Previous</a> &nbsp;|&nbsp;
+<a href="L09-Smart-Switches-Diagnostics-and-Troubleshooting.html">Next →</a>
+</nav>
+
+<details>
+<summary style="cursor:pointer;font-weight:bold;font-size:1.1em;color:#2c5f2d;">📚 All Lessons</summary>
+<div style="margin-top:0.8em;line-height:2;">
+<strong>Module 1 — System Overview</strong><br>
+<label><input type="checkbox" data-lesson="L01" onchange="saveProgress()"> <a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a></label><br>
+<strong>Module 2 — Installation</strong><br>
+<label><input type="checkbox" data-lesson="L02" onchange="saveProgress()"> <a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a></label><br>
+<label><input type="checkbox" data-lesson="L03" onchange="saveProgress()"> <a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a></label><br>
+<label><input type="checkbox" data-lesson="L04" onchange="saveProgress()"> <a href="L04-Installing-IO-Interface-and-Cards.html">L04: Installing I/O Interface and Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L05" onchange="saveProgress()"> <a href="L05-Installing-Controller-and-Power-Supply.html">L05: Installing Controller and Power Supply</a></label><br>
+<label><input type="checkbox" data-lesson="L06" onchange="saveProgress()"> <a href="L06-Workstation-Control-Network-and-Power.html">L06: Workstation, Control Network, and Power</a></label><br>
+<strong>Module 3 — Checkout &amp; Troubleshooting</strong><br>
+<label><input type="checkbox" data-lesson="L07" onchange="saveProgress()"> <a href="L07-System-Checkout-and-Power-Verification.html">L07: System Checkout and Power Verification</a></label><br>
+<label><input type="checkbox" data-lesson="L08" onchange="saveProgress()"> <a href="L08-LED-Indicators---Controllers-and-IO-Cards.html">L08: LED Indicators — Controllers and I/O Cards</a></label><br>
+<label><input type="checkbox" data-lesson="L09" onchange="saveProgress()"> <a href="L09-Smart-Switches-Diagnostics-and-Troubleshooting.html">L09: Smart Switches, Diagnostics, and Troubleshooting</a></label><br>
+<span id="progress-text"></span>
+</div>
+</details>
+
+<h1>Lesson 8: LED Indicators — Controllers and I/O Cards</h1>
+<p class="page-ref">Pages 58–78 — Complete LED indicator reference tables for all controller types, power supplies, network devices, and I/O card types.</p>
+<p class="source">Source: Emerson DeltaV M-series Hardware Installation and Reference Manual (D800001X312, April 2021), Chapter 3, Pages 58–78</p>
+
+<input type="checkbox" data-lesson="L08" onchange="saveProgress()"> Mark lesson complete
+
+<h2>8.1 Reading the LEDs: A Universal Approach</h2>
+
+<p>Every DeltaV hardware device — from the simplest I/O card to the most complex controller — communicates its health status through a small set of front-panel LEDs. Learning to read these LEDs is one of the most valuable skills in DeltaV maintenance. The good news is that almost every device follows a consistent pattern:</p>
+
+<div class="key-concept">
+<strong>Key Concept — The Universal LED Pattern:</strong>
+<ul>
+<li><strong>Green Power LED</strong> — Should be solid On when the device is powered. If it is Off, check power supply and connections.</li>
+<li><strong>Red Error LED</strong> — Should be Off during normal operation. If it is On (solid or flashing), the device has a fault that needs investigation.</li>
+<li><strong>Yellow/Amber LEDs</strong> — Indicate channel-level, port-level, or network-level status. Their meaning depends on the specific card type.</li>
+</ul>
+When diagnosing any DeltaV hardware issue, start by looking at the Green and Red LEDs. If Power is On and Error is Off, the device itself is likely healthy — the problem is probably upstream (controller not scanning) or downstream (field wiring).
+</div>
+
+<h2>8.2 System Power Supply LEDs</h2>
+
+<p>The System Power Supply (both the AC/DC and Dual DC/DC variants) has just two LEDs. This simplicity reflects the power supply's single purpose: deliver clean, regulated power.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. Power not supplied to unit (line power problem)<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (solid)</td><td>1. Outputs outside tolerance (verify loading calculations)<br>2. Input over-voltage (unit shuts down)</td><td>1. Verify loading calculations<br>2. Check input supply voltages</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Common Misdiagnosis:</strong> A Red Error LED on the power supply does not necessarily mean the power supply is faulty. The most common cause is an output overload — too many I/O cards drawing too much current. Before replacing the supply, verify that the total load on the unit is within its rated capacity. Check your loading calculations.
+</div>
+
+<h2>8.3 Controller LEDs (MD Plus, MX, MQ)</h2>
+
+<p>The MD Plus, MX, and MQ controllers share the same LED layout. These controllers have five LEDs that provide a comprehensive view of the controller's operating status, from power to network communications.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Internal fault</td><td>Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On 1 sec → all LEDs on 5 sec</td><td>Unit went through RESET due to unrecoverable software error</td><td>Contact customer support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>Controller is decommissioned</td><td>Commission the controller</td></tr>
+<tr><td>Active</td><td>Green</td><td>On</td><td>Off</td><td>1. Controller is Standby (normal)<br>2. Not commissioned<br>3. Internal fault</td><td>1. None — Standby LED is On<br>2. Commission controller<br>3. Contact technical support</td></tr>
+<tr><td>Active</td><td>Green</td><td>On</td><td>Flashing</td><td>Controller is not configured</td><td>Download controller configuration</td></tr>
+<tr><td>Standby</td><td>Green</td><td>Off</td><td>On</td><td>Controller is in Standby (normal for redundant pair)</td><td>None — this is expected</td></tr>
+<tr><td>Standby</td><td>Green</td><td>Off</td><td>Flashing</td><td>Controller is not configured</td><td>Download controller configuration</td></tr>
+<tr><td>Pri. CN</td><td>Yellow</td><td>Flashing (comms attempted)</td><td>Off — comms attempted, not flashing</td><td>No active Ethernet on primary Control Network</td><td>Check primary network cable and switch connections</td></tr>
+<tr><td>Sec. CN</td><td>Yellow</td><td>Flashing (comms attempted)</td><td>Off — comms attempted, not flashing</td><td>No active Ethernet on secondary Control Network</td><td>Check secondary network cable and switch connections</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Active vs. Standby LEDs:</strong> In a redundant controller pair, one controller is Active (running the control strategy) and the other is Standby (ready to take over). The Active LED is lit on whichever controller is currently executing control. If both controllers show Standby lit but neither shows Active, neither is running the control strategy — this is a critical fault that requires immediate attention.
+</div>
+
+<div class="pitfall">
+<strong>⚠️ Common Misdiagnosis:</strong> A flashing Red Error LED on a controller is sometimes mistaken for a hardware failure, but it typically means the controller is decommissioned. Before calling technical support, check whether the controller has been commissioned in DeltaV Explorer. A quick commission usually resolves this.
+</div>
+
+<h2>8.4 Remote Interface Unit LEDs</h2>
+
+<p>The Remote Interface Unit (RIU) shares many LED characteristics with the controller, but has a few differences — notably, the Standby LED is always Off because redundancy is not supported on the RIU.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Internal fault</td><td>Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On 1 sec → all LEDs on 5 sec</td><td>RESET due to unrecoverable software error</td><td>Contact customer support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>RIU is decommissioned</td><td>Commission the RIU</td></tr>
+<tr><td>Active</td><td>Green</td><td>On</td><td>Off</td><td>1. Not commissioned<br>2. Internal fault</td><td>1. Commission the RIU<br>2. Contact technical support</td></tr>
+<tr><td>Active</td><td>Green</td><td>On</td><td>Flashing</td><td>RIU is not configured</td><td>Download configuration</td></tr>
+<tr><td>Standby</td><td>Green</td><td>Off (redundancy not supported)</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Pri. CN</td><td>Yellow</td><td>Flashing (comms attempted)</td><td>Off — comms attempted, not flashing</td><td>No active Ethernet on primary CN</td><td>Check primary network cable and hub connections</td></tr>
+<tr><td>Sec. CN</td><td>Yellow</td><td>Flashing (comms attempted)</td><td>Off — comms attempted, not flashing</td><td>No active Ethernet on secondary CN</td><td>Check secondary network cable and hub connections</td></tr>
+</table>
+
+<h2>8.5 Media Converter LEDs</h2>
+
+<p>The Media Converter bridges twisted-pair Ethernet and fiber-optic segments of the Control Network. It has link-status LEDs for both media types on both the primary and secondary network connections.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>Power not supplied to unit</td><td>Check power supply and connections</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On</td><td>Internal fault</td><td>Contact technical support</td></tr>
+<tr><td>Pri. F Lnk</td><td>Green</td><td>On</td><td>Off</td><td>Fiber-optic cable incorrectly connected</td><td>Check fiber-optic cable (connect TX to RX)</td></tr>
+<tr><td>Pri. C Lnk</td><td>Green</td><td>On</td><td>Off</td><td>Twisted-pair cable incorrectly connected</td><td>Check cable pinouts</td></tr>
+<tr><td>Sec. F Lnk</td><td>Green</td><td>On</td><td>Off</td><td>Fiber-optic cable incorrectly connected</td><td>Check fiber-optic cable (connect TX to RX)</td></tr>
+<tr><td>Sec. C Lnk</td><td>Green</td><td>On</td><td>Off</td><td>Twisted-pair cable incorrectly connected</td><td>Check cable pinouts</td></tr>
+</table>
+
+<div class="tip">
+<strong>💡 Tip:</strong> The "F Lnk" and "C Lnk" suffixes refer to Fiber Link and Copper (twisted-pair) Link, respectively. If one link LED is Off while the other is On on the same side (primary or secondary), you know the problem is specific to that media type — which narrows your troubleshooting significantly.
+</div>
+
+<h2>8.6 Fiber Switch LEDs</h2>
+
+<p>The DeltaV Fiber Switches have power LEDs and per-port twisted-pair port LEDs.</p>
+
+<h3>8.6.1 Power LEDs</h3>
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Internal fault</td><td>Contact technical support</td></tr>
+</table>
+
+<h3>8.6.2 Twisted Pair Port LEDs</h3>
+<table>
+<tr><th>LED</th><th>Status</th><th>Meaning</th></tr>
+<tr><td>Link Act</td><td>On</td><td>Link established</td></tr>
+<tr><td>Link Act</td><td>Blinking</td><td>Data activity on port</td></tr>
+<tr><td>Link Act</td><td>Off</td><td>No link — check cable connection</td></tr>
+<tr><td>FD COL</td><td>On</td><td>Full Duplex mode</td></tr>
+<tr><td>FD COL</td><td>Blinking</td><td>Collision detected</td></tr>
+<tr><td>FD COL</td><td>Off</td><td>Half Duplex mode</td></tr>
+<tr><td>100 10</td><td>On</td><td>100 MHz speed</td></tr>
+<tr><td>100 10</td><td>Off</td><td>10 MHz speed</td></tr>
+</table>
+
+<h2>8.7 DeltaV Controller Firewall LEDs</h2>
+
+<h3>8.7.1 Power LEDs</h3>
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power — Supply 1 (P1), Power Supply 2 (P2)</td><td>Green</td><td>On</td><td>Off</td><td>System power not supplied or voltage &lt; 9.6 VDC</td><td>Check supply power and connections</td></tr>
+<tr><td>Fault</td><td>Red</td><td>Off</td><td>On</td><td>Internal fault</td><td>Contact technical support</td></tr>
+</table>
+
+<h2>8.8 AI (Analog Input) 8-Channel Card LEDs</h2>
+
+<p>The AI 8-Channel card is available in pre-Series 2, Series 2, and HART variants. All share the same basic LED structure, but the behavior of the Power and Error LEDs differs between pre-Series 2 and Series 2 in redundant configurations.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Simplex: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. No bussed field power<br>2. Controller not scanning card<br>3. Unit failed self-test</td><td>1. Check bussed field power<br>2. Check controller operation<br>3. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card with known good card of same type</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2 Redundant)</td><td>1. No bussed field power<br>2. Controller not scanning card<br>3. Hardware error</td><td>1. Check bussed field power (use Clear Saved Fault Info when fixed)<br>2. Check controller operation<br>3. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2 Simplex)</td><td>Controller not scanning card</td><td>Check controller operation</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>On</td><td>1. Input out of range (channel disabled)<br>2. No bussed field power<br>3. Internal fault</td><td>1. Check input source and connections<br>2. Check bussed field power<br>3. Contact technical support</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. Input out of range (channel disabled)<br>2. No bussed field power<br>3. HART configured but no HART communication<br>4. NAMUR limits exceeded</td><td>1. Check input source<br>2. Check bussed field power<br>3. Check HART input source and connections<br>4. Check input levels vs. NAMUR limits</td></tr>
+</table>
+
+<h2>8.9 AI 16-Channel Card LEDs</h2>
+
+<p>The Series 2 AI 16-Channel, 4-20 mA HART card in Simplex mode has a simplified LED set:</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On</td><td>1. No bussed field power<br>2. Controller not scanning card<br>3. Unit failed self-test</td><td>1. Check bussed field power<br>2. Check controller operation<br>3. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. No bussed field power<br>2. Controller not scanning card<br>3. Hardware error</td><td>1. Check bussed field power<br>2. Check controller operation<br>3. Replace card with known good card of same type</td></tr>
+</table>
+
+<h2>8.10 AO (Analog Output) 8-Channel Card LEDs</h2>
+
+<p>The AO 8-Channel card follows the same pattern as the AI card, but the channel LEDs indicate output status rather than input status.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Unit failed self-test<br>2. Controller not scanning card</td><td>1. Contact technical support<br>2. Check controller operation</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Unit failed self-test<br>3. Address conflict</td><td>1. Check controller operation<br>2. Contact technical support<br>3. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2 Redundant)</td><td>1. No bussed field power<br>2. Controller not scanning card<br>3. Hardware error</td><td>1. Check bussed field power<br>2. Check controller operation<br>3. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2 Simplex)</td><td>Controller not scanning card</td><td>Check controller operation</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>On</td><td>1. No output device (load) — channel disabled<br>2. Bussed field power not supplied<br>3. Internal fault</td><td>1. Check output connections<br>2. Check bussed field power<br>3. Contact technical support</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. No output device (load) — channel enabled<br>2. Bussed field power not supplied<br>3. HART configured but no HART communication<br>4. Internal fault</td><td>1. Check output connections<br>2. Check bussed field power<br>3. Check HART connections<br>4. Contact technical support</td></tr>
+</table>
+
+<h2>8.11 AS-Interface Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Port 1, Port 2</td><td>Yellow</td><td>Off</td><td>On</td><td>No communications</td><td>Check connections, cable, and external device</td></tr>
+<tr><td>Port 1, Port 2</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>Communications error on this port</td><td>Check connections, cable, and external device</td></tr>
+</table>
+
+<h2>8.12 DeviceNet Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Port 1 (Port 2 reserved)</td><td>Yellow</td><td>Off</td><td>On</td><td>1. No communications<br>2. Port not enabled<br>3. No configuration for this port</td><td>1. Check connections, cable, and external device<br>2. Enable port<br>3. Configure port</td></tr>
+<tr><td>Port 1 (Port 2 reserved)</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>Communication error on this port</td><td>Check connections, cable, and external device</td></tr>
+</table>
+
+<h2>8.13 DI (Digital Input) 8-Channel Card LEDs</h2>
+
+<p>The DI 8-Channel card is available in 24 VDC isolated, dry contact, and 120/230 VAC variants. The channel LEDs directly reflect the input state.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Simplex: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2)</td><td>1. Controller not scanning card<br>2. Hardware error</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>On = input &gt; detection level<br>Off = input &lt; detection level</td><td>—</td><td>—</td><td>Refer to Interface Specifications for detection levels per card type</td></tr>
+</table>
+
+<h2>8.14 DI Mass Connection Board LEDs</h2>
+
+<table>
+<tr><th>Type of LED</th><th>Status</th><th>Meaning</th></tr>
+<tr><td>Power (green)</td><td>On (green)</td><td>The mass connection board is receiving power.</td></tr>
+<tr><td>Power (green)</td><td>Off</td><td>The mass connection board is not receiving power.</td></tr>
+<tr><td>Channel (yellow for Series 2; orange/brown for Series 2 Plus)</td><td>On</td><td>The channel signal is available.</td></tr>
+<tr><td>Channel (yellow for Series 2; orange/brown for Series 2 Plus)</td><td>Off</td><td>The channel signal is not available.</td></tr>
+</table>
+
+<h2>8.15 DO (Digital Output) 8-Channel and 32-Channel Card LEDs</h2>
+
+<h3>8.15.1 DO 8-Channel Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Simplex: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2)</td><td>1. Controller not scanning card<br>2. Hardware error</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Depends on setpoint and configuration</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+
+<h3>8.15.2 DO 32-Channel Card</h3>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. Power not supplied to unit<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Communications error</td><td>Check connections, cable, and external device</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>Address conflict</td><td>Replace card with known good card of same type</td></tr>
+</table>
+
+<h3>8.15.3 DO Mass Connection Board LEDs</h3>
+
+<table>
+<tr><th>Type of LED</th><th>Status</th><th>Meaning</th></tr>
+<tr><td>Power (green)</td><td>On (green)</td><td>The mass connection board is receiving power.</td></tr>
+<tr><td>Power (green)</td><td>Off</td><td>The mass connection board is not receiving power.</td></tr>
+<tr><td>Channel (yellow)</td><td>On (yellow)</td><td>The channel is turned on.</td></tr>
+<tr><td>Channel (yellow)</td><td>Off</td><td>The channel is turned off.</td></tr>
+</table>
+
+<h2>8.16 Fieldbus H1 Card LEDs</h2>
+
+<p>The Fieldbus H1 card has a unique behavior: the Power LED may flash to indicate an incorrect terminal block installation. This is specific to Series 2 cards that support redundancy.</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Simplex: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Power / Active</td><td>Green</td><td>—</td><td>Flashing (pre-Series 2 or Series 2)</td><td>Incorrect terminal block for configured card type</td><td>Install redundant terminal blocks for Series 2 redundant cards; simplex terminal blocks for simplex/pre-Series 2 cards</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2)</td><td>1. Controller not scanning card<br>2. Hardware error</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Port 1, Port 2</td><td>Yellow</td><td>Off</td><td>On</td><td>1. No communications<br>2. Port not enabled<br>3. Configuration mismatch</td><td>1. Check connections, cable, and external devices<br>2. Enable port<br>3. Fix configuration errors</td></tr>
+<tr><td>Port 1, Port 2</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. Communication error on this port<br>2. No configuration for this port</td><td>1. Check connections, cable, and external device<br>2. Configure port</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠️ Common Misdiagnosis — Fieldbus H1 Flashing Power LED:</strong> If you see the Power/Active LED flashing on a Fieldbus H1 card, do not assume the power supply is failing. On Series 2 cards, a flashing Power LED most commonly indicates an incorrect terminal block — for example, a simplex terminal block installed on a card configured for redundancy. Verify the terminal block type matches the card configuration before investigating power issues.
+</div>
+
+<h2>8.17 Isolated Input Card LEDs (Series 2)</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+</table>
+
+<h2>8.18 Multifunction Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+</table>
+
+<h2>8.19 Profibus DP Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>Profibus DP and Simplex Series 2: On<br>Series 2 Plus Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Port 1 (Port 2 reserved)</td><td>Yellow</td><td>Off</td><td>On</td><td>1. No communications<br>2. Port not enabled<br>3. No configuration for this port</td><td>1. Check connections, cable, and external device<br>2. Enable port<br>3. Configure port</td></tr>
+<tr><td>Port 1 (Port 2 reserved)</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>Communication error on this port</td><td>Check connections, cable, and external device</td></tr>
+</table>
+
+<h2>8.20 RTD, Ohms, and Thermocouple Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>On</td><td>1. Channel not configured<br>2. Internal fault</td><td>1. Enable channel and download card<br>2. Contact technical support</td></tr>
+<tr><td>Ch.1 – Ch.8</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>1. Invalid configuration<br>2. Input out of range<br>3. Internal fault</td><td>1. Check configuration<br>2. Check input source and connections<br>3. Contact technical support</td></tr>
+</table>
+
+<h2>8.21 Sequence of Events Card LEDs</h2>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power</td><td>Green</td><td>On</td><td>Off</td><td>1. Power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>Communications error</td><td>Check connections, cable, and external device</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing</td><td>Address conflict</td><td>Replace card with known good card of same type</td></tr>
+</table>
+
+<h2>8.22 Serial Card (2 Ports, RS232/RS485) LEDs</h2>
+
+<p>The Serial Card has channel LEDs whose meaning changes depending on whether the port is configured as Master or Slave:</p>
+
+<table>
+<tr><th>LED</th><th>Color</th><th>Normal State</th><th>Fault State</th><th>Probable Cause</th><th>Corrective Action</th></tr>
+<tr><td>Power / Active</td><td>Green</td><td>pre-Series 2: On<br>Series 2 Simplex: On<br>Series 2 Redundant: Active=On, Standby=Flashing</td><td>Off</td><td>1. System power not supplied<br>2. Internal fault</td><td>1. Check supply power and connections<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>On (continuous)</td><td>1. Controller not scanning card<br>2. Unit failed self-test</td><td>1. Check controller operation<br>2. Contact technical support</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (pre-Series 2)</td><td>1. Controller not scanning card<br>2. Address conflict</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Error</td><td>Red</td><td>Off</td><td>Flashing (Series 2)</td><td>1. Controller not scanning card<br>2. Hardware error</td><td>1. Check controller operation<br>2. Replace card</td></tr>
+<tr><td>Port 1, Port 2 (Master)</td><td>Yellow</td><td>Off</td><td>On</td><td>No communications</td><td>Check connections, cable, and external device</td></tr>
+<tr><td>Port 1, Port 2 (Master)</td><td>Yellow</td><td>Off</td><td>Flashing</td><td>Communications error on this port</td><td>Check connections, cable, and external device</td></tr>
+<tr><td>Port 1, Port 2 (Slave)</td><td>Yellow</td><td>On — communicating<br>Off — no communication</td><td>Flashing — intermittent communication</td><td>Intermittent communication</td><td>Check connections, cable, and external device</td></tr>
+</table>
+
+<h2>8.23 Quick Reference: Red Error LED Diagnosis Flowchart</h2>
+
+<p>When you see a Red Error LED on any DeltaV device, follow this decision tree:</p>
+
+<table>
+<tr><th>Red Error LED State</th><th>Most Likely Cause</th><th>First Action</th></tr>
+<tr><td>On (continuous)</td><td>Unit failed self-test or controller not scanning card</td><td>Check controller operation first; if controller is healthy, contact technical support</td></tr>
+<tr><td>Flashing</td><td>Address conflict or controller not scanning card (pre-Series 2); no bussed field power or hardware error (Series 2)</td><td>For pre-Series 2: check for duplicate addresses<br>For Series 2: check bussed field power first</td></tr>
+<tr><td>On for 1 sec, then all LEDs on for 5 sec</td><td>Unrecoverable software error (controllers and RIUs only)</td><td>Contact customer support</td></tr>
+<tr><td>Flashing (on controller/RIU only)</td><td>Device is decommissioned</td><td>Commission the device in DeltaV Explorer</td></tr>
+</table>
+
+<div class="key-concept">
+<strong>Key Concept — Series 2 vs. pre-Series 2 Error Behavior:</strong> The most important difference between Series 2 and pre-Series 2 cards is how they indicate the Red Error LED on flashing. On <strong>pre-Series 2</strong> cards, a flashing Red Error typically indicates an <strong>address conflict</strong>. On <strong>Series 2</strong> cards (especially redundant ones), a flashing Red Error more commonly indicates <strong>no bussed field power</strong> or a <strong>hardware error</strong>. Always know which card generation you are working with before diagnosing.
+</div>
+
+<h2>8.24 Summary</h2>
+
+<p>In this lesson, you learned the complete LED indicator reference for every major DeltaV M-series device: power supplies, controllers (MD Plus/MX/MQ), remote interface units, media converters, fiber switches, controller firewalls, and all I/O card types including AI (8-channel and 16-channel), AO, DI, DO (8-channel and 32-channel), Fieldbus H1, AS-Interface, DeviceNet, Profibus DP, Isolated Input, Multifunction, RTD/Thermocouple, Sequence of Events, and Serial cards. You also learned the universal LED pattern (Green Power, Red Error, Yellow channel indicators) and how to distinguish between Series 2 and pre-Series 2 error behavior. In the next lesson, we will cover VIM 2 card LEDs, intrinsic safety card LEDs, smart switch LEDs (MD20, MD30, RM100, FP20), and the DeltaV Diagnostics troubleshooting workflow.</p>
+
+<div class="quiz">
+<h3>Quiz — Lesson 8</h3>
+
+<p><strong>1.</strong> What are the three types of LEDs that appear on virtually every DeltaV I/O card, and what does each indicate?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">(1) Green Power LED — indicates the card has power. (2) Red Error LED — indicates a fault condition. (3) Yellow channel LEDs — indicate channel-level status (input state, output state, communication status, or fault conditions depending on card type).</p>
+</details>
+
+<p><strong>2.</strong> A Red Error LED is flashing on a pre-Series 2 AI 8-Channel card. What is the most likely cause?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">An address conflict. On pre-Series 2 cards, a flashing Red Error typically indicates that two cards share the same address. Replace the card with a known good card of the same type and contact technical support.</p>
+</details>
+
+<p><strong>3.</strong> A Series 2 redundant AI card has its Red Error LED flashing. What should you check first?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Check bussed field power first. On Series 2 redundant cards, a flashing Red Error most commonly indicates no bussed field power. After fixing the problem, use the DeltaV Diagnostics "Clear Saved Fault Information" command.</p>
+</details>
+
+<p><strong>4.</strong> What does it mean when the Power/Active LED on a Fieldbus H1 card is flashing (rather than solid On)?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">A flashing Power/Active LED on a Fieldbus H1 card indicates an incorrect terminal block installation. For example, a simplex terminal block may have been installed on a card configured for redundancy. Install the correct terminal block type for the card configuration.</p>
+</details>
+
+<p><strong>5.</strong> On a controller, what is the difference between the Active and Standby LEDs being On vs. both being Off?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">In a redundant pair, the Active LED is lit on whichever controller is currently executing the control strategy. The Standby LED is lit on the backup controller. If both Active LEDs are off (meaning neither controller shows Active), neither is running the control strategy — this is a critical fault.</p>
+</details>
+
+<p><strong>6.</strong> What should you do before replacing a power supply that shows a Red Error LED?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">Verify the output loading. A Red Error LED on a power supply often indicates outputs outside tolerance — meaning too much current is being drawn. Check your loading calculations to ensure the total load is within the unit's rated capacity before replacing the supply.</p>
+</details>
+
+<p><strong>7.</strong> What does a controller's Red Error LED showing "On for one second, then all LEDs on for five seconds" indicate?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">The controller went through a RESET due to an unrecoverable software error. Contact customer support.</p>
+</details>
+
+<p><strong>8.</strong> What does a flashing Red Error LED on a controller (as opposed to an I/O card) typically indicate?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">The controller is decommissioned. Commission the controller in DeltaV Explorer before investigating other causes.</p>
+</details>
+
+<p><strong>9.</strong> On a Media Converter, what do the "F Lnk" and "C Lnk" LED suffixes stand for?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">"F Lnk" stands for Fiber Link (fiber-optic connection) and "C Lnk" stands for Copper Link (twisted-pair Ethernet connection). Both appear on the Primary and Secondary sides of the Media Converter.</p>
+</details>
+
+<p><strong>10.</strong> On a Serial Card configured as Slave, what does a flashing Yellow port LED indicate?</p>
+<details>
+<summary style="cursor:pointer;color:#2c5f2d;font-weight:bold;">Click to reveal answer</summary>
+<p class="answer">A flashing Yellow port LED on a Serial Card configured as Slave indicates intermittent communication. Check the connections, cable, and external device.</p>
+</details>
+</div>
+
+<p class="source">Source: DeltaV M-series Hardware Installation and Reference Manual, Emerson D800001X312, April 2021, Chapter 3: Checking Out and Troubleshooting Your DeltaV System, pp. 58–78.</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>

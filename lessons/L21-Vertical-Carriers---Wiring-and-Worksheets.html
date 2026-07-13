@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L21 – Vertical Carriers: Wiring and Worksheets</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="L20-Vertical-Carriers---Mounting-and-Configuration.html">← L20</a> |
+  <a href="#">L22 →</a>
+</nav>
+
+<h1>L21 – Vertical Carriers: Wiring and Worksheets</h1>
+<p class="source">Source: <em>DeltaV M-series Hardware Installation and Reference Manual</em>, Emerson D800001X312, April 2021 — Appendix N</p>
+<p><label><input type="checkbox" data-lesson="L21" onchange="saveProgress()"> Mark as completed</label> <span id="progress-text"></span></p>
+
+<!-- ============================================================ -->
+<h2>
+<div class="screenshot">
+  <img src="../images/page_0515_1.png" alt="Figure from page 515">
+  <div class="caption">Figure from page 515 (page 515)</div>
+</div>
+
+<div class="screenshot">
+  <img src="../images/page_0522_1.png" alt="Figure from page 522">
+  <div class="caption">Figure from page 522 (page 522)</div>
+</div>
+1. Installation Information Checklist</h2>
+
+<div class="key-concept">
+<strong>Purpose:</strong> Document system details at installation time and archive for future troubleshooting. Create two primary diagrams and maintain I/O slot records.
+</div>
+
+<table>
+<tr><th>Document</th><th>Required Details</th></tr>
+<tr><td>Control Network Diagram</td><td>Equipment location, cable routing, cable lengths, connector types at each end, cable manufacturer/type, boot color, certification reports for 10BaseT and fiber-optic cables</td></tr>
+<tr><td>Power & Ground Diagram</td><td>Power supply locations, power sizing calculations, wiring routing, wiring gauges and lengths, current flow (measured after startup)</td></tr>
+<tr><td>Enclosure Documentation</td><td>Sizing and heat rise calculations</td></tr>
+<tr><td>I/O Slot Register</td><td>I/O terminal block and I/O card type for each slot</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>2. Power Calculation Workflow</h2>
+
+<p>The DeltaV installation worksheets follow a sequential workflow to determine total power requirements. Each worksheet feeds into the next.</p>
+
+<div class="lab">
+<strong>Calculation Flow:</strong><br>
+<code>Table N-1 (12V + 24V products) → Subtotal 1</code><br>
+<code>Table N-2 (24V-only products) → Subtotal 2</code><br>
+<code>Table N-3 or N-4 (system power) → Grand Total</code><br>
+<code>Table N-5 (bulk power) → Number of bulk supplies</code><br>
+<code>Table N-6 (I.S. power, if applicable) → Add to Subtotal 2</code>
+</div>
+
+<h3>Key Rules</h3>
+<table>
+<tr><th>Rule</th><th>Limit</th></tr>
+<tr><td>Horizontal carrier max current</td><td>8 A</td></tr>
+<tr><td>Vertical carrier max current</td><td>15 A</td></tr>
+<tr><td>System power supply max</td><td>13 A (12V input) or 8A (24V input)</td></tr>
+<tr><td>Redundant power</td><td>Must include calculations for redundant system power</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>3. Table N-1: Products Using 12V LocalBus + 24VDC Bussed Field Power</h2>
+
+<p>This is the primary worksheet for most I/O cards and controllers. Record quantities and multiply by per-product amperage.</p>
+
+<h3>3.1 Controllers and Interface</h3>
+<table>
+<tr><th>Product</th><th>12V LocalBus (A)</th><th>24VDC Field (A)</th></tr>
+<tr><td>Controllers</td><td>0.01</td><td>0.01</td></tr>
+<tr><td>Remote Interface Unit</td><td>0.01</td><td>0.01</td></tr>
+</table>
+
+<h3>3.2 Analog I/O Cards</h3>
+<table>
+<tr><th>Product</th><th>12V LocalBus (A)</th><th>24VDC Field (A)</th></tr>
+<tr><td>AI, 8-Channel, 4-20 mA</td><td>0.150</td><td>0.300</td></tr>
+<tr><td>AI, 8-Channel, 4-20 mA, HART</td><td>0.150</td><td>0.300</td></tr>
+<tr><td>AI, 8-Channel, 1-5 VDC</td><td>0.150</td><td>0.100</td></tr>
+<tr><td>AO, 8-Channel, 4-20 mA</td><td>0.150</td><td>0.300</td></tr>
+<tr><td>AO, 8-Channel, 4-20 mA, HART</td><td>0.150</td><td>0.300</td></tr>
+<tr><td>RTD, ohms</td><td>0.160</td><td>N/A</td></tr>
+<tr><td>Thermocouple, mV</td><td>0.350</td><td>N/A</td></tr>
+<tr><td>Multifunction</td><td>0.250</td><td>N/A</td></tr>
+</table>
+
+<h3>3.3 Digital I/O Cards</h3>
+<table>
+<tr><th>Product</th><th>12V LocalBus (A)</th><th>24VDC Field (A)</th></tr>
+<tr><td>DI, 8-Channel, 24 VDC, Isolated</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>DI, 8-Channel, 24 VDC, Dry Contact</td><td>0.100</td><td>0.040</td></tr>
+<tr><td>DI, 8-Channel, 120 VAC, Isolated</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>DI, 8-Channel, 120 VAC, Dry Contact</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>DI, 8-Channel, 230 VAC, Isolated</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>DI, 8-Channel, 230 VAC, Dry Contact</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>DI, 32-Channel, 24 VDC, Dry Contact</td><td>0.075</td><td>0.150</td></tr>
+<tr><td>DO, 8-Channel, 120/230 VAC, Isolated</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>DO, 8-Channel, 120/230 VAC, High Side</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>DO, 8-Channel, 24 VDC, Isolated</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>DO, 8-Channel, 24 VDC, High Side</td><td>0.150</td><td>Depends on field (max 3A total)</td></tr>
+<tr><td>DO, 32-Channel, 24 VDC, High-Side</td><td>0.150</td><td>Depends on field (max 3.2A total)</td></tr>
+</table>
+
+<h3>3.4 Communication and Special Cards</h3>
+<table>
+<tr><th>Product</th><th>12V LocalBus (A)</th><th>24VDC Field (A)</th></tr>
+<tr><td>AS-Interface</td><td>0.300</td><td>N/A</td></tr>
+<tr><td>DeviceNet</td><td>0.600</td><td>N/A</td></tr>
+<tr><td>Fieldbus H1</td><td>0.600</td><td>N/A</td></tr>
+<tr><td>Profibus DP</td><td>0.600</td><td>N/A</td></tr>
+<tr><td>Media Converter</td><td>0.300</td><td>N/A</td></tr>
+<tr><td>Serial Card, 2 Ports, RS232/RS485</td><td>0.300</td><td>N/A</td></tr>
+<tr><td>Sequence of Events</td><td>0.075</td><td>0.075</td></tr>
+</table>
+
+<h3>3.5 Series 2 I/O Cards</h3>
+
+<div class="tip">
+<strong>Tip:</strong> For Series 2 cards in redundant applications, the values shown are <strong>per card</strong> of a redundant pair. For example, a redundant pair of Series 2 DO cards requires 0.300 A at 12VDC total.
+</div>
+
+<table>
+<tr><th>Product</th><th>12V LocalBus (A)</th><th>24VDC Field (A)</th></tr>
+<tr><td>Series 2 AI, 4-20 mA, HART</td><td>Simplex: 0.150 / Redundant: 0.250 each</td><td>Simplex: 0.300 / Redundant: 0.200 each</td></tr>
+<tr><td>Series 2 AI, 16-Ch, 4-20 mA, HART Simplex</td><td>0.150</td><td>0.600</td></tr>
+<tr><td>Series 2 AO, 4-20 mA, HART</td><td>Simplex: 0.150 / Redundant: 0.250 each</td><td>Simplex: 0.300 / Redundant: 0.200 each</td></tr>
+<tr><td>Series 2 AS-Interface Simplex</td><td>0.300</td><td>N/A</td></tr>
+<tr><td>Series 2 DI, 8-Ch, 24 VDC, Dry Contact</td><td>Simplex: 0.150 / Redundant: 0.150 each</td><td>Simplex: 0.040 / Redundant: 0.020 each</td></tr>
+<tr><td>Series 2 DI, 8-Ch, 24 VDC Isolated</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>Series 2 DI, 8-Ch, 120 VAC Dry/Isolated</td><td>0.100</td><td>N/A</td></tr>
+<tr><td>Series 2 DI, 32-Ch, 24 VDC Dry Contact</td><td>0.075</td><td>0.150</td></tr>
+<tr><td>Series 2 DO, 8-Ch, 24 VDC High-Side</td><td>Simplex: 0.150 / Redundant: 0.150 each</td><td>Simplex: max 3A / Redundant: max 1.5A each</td></tr>
+<tr><td>Series 2 DO, 8-Ch, 24 VDC Isolated</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>Series 2 DO, 8-Ch, 120/230 VAC High Side</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>Series 2 DO, 8-Ch, 120/230 VAC Isolated</td><td>0.150</td><td>N/A</td></tr>
+<tr><td>Series 2 DO, 32-Ch, 24 VDC High-Side</td><td>0.150</td><td>Max 3.2A total</td></tr>
+<tr><td>Series 2 H1</td><td>0.300</td><td>N/A</td></tr>
+<tr><td>Series 2 Isolated Input</td><td>0.350</td><td>N/A</td></tr>
+<tr><td>Series 2 DeviceNet</td><td>0.600</td><td>N/A</td></tr>
+<tr><td>Series 2 Profibus DP</td><td>0.600</td><td>N/A</td></tr>
+<tr><td>Series 2 Thermocouple</td><td>0.210</td><td>N/A</td></tr>
+<tr><td>Series 2 Sequence of Events</td><td>0.100</td><td>0.075</td></tr>
+<tr><td>Series 2 Serial</td><td>Simplex: 0.300 / Redundant: 0.300 each</td><td>N/A</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. Table N-2: Products Using Only 24 VDC Power</h2>
+
+<p>For products that draw power exclusively from 24 VDC (no 12V LocalBus).</p>
+
+<h3>4.1 SIS and Miscellaneous Products</h3>
+<table>
+<tr><th>Product</th><th>24VDC (A)</th></tr>
+<tr><td>H1 carrier input power (carrier only)</td><td>0.020</td></tr>
+<tr><td>H1 carrier bussed field power (max with cards)</td><td>0.500 + card currents</td></tr>
+<tr><td>Logic Solver</td><td>1 + DO field power (4 max)</td></tr>
+<tr><td>Redundant Logic Solvers</td><td>2 + DO field power</td></tr>
+<tr><td>SISNet Repeaters</td><td>0.300 per repeater</td></tr>
+<tr><td>Auxiliary Relay Modules (24 VDC)</td><td>0.010 + field power (5 max)</td></tr>
+</table>
+
+<h3>4.2 Smart Switches and Media Modules</h3>
+<table>
+<tr><th>Product</th><th>24VDC (A)</th></tr>
+<tr><td>FP20-6TX2TX</td><td>0.221</td></tr>
+<tr><td>FP20-6TX1MM1TX, FP20-6TX1SM1TX, FP20-6TX1SMLH1TX</td><td>0.271</td></tr>
+<tr><td>FP20-6TX2MM, FP20-6TX2SM, FP20-6TX2SMLH</td><td>0.321</td></tr>
+<tr><td>MD20-8</td><td>0.208</td></tr>
+<tr><td>MD20-16, MD20-24</td><td>0.500</td></tr>
+<tr><td>MD30-8</td><td>0.317</td></tr>
+<tr><td>MD30-16, MD30-24</td><td>0.609</td></tr>
+<tr><td>MD2-4TX1, MD2-4TX1-PoE</td><td>0.034</td></tr>
+<tr><td>MD3-4FX/M2, MD3-4FX/M4, MD3-4FXS2</td><td>0.292</td></tr>
+<tr><td>MD2-2FXM2, MD3-2FXM2/2TX1, MD3-2FXM4/2TX1, MD2-2FXS2, MD3-2FXS2/2TX1, MD3-1FXS2/3TX1</td><td>0.142</td></tr>
+</table>
+
+<h3>4.3 Power Supplies</h3>
+<table>
+<tr><th>Product</th><th>24VDC (A)</th></tr>
+<tr><td>I.S. System Power Supply</td><td>3.4</td></tr>
+<tr><td>Fieldbus Power Supply</td><td>Refer to manufacturer specifications</td></tr>
+<tr><td>I.S. Fieldbus Power Supply</td><td>Refer to manufacturer specifications</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. Table N-3: System Power — 24VDC Input</h2>
+
+<p>Calculate the number of system power supplies needed for systems powered by 24 VDC.</p>
+
+<table>
+<tr><th>Item</th><th>Calculation</th></tr>
+<tr><td>System Power Supply (Dual DC/DC) 24V input</td><td>Provides 8.0 A @ 12V; Quantity = Subtotal 1 ÷ 8.0 A</td></tr>
+<tr><td>Redundant System Power Supply</td><td>Max 1.0 A additional (if applicable)</td></tr>
+<tr><td>Grand Total</td><td>Subtotal 1 + Subtotal 2 + Subtotal 3 (system supply draw)</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Note:</strong> Older Dual DC/DC System Power Supplies provided only 4.5 A of +12V power and required 4.0 A input from +24V. Verify your hardware revision.
+</div>
+
+<h3>Example Calculation — 24VDC Input</h3>
+<div class="lab">
+<strong>Given:</strong> Total 12V LocalBus power = 6.1 A<br>
+<strong>Calculation:</strong> 6.1 A ÷ 8.0 A/supply = 0.76 → <strong>1 system power supply</strong> for simplex<br>
+<strong>Redundant:</strong> Requires an additional 2-wide carrier in horizontally mounted systems
+</div>
+
+<!-- ============================================================ -->
+<h2>6. Table N-4: System Power — 12VDC Input</h2>
+
+<p>For systems where the system power supply is powered from a 12 VDC source.</p>
+
+<table>
+<tr><th>Item</th><th>Calculation</th></tr>
+<tr><td>System Power Supply (Dual DC/DC) 12V input</td><td>Provides 13 A @ 12V; Quantity = Subtotal 1 ÷ 13 A; draws 1.8 A from bulk supply per controller</td></tr>
+<tr><td>Redundant System Power Supply</td><td>1.8 A from bulk supply (if applicable)</td></tr>
+<tr><td>Grand Total</td><td>Subtotal 1 + Subtotal 2 + Subtotal 4</td></tr>
+</table>
+
+<div class="pitfall">
+<strong>⚠ Current Limits:</strong>
+<ul>
+  <li>Horizontal carrier: max 8 A</li>
+  <li>Vertical carrier: max 15 A</li>
+  <li>System power supply: max 13 A</li>
+</ul>
+If any limit is exceeded, use the cable extender to split the 12VDC as described in the System Power Guidelines.
+</div>
+
+<h3>Example Calculation — 12VDC Input</h3>
+<div class="lab">
+<strong>Given:</strong> Total 12VDC power = 6.1 A<br>
+<strong>Calculation:</strong> 6.1 A ÷ 13 A/supply = 0.47 → <strong>1 system power supply</strong> for simplex<br>
+<strong>Redundant:</strong> <strong>2 system power supplies</strong> for redundant power
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Table N-5: Bulk Power Requirements</h2>
+
+<p>Calculate the number of legacy bulk power supplies based on the Grand Total from Tables N-3 or N-4.</p>
+
+<table>
+<tr><th>Product</th><th>Capacity</th><th>Quantity Formula</th></tr>
+<tr><td>Legacy DIN rail-mounted 12VDC Bulk</td><td>12 A each</td><td>Grand Total ÷ 12 A</td></tr>
+<tr><td>Legacy DIN rail-mounted 24VDC Bulk</td><td>12 A each</td><td>Grand Total ÷ 12 A</td></tr>
+<tr><td>Legacy Panel-mounted 12VDC Bulk</td><td>25 A each</td><td>Grand Total ÷ 25 A</td></tr>
+<tr><td>Legacy Panel-mounted 24VDC Bulk</td><td>12.5 A each</td><td>Grand Total ÷ 12.5 A</td></tr>
+</table>
+
+<div class="tip">
+<strong>Redundant Bulk Power:</strong> An OR-ing diode is required for redundant bulk power supplies.
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Table N-6: Intrinsically Safe (I.S.) Power</h2>
+
+<p>Use this table only for I.S. systems. Add the total I.S. power supply count to Table N-2 (24V-only products).</p>
+
+<table>
+<tr><th>I.S. Product</th><th>Amps Required (A)</th></tr>
+<tr><td>I.S. AI, 4-20 mA, 8-Channel with HART</td><td>0.600</td></tr>
+<tr><td>I.S. AO, 4-20 mA, 8-Channel (with HART)</td><td>0.630</td></tr>
+<tr><td>I.S. DI, 16-Channel</td><td>0.350</td></tr>
+<tr><td>I.S. DO, 4-Channel</td><td>0.560</td></tr>
+<tr><td>I.S. LocalBus Isolator</td><td>0.060</td></tr>
+</table>
+
+<table>
+<tr><th>I.S. Power Supply</th><th>Details</th></tr>
+<tr><td>I.S. System Power Supply</td><td>5 A max each; Quantity = Grand Total ÷ 5 A</td></tr>
+<tr><td>Redundant I.S. Power Supplies</td><td>Max 1 redundant supply; add total to Table N-2</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>9. Calculation Workflow Summary</h2>
+
+<div class="key-concept">
+<strong>Step-by-Step Process:</strong>
+<ol>
+  <li>Fill <strong>Table N-1</strong> for all 12V + 24V products → obtain <strong>Subtotal 1</strong></li>
+  <li>Fill <strong>Table N-2</strong> for all 24V-only products (including I.S. supplies from Table N-6 if applicable) → obtain <strong>Subtotal 2</strong></li>
+  <li>Fill <strong>Table N-3</strong> (24V input) or <strong>Table N-4</strong> (12V input) to determine system power supply count → obtain <strong>Grand Total</strong></li>
+  <li>Fill <strong>Table N-5</strong> to determine bulk power supply count from Grand Total</li>
+  <li>If I.S. system: fill <strong>Table N-6</strong> first, then add I.S. supply count to Table N-2</li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<h2>10. Reference Summary</h2>
+
+<table>
+<tr><th>Worksheet</th><th>Purpose</th><th>Output</th></tr>
+<tr><td>Table N-1</td><td>12V LocalBus + 24VDC field power products</td><td>Subtotal 1</td></tr>
+<tr><td>Table N-2</td><td>24VDC-only products</td><td>Subtotal 2</td></tr>
+<tr><td>Table N-3</td><td>System power (24V input)</td><td>Grand Total</td></tr>
+<tr><td>Table N-4</td><td>System power (12V input)</td><td>Grand Total</td></tr>
+<tr><td>Table N-5</td><td>Bulk power supply count</td><td>Number of bulk supplies</td></tr>
+<tr><td>Table N-6</td><td>I.S. system power</td><td>Add to Subtotal 2</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="quiz">
+<h3>Review Questions</h3>
+
+<p><strong>1.</strong> What is the first worksheet to fill out when calculating DeltaV system power requirements?</p>
+<p class="answer">Table N-1 (Worksheet for Products Using 12V LocalBus Power and 24VDC Bussed Field Power).</p>
+
+<p><strong>2.</strong> What is the maximum current allowed on a horizontal carrier?</p>
+<p class="answer">8 A.</p>
+
+<p><strong>3.</strong> If your total 12VDC LocalBus power is 22 A, how many system power supplies (12V input, 13A each) are needed for simplex power?</p>
+<p class="answer">22 ÷ 13 = 1.69, rounded up to 2 system power supplies.</p>
+
+<p><strong>4.</strong> What component is required when using redundant bulk power supplies?</p>
+<p class="answer">An OR-ing diode is required for redundant bulk power supplies.</p>
+
+<p><strong>5.</strong> At what point do you fill in Table N-6 (I.S. Power Requirements)?</p>
+<p class="answer">Before completing Table N-2 — the total number of I.S. power supplies is added to the 24VDC-only products worksheet.</p>
+</div>
+
+<p class="page-ref">Pages referenced: 527–542</p>
+
+</body>
+</html>

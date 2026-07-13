@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L24 — Glossary of DeltaV Hardware Terms</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="L23-Product-Type-Numbers.html">← L23: Product Type Numbers</a>
+</nav>
+
+<h1>Lesson 24 — Glossary of DeltaV Hardware Terms</h1>
+<p class="source">Source: DeltaV M-series Hardware Installation and Reference Manual, D800001X312, April 2021, pp. 553–558</p>
+
+<div class="key-concept">
+<strong>Quick Reference:</strong> This glossary covers units, acronyms, and key terms used throughout the DeltaV M-series Hardware Installation and Reference Manual. Use this as a fast lookup during installation, troubleshooting, or training.
+</div>
+
+<h2>Units of Measure</h2>
+<table>
+<tr><th>Symbol</th><th>Unit</th></tr>
+<tr><td>Ω, kΩ</td><td>ohm, kilo-ohm</td></tr>
+<tr><td>°C</td><td>degrees Celsius</td></tr>
+<tr><td>°F</td><td>degrees Fahrenheit</td></tr>
+<tr><td>A</td><td>ampere</td></tr>
+<tr><td>BTU</td><td>British thermal units</td></tr>
+<tr><td>cm</td><td>centimeter</td></tr>
+<tr><td>dB</td><td>decibel</td></tr>
+<tr><td>g</td><td>gram</td></tr>
+<tr><td>Hz</td><td>hertz</td></tr>
+<tr><td>in.</td><td>inch</td></tr>
+<tr><td>in-lb</td><td>inch-pounds</td></tr>
+<tr><td>kB</td><td>kilobyte</td></tr>
+<tr><td>kg</td><td>kilogram</td></tr>
+<tr><td>kJ</td><td>kiloJoule</td></tr>
+<tr><td>lb</td><td>pound</td></tr>
+<tr><td>Mb</td><td>Megabit</td></tr>
+<tr><td>Mbps</td><td>Megabits per second</td></tr>
+<tr><td>MB</td><td>Megabyte</td></tr>
+<tr><td>MHz</td><td>Megahertz</td></tr>
+<tr><td>m</td><td>meter</td></tr>
+<tr><td>mA</td><td>milliampere</td></tr>
+<tr><td>mm</td><td>millimeter</td></tr>
+<tr><td>ms</td><td>millisecond</td></tr>
+<tr><td>mV</td><td>millivolt</td></tr>
+<tr><td>Nm</td><td>Newton-meter</td></tr>
+<tr><td>nF</td><td>nanoFarad</td></tr>
+<tr><td>pF</td><td>picoFarad</td></tr>
+<tr><td>s</td><td>second</td></tr>
+<tr><td>V</td><td>volt</td></tr>
+<tr><td>V·A</td><td>volt-ampere</td></tr>
+<tr><td>W</td><td>watt</td></tr>
+<tr><td>µF</td><td>microFarad</td></tr>
+</table>
+
+<h2>Acronyms</h2>
+<table>
+<tr><th>Acronym</th><th>Definition</th><th>Related Hardware</th></tr>
+<tr><td>AC</td><td>Alternating Current</td><td>System Power Supply, UPS</td></tr>
+<tr><td>A/D</td><td>Analog-to-Digital</td><td>AI cards (KJ3002, KJ3222, KJ3223)</td></tr>
+<tr><td>AI</td><td>Analog Input</td><td>KJ3002X1-BA1/BC1/BD1, KJ3222X1-BA1, KJ3223X1-BA1</td></tr>
+<tr><td>AO</td><td>Analog Output</td><td>KJ3002X1-BB1/BE1, KJ3221X1-BA1, KC3011X1-BA1</td></tr>
+<tr><td>AWG</td><td>American Wire Gauge</td><td>All wiring — controls wire sizing</td></tr>
+<tr><td>CD</td><td>Compact Disk</td><td>Documentation Library DVD</td></tr>
+<tr><td>CPU</td><td>Central Processing Unit</td><td>MD Plus Controller (KJ2003X1-BB1), MX Controller (KJ2005X1-BA1)</td></tr>
+<tr><td>CSA</td><td>Canadian Standards Association</td><td>Regulatory certification for hardware</td></tr>
+<tr><td>DC</td><td>Direct Current</td><td>System Power Supply, all I/O cards</td></tr>
+<tr><td>DIMM</td><td>Double In-line Memory Module</td><td>Controller memory expansion</td></tr>
+<tr><td>DI</td><td>Discrete Input</td><td>KJ3001X1-BA1/BB1/CA1, KJ3201X1-BA1, KJ3203X1-BA1, KC3021X1-BA1</td></tr>
+<tr><td>DIN</td><td>Deutsche Institut für Normung</td><td>DIN rail mounting hardware</td></tr>
+<tr><td>DO</td><td>Discrete Output</td><td>KJ3001X1-BG1/BJ1/CB1, KJ3202X1-BA1, KC3020X1-BA1</td></tr>
+<tr><td>DRAM</td><td>Dynamic Random Access Memory</td><td>Controller memory</td></tr>
+<tr><td>EMI</td><td>Electromagnetic Interference</td><td>Cable shielding, carrier shield bars</td></tr>
+<tr><td>FCC</td><td>Federal Communications Commission</td><td>Regulatory certification</td></tr>
+<tr><td>IEC</td><td>International Electrotechnical Commission</td><td>Safety and standards compliance</td></tr>
+<tr><td>IEEE</td><td>Institute of Electrical and Electronic Engineers</td><td>Network standards (802.3)</td></tr>
+<tr><td>I/O</td><td>Input/Output</td><td>All I/O cards and terminal blocks</td></tr>
+<tr><td>IP</td><td>Internet Protocol</td><td>Ethernet networking, Control Network</td></tr>
+<tr><td>ISA</td><td>Instrument Society of America</td><td>Instrumentation standards</td></tr>
+<tr><td>ISO</td><td>International Standards Organization</td><td>Manufacturing standards</td></tr>
+<tr><td>LAN</td><td>Local Area Network</td><td>Control Network, fiber switches</td></tr>
+<tr><td>LED</td><td>Light-Emitting Diode</td><td>Status indicators on all cards and controllers</td></tr>
+<tr><td>MDI</td><td>Medium Dependent Interface</td><td>Ethernet port configuration</td></tr>
+<tr><td>MIL</td><td>Military Standard</td><td>Environmental and durability ratings</td></tr>
+<tr><td>NVM</td><td>Non-Volatile Memory</td><td>Controller firmware and configuration storage</td></tr>
+<tr><td>OLE</td><td>Object Linking and Embedding</td><td>Software integration standard</td></tr>
+<tr><td>OPC</td><td>OLE for Process Control</td><td>Software standard for process control communication</td></tr>
+<tr><td>OTDR</td><td>Optical Time Domain Reflectometer</td><td>Fiber-optic cable testing</td></tr>
+<tr><td>RAM</td><td>Random-Access Memory</td><td>Controller runtime memory</td></tr>
+<tr><td>ROM</td><td>Read-Only Memory</td><td>Controller firmware storage</td></tr>
+<tr><td>SIMM</td><td>Single In-Line Memory Module</td><td>Legacy controller memory</td></tr>
+<tr><td>UL</td><td>Underwriters Laboratory</td><td>Electrical safety certification</td></tr>
+<tr><td>UPS</td><td>Uninterruptible Power Supply</td><td>Backup power for controllers and workstations</td></tr>
+<tr><td>UTP</td><td>Unshielded Twisted Pair</td><td>Ethernet cabling</td></tr>
+<tr><td>VAC</td><td>Volts Alternating Current</td><td>AC power specifications</td></tr>
+<tr><td>VDC</td><td>Volts Direct Current</td><td>DC power specifications for cards and controllers</td></tr>
+</table>
+
+<h2>Key Terms</h2>
+<table>
+<tr><th>Term</th><th>Definition</th><th>Related Hardware</th></tr>
+<tr><td>2-Wide Power/Controller Carrier</td><td>Assembly that provides power and communications connections for the DeltaV Controller and the DeltaV System Power Supply.</td><td>KJ4001X1-BA3</td></tr>
+<tr><td>4-Wide I/O Interface Carrier</td><td>Assembly that provides power and communication connections for the DeltaV I/O Interface with 4 I/O card slots.</td><td>KJ4003X1-BC1, KJ4003X1-BG1</td></tr>
+<tr><td>8-Wide I/O Interface Carrier</td><td>Assembly that provides power and communication connections for the DeltaV I/O Interface with 8 I/O card slots.</td><td>KJ4001X1-BB1, KJ4001X1-BE1</td></tr>
+<tr><td>10BaseT</td><td>IEEE standard for a 10-Megabit per second (Mbps) baseband network on twisted-pair wiring.</td><td>Ethernet ports on controllers</td></tr>
+<tr><td>American Wire Gauge (AWG)</td><td>Usual system of wire size measurement in the United States. A 14 AWG wire has a cross-sectional area of 2.08 mm²; a 000 AWG wire has a cross-sectional area of 85.02 mm². Note that the smaller the AWG value, the larger the wire.</td><td>All field wiring</td></tr>
+<tr><td>Bit</td><td>Electrical equivalent of a 0 or a 1 that represents the basic unit of computer communication.</td><td>All digital communication</td></tr>
+<tr><td>CD-ROM</td><td>Compact disk used as a computer information storage medium. CD-ROMs can store a large amount of information.</td><td>Documentation Library DVD</td></tr>
+<tr><td>Central Processing Unit (CPU)</td><td>Portion of a computer that manipulates and modifies data and carries out software instructions.</td><td>MD Plus Controller (KJ2003X1-BB1), MX Controller (KJ2005X1-BA1)</td></tr>
+<tr><td>Control Network</td><td>Communications network for the DeltaV system.</td><td>Ethernet switches, fiber converters, UTP cabling</td></tr>
+<tr><td>Daisy Chain</td><td>To connect one device to another in sequence.</td><td>Fieldbus H1 devices, Profibus DP devices</td></tr>
+<tr><td>Deutsche Institut für Normung (DIN)</td><td>The German standards organization.</td><td>DIN rail mounting hardware (KJ4010X1-BS1)</td></tr>
+<tr><td>Device</td><td>Piece of electronic hardware that performs one or more prescribed functions.</td><td>All DeltaV hardware components</td></tr>
+<tr><td>Diagnostics</td><td>One or more programs in a computer or microprocessor that can detect and pinpoint a hardware fault or a configuration error.</td><td>All I/O cards and controllers (LED status indicators)</td></tr>
+<tr><td>Ethernet</td><td>Local area network (LAN) specification that uses baseband signaling at 10 Megabits per second (Mbps).</td><td>Control Network, fiber switches</td></tr>
+<tr><td>Federal Communications Commission (FCC)</td><td>A United States government communications standards group.</td><td>Regulatory compliance for all networked hardware</td></tr>
+<tr><td>Fiber-Optic Cable</td><td>Thin, transparent fibers of glass or plastic that transmit data through pulses of light from a laser or light-emitting diode (LED).</td><td>KJ1700X1-BA1 (Media Converter), KJ1710X1-BA1, KJ1740X1-BA1</td></tr>
+<tr><td>Hub</td><td>Device in a network that consolidates wiring connections and routes communications. All communications devices on a hub-based network connect to one or more hubs.</td><td>Control Network infrastructure</td></tr>
+<tr><td>Institute of Electrical and Electronic Engineers (IEEE)</td><td>Independent technical organization that defines standards for the electrical, electronic, and computer industries.</td><td>Network standards (IEEE 802.3)</td></tr>
+<tr><td>IEEE 802.3</td><td>Set of specifications from the Institute of Electrical and Electronic Engineers (IEEE) for local area networks (LANs). This specification provides standards for media access control.</td><td>Control Network Ethernet</td></tr>
+<tr><td>Input/Output (I/O)</td><td>Signal reception and transmission or signal interfacing. Input, for an instrument, involves accepting and processing signals from field devices. Output, for an instrument, involves converting commands into electrical signals to field devices.</td><td>All I/O cards and terminal blocks</td></tr>
+<tr><td>International Standards Organization (ISO)</td><td>International organization that defines manufacturing standards.</td><td>Compliance standards for all hardware</td></tr>
+<tr><td>Instrument Society of America (ISA)</td><td>Independent organization that defines instrumentation standards.</td><td>Instrumentation standards compliance</td></tr>
+<tr><td>Intrinsically Safe Field Circuits</td><td>Circuits that are designed to limit the amount of energy provided to field devices to levels below those that are required to ignite specific types of hazardous materials under fault and no fault conditions.</td><td>I.S. I/O cards, I.S. terminal blocks, I.S. power supply</td></tr>
+<tr><td>Intrinsically Safe I/O</td><td>Equipment that contains intrinsically safe field circuits.</td><td>I.S. DI, I.S. DO, I.S. AI, I.S. AO cards; LocalBus Isolator</td></tr>
+<tr><td>Light-Emitting Diode (LED)</td><td>Electronic component that generates a small focused beam of light in response to a current passing through the component.</td><td>Status indicators on all cards and controllers</td></tr>
+<tr><td>Local Area Network (LAN)</td><td>Communications network within a limited physical area that provides high-speed data transmission.</td><td>Control Network</td></tr>
+<tr><td>LocalBus</td><td>A DeltaV Power/Controller Carrier, its associated DeltaV I/O Interface Carriers, and the cables that connect them.</td><td>Carriers, extender cables, controller</td></tr>
+<tr><td>Megabit (Mb)</td><td>One million binary bits.</td><td>Network bandwidth specifications</td></tr>
+<tr><td>Military Standard (MIL)</td><td>Standard requirements as set by United States military organizations.</td><td>Environmental ratings</td></tr>
+<tr><td>Node</td><td>Communication device, such as a workstation or controller, attached to the Control Network.</td><td>Controllers, workstations, workstations</td></tr>
+<tr><td>Object Linking and Embedding (OLE)</td><td>Software standard governing the relationship between software document files.</td><td>Software integration</td></tr>
+<tr><td>OLE for Process Control (OPC)</td><td>Software standard for OLE applications in process control.</td><td>Software communication standard</td></tr>
+<tr><td>Operating Range</td><td>A sensor type's input signal range over which the accuracy is stated.</td><td>AI cards — specifies supported signal ranges</td></tr>
+<tr><td>Port</td><td>Physical connection between an electronic device and a cable.</td><td>All cards with external connections (serial, Ethernet, fieldbus)</td></tr>
+<tr><td>Random-Access Memory (RAM)</td><td>Type of semiconductor memory. The user can read from and write to RAM as often as desired.</td><td>Controller runtime memory</td></tr>
+<tr><td>Read-Only Memory (ROM)</td><td>Type of semiconductor memory. Information is stored permanently on ROM; the user can examine ROM contents as often as desired but cannot change the contents.</td><td>Controller firmware storage</td></tr>
+<tr><td>Single In-Line Memory Module (SIMM)</td><td>Plug-in random-access memory (RAM) unit for a computer.</td><td>Legacy controller memory modules</td></tr>
+<tr><td>Underwriters Laboratory (UL)</td><td>Independent organization that defines electrical standards.</td><td>Electrical safety certification</td></tr>
+<tr><td>Uninterruptible Power Supply (UPS)</td><td>Battery that supplies continuous power to a computer system if there is a failure or an interruption in the AC power source.</td><td>Backup power for controllers and workstations</td></tr>
+</table>
+
+<div class="tip">
+<strong>💡 Tip:</strong> When referencing product type numbers in the field, cross-check against the product type number table in Lesson 23 (pp. 549–552) for the exact ordering code and revision.
+</div>
+
+<div class="quiz">
+<h3>📝 Glossary Quick Check</h3>
+<p><strong>Q1:</strong> What does "LocalBus" refer to in a DeltaV system?</p>
+<p class="answer">A: The combination of a Power/Controller Carrier, its associated I/O Interface Carriers, and the cables that connect them.</p>
+
+<p><strong>Q2:</strong> What is the difference between AWG 14 and AWG 000 wire?</p>
+<p class="answer">A: AWG 14 has a cross-sectional area of 2.08 mm², while AWG 000 has 85.02 mm². Smaller AWG numbers indicate larger wire.</p>
+
+<p><strong>Q3:</strong> What does "Intrinsically Safe" mean in the context of DeltaV field circuits?</p>
+<p class="answer">A: Circuits designed to limit energy to field devices below the ignition threshold for hazardous materials, under both normal and fault conditions.</p>
+</div>
+
+<nav>
+  <a href="L23-Product-Type-Numbers.html">← L23: Product Type Numbers</a>
+</nav>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+
+</body>
+</html>

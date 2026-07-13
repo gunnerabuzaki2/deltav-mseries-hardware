@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L03: DIN Rails, Carriers, and Bussed Field Power</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="#">L04: Installing I/O Interface and Cards</a><br>
+<a href="#">L05: Installing Controller and Power Supply</a><br>
+<a href="#">L06: Workstation, Control Network, and Power</a><br>
+<a href="#">L07: System Checkout and Power Verification</a><br>
+<a href="#">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="#">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="#">L10: Environmental and Carrier Specifications</a><br>
+<a href="#">L11: Interface Specifications — Digital I/O Cards</a><br>
+<a href="#">L12: Interface Specifications — Analog I/O Cards</a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a>
+</div>
+</details>
+</nav>
+
+<h1>L03: DIN Rails, Carriers, and Bussed Field Power</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 2, "Installing Your DeltaV System," pp. 28–35.</p>
+
+<p>In L01 you learned what the components are. In L02 you learned how to prepare. Now we get to the hands-on work — mounting DIN rails, attaching carriers, and wiring bussed field power. This is the lesson where theory meets the backplate. Pay close attention to the details here, because mistakes in rail mounting and power wiring are among the most common causes of installation problems.</p>
+
+<h2>3.1 — Installing DIN Rails and Carriers</h2>
+
+<p>The power/controller carriers and 8-wide I/O interface carriers install on <strong>standard 35 mm (1.38 in.) T-type or G-type DIN rails</strong>. If you use T-type rails, use the heavier 15 mm deep version — it better accommodates the weight distribution of DeltaV equipment.</p>
+
+<div class="key-concept">
+<strong>Key Concept — T-Rail vs. G-Rail:</strong> DeltaV carriers use different screws for each rail type. The middle two screws are for G-rail mounting; the upper and lower screws are for T-rail mounting. If you mix them up, the carrier will not latch properly.
+</div>
+
+<p>An optional carrier shield bar provides a connection point for field shield wires on the I/O interface carrier. This is particularly important for low-level analog signals where noise rejection is critical.</p>
+
+<div class="pitfall">
+<strong>Pitfall — Never Mix Horizontal and Vertical Carriers:</strong> You cannot connect a vertical carrier to a horizontal carrier, or vice versa. You must choose one carrier configuration for your entire installation. If you mix them, the 48-pin connectors will not mate and the LocalBus will not function.
+</div>
+
+<h3>3.1.1 — DIN Rail Spacing and Screw Clearance</h3>
+
+<p>When mounting DIN rails on a backplate, proper spacing and screw placement are critical. The manual specifies zones where you must <em>not</em> place mounting screws:</p>
+
+<ul>
+<li>An area <strong>1.3 cm (0.5 in.) wide</strong>, centered <strong>4.5 cm (1.75 in.)</strong> from the left side of a 2-wide power/controller carrier.</li>
+<li>An area <strong>1.3 cm (0.5 in.) wide</strong>, centered <strong>8.3 cm (3.25 in.)</strong> from either side of an 8-wide I/O interface carrier.</li>
+</ul>
+
+<p>If you place screws in these zones, the screw heads will interfere with the carrier latching mechanism and prevent proper mounting.</p>
+
+<div class="screenshot">
+<img src="../images/page_0029_1.png" alt="DIN Rail Installation diagram showing suggested spacing">
+<div class="caption">Figure 2-1: DIN Rail Installation — suggested spacing for rail placement on the mounting surface. (Source: p. 29)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0029_2.png" alt="Screw Clearance Guidelines for DIN Rail Mounting">
+<div class="caption">Figure 2-2: Screw Clearance Guidelines — the red zones show where mounting screws must not be placed to avoid interference with carrier heads. (Source: p. 29)</div>
+</div>
+
+<div class="tip">
+<strong>Tip — Plan Your Rail Layout on Paper First:</strong> Use Appendix N (Installation Worksheets) to lay out rail positions, carrier positions, and screw zones before drilling any holes. A $0.50 paper worksheet saves hours of rework on a $500 steel backplate.
+</div>
+
+<h2>3.2 — Installing the 2-Wide Power/Controller Carrier</h2>
+
+<p>The 2-wide power/controller carrier holds the system power supply and the controller. Here is the installation procedure:</p>
+
+<ol>
+<li>Install the DIN rail at the appropriate location.</li>
+<li>Connect each power/controller carrier to any adjacent carriers by sliding the <strong>48-pin connectors</strong> on the sides of the carriers together.</li>
+<li>Turn the screws <strong>counter-clockwise</strong> on the carrier to disengage the latch. Place the carrier on the rail and tighten the screws <strong>clockwise</strong> to latch.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0030_1.png" alt="2-Wide Power/Controller Carrier Installation">
+<div class="caption">Figure 2-3: 2-Wide Power/Controller Carrier Installation — note the 48-pin side connectors for daisy-chaining to adjacent carriers. (Source: p. 30)</div>
+</div>
+
+<div class="pitfall">
+<strong>Pitfall — 2-Wide Carriers Go on the Left:</strong> The manual specifies that 2-wide carriers should be installed to the left of any 8-wide carriers. This is not a suggestion — it relates to how the LocalBus routes power and data through the carrier chain.
+</div>
+
+<h2>3.3 — Installing the I/O Interface Carrier</h2>
+
+<p>The 8-wide I/O interface carrier is where your I/O terminal blocks and I/O cards live. The installation is similar to the power/controller carrier but with additional steps:</p>
+
+<ol>
+<li>Install the DIN rail at the appropriate location.</li>
+<li>Connect each I/O interface carrier to adjacent carriers by sliding together the <strong>48-pin connectors</strong> on the sides.</li>
+<li>Turn the screws counter-clockwise to disengage the latch. Place on rail and tighten clockwise. Middle screws for G-rail, upper/lower for T-rail.</li>
+<li>If installing on <strong>separate rails</strong>, connect them with a LocalBus cable from the 48-pin connector on the right side of one carrier to the 48-pin connector on the left side of the next carrier.</li>
+<li>Install the carrier ground wiring per the grounding diagram in Appendix J.</li>
+</ol>
+
+<div class="screenshot">
+<img src="../images/page_0031_1.png" alt="I/O Interface Carrier Installation">
+<div class="caption">Figure 2-4: I/O Interface Carrier Installation — 8 slots for I/O cards, with 48-pin connectors on each side for daisy-chaining. (Source: p. 31)</div>
+</div>
+
+<div class="key-concept">
+<strong>Key Concept — Connecting Carriers on Separate Rails:</strong> When carriers are on separate DIN rails, you use a LocalBus cable to bridge them. This cable connects the 48-pin connector on the right side of one carrier to the 48-pin connector on the left side of the next. Remember — the total LocalBus length (including all cabling) cannot exceed 6.5 m (21.3 ft).
+</div>
+
+<h2>3.4 — Bussed Field Power: The Backbone of I/O Power</h2>
+
+<p>Bussed field power is how power gets from your bulk power supply to the field-side I/O cards. The way this works depends on the carrier type you are using, and there are important differences between them.</p>
+
+<h3>3.4.1 — Horizontal and Legacy Vertical Carriers</h3>
+
+<p>Each pair of slots on these carriers has <strong>four screw terminals</strong> for bussed field power — two for supply and two for return. Each bussed field power connection routes power to <strong>two adjacent I/O cards</strong>.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Card Pairing for Field Power:</strong> On horizontal and Legacy Vertical carriers, cards 1 and 2 are paired — they must use the same field voltage level. Similarly, cards 3 and 4 are paired, and cards 5 and 6, and cards 7 and 8. However, different pairs can use different voltages. For example, pair 1-2 might be 24 VDC while pair 3-4 is 120 VAC.
+</div>
+
+<div class="pitfall">
+<strong>Pitfall — Removing the Connector Cuts Power to Everything Downstream:</strong> If bussed field power is extended to additional I/O cards, removing the connector will break the connection between the power supply and all downstream devices. Plan your wiring so you do not need to remove connectors during live operations.
+</div>
+
+<h3>3.4.2 — VerticalPLUS Carriers</h3>
+
+<p>VerticalPLUS carriers are more flexible. Each <strong>individual slot</strong> has four screw terminals — two for +field power and two for −field power. This means each slot can theoretically receive power from a different source.</p>
+
+<p>However, there are factory-installed jumpers: slots 1–4 are connected, and slots 5–8 are connected. Cards installed in slots 1–4 must use the same field voltage, and cards in slots 5–8 must use the same field voltage (though the two banks can differ).</p>
+
+<div class="tip">
+<strong>Tip — Use Separate Power Feeds When Possible:</strong> The manual recommends using a separate power feed to each field power connector (a connector connects to a bank of four I/O cards). This gives you maximum flexibility and isolates faults — if one supply trips, only four cards are affected instead of eight.
+</div>
+
+<h3>3.4.3 — The Keying System</h3>
+
+<p>Keys supplied with the two-part connector on horizontal and Legacy Vertical carriers <strong>prevent damage to cards</strong> if an incorrect power source is connected after cards are installed. You install the keys in each field power connector based on the power source you connect to that connector.</p>
+
+<div class="screenshot">
+<img src="../images/page_0033_1.png" alt="Bussed Field Power Connector on Horizontal and Legacy Vertical Carriers">
+<div class="caption">Figure 2-5: Bussed Field Power Connector — note the four screw terminals (two supply, two return) per card pair. (Source: p. 33)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0034_1.png" alt="Bussed Field Power Keying Connections for 120 VAC Only">
+<div class="caption">Figure 2-6: Bussed Field Power Keying for 120 VAC — the key positions physically prevent a wrong-voltage cable from being plugged in after cards are mounted. (Source: p. 34)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0034_2.png" alt="Bussed Field Power Keying Scheme Example">
+<div class="caption">Figure 2-7: Bussed Field Power Keying Scheme Example — you can set up any standard that meets your needs for the keying scheme. (Source: p. 34)</div>
+</div>
+
+<h2>3.5 — Wiring Bussed Field Power</h2>
+
+<p>How you wire bussed field power depends on whether you are extending power to additional cards.</p>
+
+<h3>3.5.1 — Single Pair (No Extension)</h3>
+<p>If bussed field power supplies only one pair of I/O cards and is not extended, connect wiring to the assigned screw terminal on the top of the I/O interface carrier.</p>
+
+<div class="screenshot">
+<img src="../images/page_0035_1.png" alt="Bussed Field Power Wiring Diagram — single pair">
+<div class="caption">Figure 2-8: Bussed Field Power Wiring Diagram — power feeds the first pair of I/O cards only. (Source: p. 35)</div>
+</div>
+
+<h3>3.5.2 — Extended Power (Multiple Pairs)</h3>
+<p>If bussed field power is extended to additional I/O cards, connect wiring to the assigned screw terminal, and the power bus routes through the connector to downstream pairs.</p>
+
+<div class="screenshot">
+<img src="../images/page_0035_2.png" alt="Bussed Field Power Wiring Diagram — extended power">
+<div class="caption">Figure 2-9: Bussed Field Power Wiring Diagram (Extended) — power routes through the connector to downstream card pairs. (Source: p. 35)</div>
+</div>
+
+<div class="pitfall">
+<strong>Pitfall — Voltage Mismatch Causes Card Damage:</strong> The bussed field power connection to each carrier slot must be correct for the card being installed. Card damage will result if there is a mismatch between the field power voltage at the carrier slot and the card installed in that slot. Always double-check your voltage plan before powering up.
+</div>
+
+<h3>3.5.3 — Multiple Power Sources Warning</h3>
+
+<p>If more than one bussed power source is used, you <strong>must</strong> place a label near the bussed field power connectors with the following warning in English and French:</p>
+
+<blockquote>
+<p><strong>WARNING:</strong> MORE THAN ONE LIVE CIRCUIT. SEE INSTALLATION DIAGRAM.<br>
+<strong>AVERTISSEMENT:</strong> CET EQUIPMENT RENFERME PLUSIEURS CIRCUITS SOUS TENSION. VOIR LE SCHÉMA D'INSTALLATION.</p>
+</blockquote>
+
+<div class="key-concept">
+<strong>Key Concept — Same Voltage Across a Carrier When Possible:</strong> The manual recommends supplying the same voltage at bussed field power to all cards on a carrier whenever possible. Use clean bussed field power and apply inductive noise reduction techniques on I/O signals. Refer to Appendix K for detailed bussed field power guidelines.
+</div>
+
+<h2>Summary — What to Remember</h2>
+
+<ul>
+<li>DIN rails are <strong>35 mm T-type or G-type</strong>; use 15 mm deep T-rails for DeltaV equipment.</li>
+<li>2-wide carriers go <strong>to the left</strong> of 8-wide carriers; never mix horizontal and vertical carrier types.</li>
+<li>Carriers connect via <strong>48-pin side connectors</strong>; separate rails are bridged with LocalBus cables (max 6.5 m total).</li>
+<li>Bussed field power on horizontal/Legacy Vertical carriers powers <strong>pairs of cards</strong>; VerticalPLUS powers <strong>individual slots</strong> (with factory jumpers connecting banks of 4).</li>
+<li>Always use the <strong>keying system</strong> to prevent wrong-voltage connections.</li>
+<li><strong>Never remove a bussed field power connector</strong> while the system is live if other cards depend on it downstream.</li>
+<li>Use <strong>voltage labels</strong> when multiple power sources are present.</li>
+</ul>
+
+<h2>Quiz — Test Your Understanding</h2>
+
+<div class="quiz">
+<h3>Question 1</h3>
+<p>What size DIN rail is required for DeltaV carriers?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Standard 35 mm (1.38 in.) T-type or G-type DIN rails. If using T-type, use the heavier 15 mm deep version to better accommodate the weight of DeltaV equipment.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 2</h3>
+<p>On horizontal carriers, cards 1 and 2 share a bussed field power connection. Must they use the same voltage? What about cards 1 and 3?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Cards 1 and 2 must use the same field voltage level because they share a bussed field power connection. Cards 1 and 3 do not share a connection, so they can use different voltage levels.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 3</h3>
+<p>What is the difference in bussed field power wiring between horizontal carriers and VerticalPLUS carriers?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">On horizontal carriers, each bussed field power connection powers a pair of two adjacent I/O cards. On VerticalPLUS carriers, each slot has its own four screw terminals for bussed field power, though factory jumpers connect slots 1-4 and slots 5-8 into banks.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 4</h3>
+<p>Why is the keying system important when connecting bussed field power?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Keys prevent damage to I/O cards by physically preventing an incorrect power source from being connected after cards are installed. The key positions correspond to specific voltage levels.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 5</h3>
+<p>What happens if you remove a bussed field power connector on a horizontal carrier when power has been extended to additional I/O cards?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Removing the connector breaks the connection between the power supply and all downstream devices. All I/O cards receiving extended power from that connector will lose power.</p>
+</details>
+</div>
+
+<hr>
+<p class="source">DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 2, "Installing Your DeltaV System," pp. 28–35.</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>

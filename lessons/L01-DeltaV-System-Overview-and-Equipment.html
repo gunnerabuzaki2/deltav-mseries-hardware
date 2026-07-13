@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L01: DeltaV System Overview and Equipment</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="#">L04: Installing I/O Interface and Cards</a><br>
+<a href="#">L05: Installing Controller and Power Supply</a><br>
+<a href="#">L06: Workstation, Control Network, and Power</a><br>
+<a href="#">L07: System Checkout and Power Verification</a><br>
+<a href="#">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="#">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="#">L10: Environmental and Carrier Specifications</a><br>
+<a href="#">L11: Interface Specifications — Digital I/O Cards</a><br>
+<a href="#">L12: Interface Specifications — Analog I/O Cards</a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a>
+</div>
+</details>
+</nav>
+
+<h1>L01: DeltaV System Overview and Equipment</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 1, "Overview," pp. 15–22.</p>
+
+<p>Welcome to the very first lesson in the DeltaV M-series hardware training series. Before you pick up a screwdriver or crimp a cable, you need a clear mental model of the entire system — what it looks like, how its pieces relate, and which terms the manual uses. This lesson walks you through that foundation so that every subsequent chapter makes sense.</p>
+
+<h2>1.1 — The DeltaV System at a Glance</h2>
+
+<p>The DeltaV automation system is built from five major categories of components working together. Understanding these categories is the single most important starting point for any installer, technician, or operator.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Five Pillars of DeltaV:</strong> The system is composed of (1) I/O subsystems that talk to field devices, (2) controllers that manage local control and data flow, (3) power supplies that keep everything running, (4) workstations that give operators a graphical interface, and (5) a Control Network that connects it all.
+</div>
+
+<p>Think of it like this: field devices out in the plant generate data — a temperature reading, a valve position, a flow rate. The <strong>I/O subsystem</strong> converts those physical signals into a digital format. The <strong>controller</strong> sits between the I/O and the rest of the world, executing control logic and managing communications. <strong>Workstations</strong> let humans see what is happening and make decisions. And the <strong>Control Network</strong> — a dedicated Ethernet LAN — is the nervous system tying it all together.</p>
+
+<div class="screenshot">
+<img src="../images/page_0015_1.png" alt="DeltaV System Overview Diagram showing controllers, I/O subsystems, workstations, and Control Network">
+<div class="caption">Figure 1-1: DeltaV System Overview Diagram — a high-level view of how the major components connect. (Source: p. 15)</div>
+</div>
+
+<p class="page-ref">Reference: Figure 1-1, p. 15.</p>
+
+<h2>1.2 — DeltaV System Equipment</h2>
+
+<p>Now let us get more specific. The DeltaV system uses <strong>DIN rail-mounted</strong> interconnecting carriers and modular components designed for installation inside an enclosure. The carriers provide both power and communication connections. When you see the term "8-wide" in a carrier name, it means the carrier has eight slots for cards.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Modular by Design:</strong> DeltaV I/O cards and controllers simply snap onto carriers for installation. You do not solder anything. You do not hard-wire logic boards. The carrier handles power distribution and backplane communication.
+</div>
+
+<p>Here are the main pieces of equipment you will encounter in every DeltaV installation:</p>
+
+<table>
+<thead>
+<tr><th>Equipment</th><th>What It Does</th><th>Key Detail</th></tr>
+</thead>
+<tbody>
+<tr><td>Power Controller Carriers</td><td>Mount on DIN rails; provide power and slots for the controller</td><td>2-wide and 4-wide versions; controller goes in the right slot</td></tr>
+<tr><td>I/O Interface Carriers</td><td>Mount on DIN rails; hold I/O terminal blocks and I/O cards</td><td>8-wide is the standard; number in name = slot count</td></tr>
+<tr><td>LocalBus</td><td>Internal power bus + communication bus connecting carriers</td><td>Total length cannot exceed 6.5 m (21.3 ft)</td></tr>
+<tr><td>I/O Terminal Blocks</td><td>Snap onto the carrier; provide screw terminations for field wiring</td><td>Can be installed before cards — saves time and money</td></tr>
+<tr><td>I/O Cards</td><td>Snap over terminal blocks; convert field signals to digital</td><td>Many Series 2 cards support redundancy</td></tr>
+<tr><td>Controllers</td><td>Perform local control; manage I/O ↔ Control Network comms</td><td>Mount on the right slot of the 2-wide carrier (horizontal)</td></tr>
+<tr><td>System Power Supplies</td><td>Provide regulated power to the system</td><td>AC/DC and Dual DC/DC options; IS version available</td></tr>
+<tr><td>Workstations</td><td>Graphical user interface for configuration, operation, and diagnostics</td><td>System Identifier is a USB connector shipped with the License Pack</td></tr>
+<tr><td>Bulk Power Supplies</td><td>Supply power to system or field devices (isolated from each other)</td><td>Separate from system power supply</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — I/O Terminal Blocks First:</strong> One of the smart design choices in DeltaV is that you can install I/O terminal blocks and connect all your field wiring <em>before</em> installing any I/O cards or controllers. This means electricians can wire up the system while technicians continue working on other parts — a significant cost and schedule advantage.
+</div>
+
+<h2>1.2.1 — The Control Network</h2>
+
+<p>The Control Network is an <strong>isolated Ethernet LAN</strong> dedicated exclusively to the DeltaV system. It connects controllers to workstations. It is <em>not</em> your plant-wide office network — it is a completely separate, purpose-built communication backbone.</p>
+
+<div class="pitfall">
+<strong>Pitfall — Never Connect Unapproved Equipment:</strong> Connecting unapproved non-DeltaV equipment to the Control Network can cause unpredictable system operation. This is not a suggestion — it is a caution from the manual. The Control Network is designed for DeltaV traffic only.
+</div>
+
+<p>The Control Network is <strong>redundant by design</strong>. It has two separate communication channels — Primary and Secondary — each implemented with its own Ethernet NIC card and its own hub or switch. If one channel fails, the other takes over seamlessly.</p>
+
+<p>For cable runs up to <strong>100 meters (328 feet)</strong>, you use standard Category 5(e) Screened Twisted Pair (ScTP) cable. For runs up to <strong>2 kilometers (6,562 feet)</strong>, you use fiber-optic switches. Fiber is also preferred when electromagnetic noise is a concern or when you need ground isolation between buildings.</p>
+
+<div class="screenshot">
+<img src="../images/page_0017_1.png" alt="No Hub System Example — direct connection between one workstation and one controller">
+<div class="caption">Figure 1-3: No Hub System Example — the simplest possible Control Network, with a single cable from workstation to controller. (Source: p. 18)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0019_1.png" alt="Control Network Example with 2 nodes">
+<div class="caption">Figure 1-4: Control Network Example with 2 nodes — hubs/switches come into play once you have more than one device on the network. (Source: p. 19)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0019_2.png" alt="Control Network Example with 8 nodes">
+<div class="caption">Figure 1-5: Control Network Example with 8 nodes — a more typical production network layout. (Source: p. 19)</div>
+</div>
+
+<div class="tip">
+<strong>Tip — When to Use Fiber:</strong> If your plant has variable frequency drives, large motors, or near-lightning-strike risk between buildings, choose fiber-optic links. It costs more upfront but saves enormous headaches from noise-related dropouts.
+</div>
+
+<h2>1.2.2 — The Remote Network</h2>
+
+<p>Separate from the Control Network, the DeltaV <strong>Remote Network</strong> provides communications between remote workstations and the DeltaV system. It can be a dedicated LAN or your existing plant-wide LAN (containing PCs, printers, etc.).</p>
+
+<p>The Remote Network connects to the DeltaV system through an <strong>Application Station</strong> or the <strong>ProfessionalPLUS workstation</strong> running DeltaV Remote Access Services (RAS). A router is required to minimize network traffic between the plant-wide LAN and the DeltaV system.</p>
+
+<div class="key-concept">
+<strong>Key Concept — Dual Roles of Workstations:</strong> The ProfessionalPLUS and Application Station serve dual purposes. They sit on the Control Network <em>and</em> bridge to the Remote Network. They act as RAS servers. This is also why you must enable Remote Network redundancy in DeltaV Explorer for <em>both</em> the ProfessionalPLUS and any Application Station connected to the remote network.
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0020_1.png" alt="Dedicated Remote Network diagram">
+<div class="caption">Figure 1-6: Dedicated Remote Network — remote operator stations connect through a separate network switched independently from the control network. (Source: p. 20)</div>
+</div>
+
+<div class="screenshot">
+<img src="../images/page_0022_1.png" alt="Remote Plant-Wide LAN connected to DeltaV System via router">
+<div class="caption">Figure 1-7: Remote Plant-Wide LAN connected to a DeltaV System — a router separates the plant LAN from the control network for traffic isolation. (Source: p. 22)</div>
+</div>
+
+<div class="pitfall">
+<strong>Pitfall — Network Redundancy Must Be Enabled on Both Sides:</strong> If you enable Remote Network redundancy for remote nodes in DeltaV Explorer, you <em>must</em> also enable it on the ProfessionalPLUS and Application Station nodes. If you skip this step, you lose all remote data visibility if the Primary network connection drops.
+</div>
+
+<h2>Summary — What to Remember</h2>
+
+<p>Let us consolidate the key takeaways from this first lesson:</p>
+
+<ul>
+<li><strong>Five components</strong> make up the DeltaV system: I/O subsystem, controllers, power supplies, workstations, and the Control Network.</li>
+<li>Everything mounts on <strong>DIN rails</strong> inside an enclosure. Carriers provide power and communication buses. Cards snap onto carriers.</li>
+<li>The <strong>LocalBus</strong> has a strict 6.5 m (21.3 ft) maximum length — plan your carrier layout accordingly.</li>
+<li>The <strong>Control Network</strong> is a dedicated, redundant Ethernet LAN. Never connect non-DeltaV equipment to it.</li>
+<li>The <strong>Remote Network</strong> provides access from outside the control network, bridged through ProfessionalPLUS or Application Station nodes.</li>
+<li>Always enable <strong>redundancy on both the Control Network and Remote Network</strong> sides when configuring remote access.</li>
+</ul>
+
+<h2>Quiz — Test Your Understanding</h2>
+
+<div class="quiz">
+<h3>Question 1</h3>
+<p>What are the five major components of the DeltaV system?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">I/O subsystem, controllers, power supplies, workstations, and the Control Network.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 2</h3>
+<p>What is the maximum total length of a LocalBus, including all cabling?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">6.5 meters (21.3 feet). This supports up to eight 8-wide carriers, two 2-wide carriers, and three carrier extenders.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 3</h3>
+<p>Why must you not connect unapproved equipment to the DeltaV Control Network?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Connecting unapproved equipment can cause unpredictable system operation. The Control Network is designed and dedicated exclusively for DeltaV traffic.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 4</h3>
+<p>How many communication channels does the Control Network have, and why?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">Two — Primary and Secondary. Each uses a separate Ethernet NIC and hub/switch. The dual-channel design provides communications reliability through redundancy.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 5</h3>
+<p>What must you do when enabling Remote Network redundancy for remote nodes?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">You must also enable Remote Network redundancy in DeltaV Explorer for the ProfessionalPLUS and any Application Station nodes connected to the remote network. Otherwise, remote data is lost if the Primary connection drops.</p>
+</details>
+</div>
+
+<hr>
+<p class="source">DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 1, "Overview," pp. 15–22.</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>

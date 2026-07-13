@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L02: Installation Planning and Safety</title>
+<style>
+body { font-family: Georgia, serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 1.3em; color: #2c5f2d; margin-top: 1.5em; }
+h3 { font-size: 1.1em; color: #555; }
+.key-concept { background: #f0f7f0; border-left: 4px solid #2c5f2d; padding: 1em; margin: 1em 0; }
+.pitfall { background: #fff3f3; border-left: 4px solid #c0392b; padding: 1em; margin: 1em 0; }
+.lab { background: #f0f4ff; border-left: 4px solid #2c3e50; padding: 1em; margin: 1em 0; }
+.tip { background: #fffde7; border-left: 4px solid #f39c12; padding: 1em; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 0.5em; text-align: left; }
+th { background: #f5f5f5; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; font-size: 0.95em; }
+.screenshot { text-align: center; margin: 1.5em 0; }
+.screenshot img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.screenshot .caption { font-size: 0.85em; color: #666; font-style: italic; margin-top: 0.5em; }
+.quiz { background: #fffde7; border: 1px solid #f0e68c; padding: 1em; margin: 2em 0; }
+.quiz h3 { margin-top: 0; }
+.answer { color: #2c5f2d; font-weight: bold; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { color: #2c5f2d; }
+.source { font-size: 0.85em; color: #777; font-style: italic; }
+.page-ref { font-size: 0.8em; color: #999; font-style: italic; margin-top: 0.3em; }
+</style>
+</head>
+<body>
+
+<nav>
+<details>
+<summary><strong>📚 Course Navigation — All 24 Lessons</strong></summary>
+<div style="padding: 0.5em 0;">
+<strong>Part 1 — Core Chapters</strong><br>
+<a href="L01-DeltaV-System-Overview-and-Equipment.html">L01: DeltaV System Overview and Equipment</a><br>
+<a href="L02-Installation-Planning-and-Safety.html">L02: Installation Planning and Safety</a><br>
+<a href="L03-DIN-Rails-Carriers-and-Bussed-Field-Power.html">L03: DIN Rails, Carriers, and Bussed Field Power</a><br>
+<a href="#">L04: Installing I/O Interface and Cards</a><br>
+<a href="#">L05: Installing Controller and Power Supply</a><br>
+<a href="#">L06: Workstation, Control Network, and Power</a><br>
+<a href="#">L07: System Checkout and Power Verification</a><br>
+<a href="#">L08: LED Indicators — Controllers and I/O Cards</a><br>
+<a href="#">L09: Smart Switches, Diagnostics, and Troubleshooting</a><br>
+<strong>Part 2 — Specifications</strong><br>
+<a href="#">L10: Environmental and Carrier Specifications</a><br>
+<a href="#">L11: Interface Specifications — Digital I/O Cards</a><br>
+<a href="#">L12: Interface Specifications — Analog I/O Cards</a><br>
+<a href="#">L13: Interface Specifications — Special Cards</a><br>
+<strong>Part 3 — Controllers &amp; Power</strong><br>
+<a href="#">L14: Controllers, Remote Interface Unit, and Power Supplies</a><br>
+<a href="#">L15: Control Network — Topology and Cable Specs</a><br>
+<a href="#">L16: Control Network — Installation Rules and Diagrams</a><br>
+<a href="#">L17: Legacy Bulk Power Supplies and Enclosure Guidelines</a><br>
+<strong>Part 4 — Power &amp; Vertical</strong><br>
+<a href="#">L18: System Power Guidelines</a><br>
+<a href="#">L19: Bussed Field Power and Controller Redundancy</a><br>
+<a href="#">L20: Vertical Carriers — Mounting and Configuration</a><br>
+<a href="#">L21: Vertical Carriers — Wiring and Worksheets</a><br>
+<strong>Part 5 — Special Topics</strong><br>
+<a href="#">L22: Intrinsically Safe I/O</a><br>
+<a href="#">L23: Product Type Numbers</a><br>
+<a href="#">L24: Glossary of DeltaV Hardware Terms</a>
+</div>
+</details>
+</nav>
+
+<h1>L02: Installation Planning and Safety</h1>
+
+<p class="source">Source: DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 2, "Installing Your DeltaV System," pp. 23–27.</p>
+
+<p>You know what the system looks like from L01. Now it is time to talk about what happens <em>before</em> anything gets mounted on a rail. Installation planning and safety are not glamorous topics, but they are the topics that determine whether your system runs for twenty years or fails in its first year. This lesson covers site preparation, regulatory compliance, wiring and power guidelines, torque limits, and the eight-step installation sequence.</p>
+
+<h2>2.1 — Regulatory Compliance: CE, RoHS, and Hazardous Areas</h2>
+
+<p>Before a single DIN rail is bolted to a backplate, you need to understand the regulatory environment your installation lives in. Emerson's DeltaV hardware has been tested for compliance with several directives, and the manual is explicit: <strong>to maintain compliance, products must be installed and maintained according to the documented procedures</strong>.</p>
+
+<div class="key-concept">
+<strong>Key Concept — CE Compliance Is Not Optional:</strong> The manual states that installation and maintenance must follow the procedures in this document. Failure to do so may compromise CE compliance. This is not just a paperwork issue — it affects whether your system is legally deployable in the European Economic Area.
+</div>
+
+<h3>China RoHS</h3>
+<p>DeltaV products manufactured on or after 1 July 2016 and shipped into China are China RoHS compliant. You can verify product certificates at the Emerson documentation website.</p>
+
+<h3>Hazardous Area Classifications</h3>
+<p>If your installation is in a hazardous area, you need additional documentation:</p>
+
+<table>
+<thead>
+<tr><th>Area Classification</th><th>Required Document</th><th>Document Number</th></tr>
+</thead>
+<tbody>
+<tr><td>Class I Division 2</td><td>DeltaV Scalable Process System, Class I Division 2 Installation Instructions</td><td>12P1293</td></tr>
+<tr><td>Zone 2</td><td>DeltaV Scalable Process System, Zone 2 Installation Instructions</td><td>12P2046</td></tr>
+<tr><td>NAMUR NE 21</td><td>DeltaV Digital Automation System Namur NE 21 Installation Instructions</td><td>12P2822</td></tr>
+<tr><td>Marine (24V only)</td><td>Refer to specific certifying agency requirements</td><td>—</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — Marine Installations Have Extra Requirements:</strong> Marine-certified DeltaV installations require IP66/NEMA 4 enclosures with EMC-reduction shielding of at least 15 dB. The enclosure door must remain closed during normal operation — opening it defeats both the EMC shielding and electrostatic discharge protection. You also need an EMC power line filter (such as a Tyco S Series) on all DC input leads.
+</div>
+
+<div class="pitfall">
+<strong>Pitfall — AC I/O Cards Have Hazardous Live Voltages:</strong> The AC input and output I/O cards and carriers may have hazardous live voltages on their terminals — 120 VAC or 250 VAC. Always de-energize field power before installation, maintenance, or wiring changes on these devices. The affected devices include specific carriers (KJ4001X1-BE1, KJ4002X1, KJ4003X1) and Series 2 AC cards (KJ3207X1, KJ3209X1, KJ3210X1).
+</div>
+
+<h2>2.2 — Planning Your Installation</h2>
+
+<p>The manual dedicates an entire appendix set to planning information. Here are the key areas you need to review before starting:</p>
+
+<table>
+<thead>
+<tr><th>Appendix</th><th>Covers</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>Environmental Specifications (temperature, humidity, altitude)</td></tr>
+<tr><td>B</td><td>Carrier Specifications</td></tr>
+<tr><td>C</td><td>Interface Specifications (I/O card electrical characteristics)</td></tr>
+<tr><td>D</td><td>Controller Specifications</td></tr>
+<tr><td>E</td><td>System Power Supply Specifications</td></tr>
+<tr><td>F</td><td>Workstation and Server Specifications</td></tr>
+<tr><td>G</td><td>Control Network Specifications</td></tr>
+<tr><td>H</td><td>Bulk Power Supply Specifications</td></tr>
+<tr><td>I</td><td>Enclosure and Power Dissipation Guidelines</td></tr>
+<tr><td>J</td><td>System Power Guidelines</td></tr>
+<tr><td>K</td><td>Bussed Field Power Guidelines</td></tr>
+<tr><td>L</td><td>Controller Redundancy</td></tr>
+<tr><td>M</td><td>DeltaV Vertical Carriers</td></tr>
+<tr><td>N</td><td>Installation Worksheets</td></tr>
+<tr><td>O</td><td>Intrinsically Safe I/O</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — Use the Installation Worksheets:</strong> Appendix N provides ready-made installation worksheets. Print them out and use them to plan carrier placement, wire routing, and power distribution before you touch any hardware. Planning on paper is always cheaper than fixing on the backplate.
+</div>
+
+<h2>2.3 — Tools, Site Preparation, and Wiring Guidelines</h2>
+
+<h3>2.3.1 — Tools Required</h3>
+<p>You need three categories of tools:</p>
+<ul>
+<li><strong>Standard electrical tools:</strong> voltmeter, wire cutter, wire stripper, pliers, screwdriver</li>
+<li><strong>Standard installation tools:</strong> screwdrivers, drill with standard bits</li>
+<li><strong>Ethernet cable tools:</strong> crimper, cable tester</li>
+</ul>
+
+<h3>2.3.2 — Site Preparation</h3>
+
+<div class="key-concept">
+<strong>Key Concept — The Electrical Foundation Matters Most:</strong> The manual says it plainly: "Even the best control system can only perform as well as the electrical foundation on which it is built." Clean input power, single-point grounding, and adequate shielding from outside electrical interference are non-negotiable requirements.
+</div>
+
+<p>Power distribution, ground networks, and signal wiring should be installed <em>before</em> the DeltaV system itself. Emerson recommends using the separate manual <em>DeltaV Power and Grounding</em> as your resource for proper site preparation.</p>
+
+<h3>2.3.3 — Wiring Guidelines</h3>
+<p>The power, grounding, and field termination points on the I/O subsystem and system power supplies are designed to accept <strong>2.5 mm² (14 AWG) stranded or solid wire</strong>. Select your wire size by calculating the maximum current limit for each wire, then apply local electrical code requirements.</p>
+
+<p>For low-level signal wiring, <strong>shielded twisted pair</strong> wiring is recommended to reduce noise susceptibility. I/O carriers are available with or without a shield bar — choose the version that matches your field wiring termination needs.</p>
+
+<div class="pitfall">
+<strong>Pitfall — No Bullet-Style Wiring:</strong> Some images in the manual show bullet-style wiring connections. This is for reference only. Emerson never recommends splicing wires into wires to emulate bullet connections. Always use terminal-to-terminal wiring.
+</div>
+
+<h3>2.3.4 — Power Guidelines</h3>
+<p>The removable connectors on System Power Supplies and legacy Bulk Power Supplies are <strong>not</strong> designed to interrupt current flow in circuits under load. If you need to disconnect power, use a separate component — such as a knife blade fuse terminal block or breaker — that is designed for this purpose.</p>
+
+<div class="pitfall">
+<strong>Pitfall — Never Unplug a Connector Under Load:</strong> Pulling a power connector while current is flowing can damage the connector and potentially the power supply. Always use a dedicated disconnect device (breaker, fuse block) in the supply circuit.
+</div>
+
+<h2>2.4 — Torque Limits</h2>
+
+<p>Over-tightening or under-torquing mounting screws and termination screws can cause mechanical damage, poor electrical contact, or both. The following table gives you the exact limits:</p>
+
+<table>
+<thead>
+<tr><th>Item</th><th>Maximum Torque</th></tr>
+</thead>
+<tbody>
+<tr><td>Bulk power supply</td><td>2.84 Nm (25 in-lb)</td></tr>
+<tr><td>DIN rail latching</td><td>1.32 Nm (12 in-lb)</td></tr>
+<tr><td>DIN rail stop</td><td>0.9 Nm (8 in-lb)</td></tr>
+<tr><td>I/O terminal block field terminations</td><td>0.45 Nm (4 in-lb)</td></tr>
+<tr><td>I/O terminal block protection cover</td><td>0.11 Nm (1 in-lb)</td></tr>
+<tr><td>I/O card</td><td>0.11 Nm (1 in-lb)</td></tr>
+<tr><td>Controller</td><td>0.11 Nm (1 in-lb)</td></tr>
+<tr><td>Media Converter</td><td>0.11 Nm (1 in-lb)</td></tr>
+<tr><td>System Power Supply</td><td>0.11 Nm (1 in-lb)</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>Tip — Buy a Torque Screwdriver:</strong> Most of the DeltaV components require very low torque (0.11 Nm = 1 in-lb). A calibrated torque screwdriver in the 0.1–3.0 Nm range is inexpensive insurance against stripped threads or cracked PCBs.
+</div>
+
+<h2>2.5 — The Eight-Step Installation Sequence</h2>
+
+<p>The manual lays out eight installation steps in the most common order. You may reorder them for your project, but understanding this sequence helps you plan the workflow:</p>
+
+<ol>
+<li><strong>Install DIN rails and carriers</strong> — mount the rails, attach power/controller and I/O interface carriers.</li>
+<li><strong>Install I/O interface</strong> — set key settings on terminal blocks, install them on the carrier, connect field wiring, then install I/O cards.</li>
+<li><strong>Install the controller</strong> — mount it on the power/controller carrier.</li>
+<li><strong>Install the system power supply</strong> — mount it on the power/controller carrier and connect supply inputs.</li>
+<li><strong>Install workstations and servers</strong> — follow manufacturer instructions, install the system identifier (USB), set up printer and UPS.</li>
+<li><strong>Set up the Control Network</strong> — install hubs/switches and run network cables between nodes.</li>
+<li><strong>Connect power and power up</strong> — install the bulk power supply, connect supply inputs, and power on the system.</li>
+<li><strong>Check out the installation</strong> — verify cable connections, check power supply voltages, inspect LED indicators, and test field wiring.</li>
+</ol>
+
+<div class="key-concept">
+<strong>Key Concept — Cooling Requires Vertical Mounting:</strong> I/O cards and controllers must be mounted vertically on horizontal carriers for cooling purposes. This is a caution in the manual — not following it leads to thermal damage.
+</div>
+
+<div class="lab">
+<strong>Lab Exercise:</strong> Using the list of appendices above, identify the specific appendix you would need to reference for each of the following decisions: (a) What wire size should you use for a 4-20 mA signal? (b) How far apart can Control Network switches be? (c) What is the power budget for your enclosure? (d) How do you configure a redundant controller pair?
+<details>
+<summary>Show Answers</summary>
+<p>(a) Appendix C — Interface Specifications<br>
+(b) Appendix G — Control Network Specifications<br>
+(c) Appendix I — Enclosure and Power Dissipation Guidelines<br>
+(d) Appendix L — Controller Redundancy</p>
+</details>
+</div>
+
+<h2>Summary — What to Remember</h2>
+
+<ul>
+<li><strong>Regulatory compliance is the first step</strong> — CE, RoHS, and hazardous area requirements must be addressed before installation.</li>
+<li>The <strong>electrical foundation</strong> (clean power, single-point ground, shielding) is the most critical factor in system reliability.</li>
+<li>Use <strong>2.5 mm² (14 AWG)</strong> wire for power and ground terminations; use shielded twisted pair for low-level signals.</li>
+<li><strong>Never disconnect a power connector under load</strong> — always use a dedicated breaker or fuse block.</li>
+<li>Follow the <strong>torque limits table</strong> — most DeltaV components need only 0.11 Nm (1 in-lb).</li>
+<li>The installation follows an <strong>eight-step sequence</strong>, with cooling requiring vertical card mounting on horizontal carriers.</li>
+</ul>
+
+<h2>Quiz — Test Your Understanding</h2>
+
+<div class="quiz">
+<h3>Question 1</h3>
+<p>Why must I/O cards and controllers be mounted vertically on horizontal carriers?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">For cooling purposes. Horizontal mounting prevents proper air convection and can lead to thermal damage of the components.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 2</h3>
+<p>What is the maximum torque you should apply to an I/O card mounting screw?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">0.11 Nm (1 in-lb). This is the same limit for controllers, media converters, system power supplies, and terminal block protection covers.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 3</h3>
+<p>Why should you never disconnect a power connector while current is flowing?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">The removable connectors on system power supplies and bulk power supplies are not designed to interrupt current flow under load. Disconnecting under load can damage the connector and potentially the power supply. Use a dedicated breaker or fuse block instead.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 4</h3>
+<p>What wire size is specified for power, grounding, and field termination points on the DeltaV I/O subsystem?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">2.5 mm² (14 AWG) stranded or solid wire. Actual wire gauge should also meet local electrical code requirements for the expected current.</p>
+</details>
+</div>
+
+<div class="quiz">
+<h3>Question 5</h3>
+<p>What is the minimum EMC-reduction shielding required for marine DeltaV installations?</p>
+<details>
+<summary>Show Answer</summary>
+<p class="answer">15 dB minimum, installed in an IP66/NEMA 4 enclosure (such as the Stahl Series 8125/8126). Marine certification is approved for 24 V powered systems only.</p>
+</details>
+</div>
+
+<hr>
+<p class="source">DeltaV Scalable Process System — Hardware Installation and Reference Manual, D800001X312, April 2021 (Emerson). Chapter 2, "Installing Your DeltaV System," pp. 23–27.</p>
+
+<script>
+function saveProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{localStorage.setItem('deltav_mseries_'+c.dataset.lesson,c.checked?'1':'0')});updateProgressText()}
+function loadProgress(){document.querySelectorAll('input[data-lesson]').forEach(c=>{c.checked=localStorage.getItem('deltav_mseries_'+c.dataset.lesson)==='1'});updateProgressText()}
+function updateProgressText(){var t=document.querySelectorAll('input[data-lesson]').length,d=document.querySelectorAll('input[data-lesson]:checked').length,e=document.getElementById('progress-text');if(e)e.textContent=d+' / '+t+' lessons completed'}
+window.addEventListener('load',loadProgress);
+</script>
+</body>
+</html>
